@@ -1,28 +1,22 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:screen_retriever/screen_retriever.dart';
+
+import 'configForDebugWindows.dart';
 
 void main() async {
-  Size defaultSize = Size(390, 844);
-
   WidgetsFlutterBinding.ensureInitialized();
   // Must add this line.
   await windowManager.ensureInitialized();
 
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    WindowOptions windowOptions = WindowOptions(
-      alwaysOnTop: true,
-      minimumSize: defaultSize,
-      maximumSize: defaultSize,
-      backgroundColor: Colors.transparent,
-      skipTaskbar: false,
-    );
+  // windowManager
 
-    windowManager.setAlignment(Alignment.bottomRight);
+  WindowOptions? windowOptions = configForDebug();
 
+
+  if (windowOptions != null){
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
+
       await windowManager.focus();
     });
   }
