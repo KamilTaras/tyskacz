@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
-
 import 'configForDebugWindows.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Must add this line.
   await windowManager.ensureInitialized();
-
   // windowManager
-
   WindowOptions? windowOptions = configForDebug();
-
-
   if (windowOptions != null){
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
