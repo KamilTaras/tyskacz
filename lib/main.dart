@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/constatntValues.dart';
 import 'package:window_manager/window_manager.dart';
 import 'MyHomePage.dart';
 import 'configForDebugWindows.dart';
@@ -25,11 +26,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch:Colors.grey,
+        scaffoldBackgroundColor:const Color(0xffeaeaea),
+        // primarySwatch:Colors.brown,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: Constant.title),
     );
   }
 }
