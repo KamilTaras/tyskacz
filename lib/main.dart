@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor:const Color(0xffeaeaea),
-        // primarySwatch:Colors.brown,
+        // primarySwatch:Colors.brgitown,
       ),
       home: const MyHomePage(title: Constant.title),
     );
