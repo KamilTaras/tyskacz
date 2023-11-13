@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Constant {
-  static const mainRedColor = Color(0xE82C4E);
-  static const mainGreenColor = Color(0x00B47E);
-  static const mainBackgroundColor = Color(0xEAEAEA);
+  static const Color mainRedColor = Color(0xFFE82C4E);
+  static const Color mainGreenColor = Color(0xff00b47e);
+  static const Color mainBackgroundColor = Color(0xffeaeaea);
 }
