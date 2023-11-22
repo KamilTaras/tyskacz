@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/constatntValues.dart';
 import 'package:window_manager/window_manager.dart';
-import 'MyHomePage.dart';
+import 'Pages/navBar.dart';
 import 'configForDebugWindows.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,9 +27,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor:Constant.mainBackgroundColor,
+        primarySwatch: Colors.blue,
+
       ),
-      home: const MyHomePage(title: Constant.title),
+      home: NavBarClass(),
     );
   }
 }
