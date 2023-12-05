@@ -16,9 +16,31 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: () {}, child: Container()),
-                ElevatedButton(onPressed: () {}, child: Container())
+                SizedBox(child: FilledButton(onPressed: () {}, child: Container())),
+                SizedBox(width: 10,),
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child:  FilledButton(
+
+                    style: ElevatedButton.styleFrom(
+                      shadowColor: Colors.black54,
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+
+                    ),
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Nice\ndick'),
+                      ],
+                    ),
+                  )
+                )
               ],
             ),
             Text(
