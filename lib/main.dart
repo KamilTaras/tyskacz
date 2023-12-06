@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: maingreen
       ),
-      darkTheme: ThemeData.dark(),
+      // darkTheme: ThemeData.dark(),
       home: NavBarClass(),
     );
   }

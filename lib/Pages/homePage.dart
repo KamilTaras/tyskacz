@@ -24,8 +24,10 @@ class HomePage extends StatelessWidget {
                   height: 100,
                   width: 100,
                   child:  FilledButton(
+                    
 
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       shadowColor: Colors.black54,
                       elevation: 4,
                       shape: RoundedRectangleBorder(
@@ -36,7 +38,7 @@ class HomePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Nice\ndick'),
+                        Text('Nice'),
                       ],
                     ),
                   )
