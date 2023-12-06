@@ -9,7 +9,7 @@ class PlanPage extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            'Map Page',
+            'Plans page',
             style: TextStyle(fontSize: 25),
           ),
         ),

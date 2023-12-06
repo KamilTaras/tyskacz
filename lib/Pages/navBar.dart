@@ -47,16 +47,16 @@ class _NavBarClassState extends State<NavBarClass> {
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.star),
                 label: "Plans",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "calendar",
+                icon: Icon(Icons.calendar_month),
+                label: "Calendar",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "maps",
+                icon: Icon(Icons.map),
+                label: "Maps",
               ),
             ],
             type: BottomNavigationBarType.shifting,
