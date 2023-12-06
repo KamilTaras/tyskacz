@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'atttractionDescription.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -25,18 +27,18 @@ class HomePage extends StatelessWidget {
                   width: 100,
                   child:  FilledButton(
 
-                    style: ElevatedButton.styleFrom(
+                    style: FilledButton.styleFrom(
                       shadowColor: Colors.black54,
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
 
                     ),
-                    onPressed: () {},
+                    onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>AttractionDescriptionPage()));},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Nice\ndick'),
+                        Text('Atraction'),
                       ],
                     ),
                   )

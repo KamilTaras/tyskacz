@@ -160,8 +160,5 @@ class AttractionDescriptionPage extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: AttractionDescriptionPage(),
-  ));
-}
+
+

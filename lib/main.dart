@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: maingreen
       ),
-      darkTheme: ThemeData.dark(),
-      home: AttractionDescriptionPage(),
+      // darkTheme: ThemeData.dark(),
+      home: NavBarClass(),
     );
   }
 }
