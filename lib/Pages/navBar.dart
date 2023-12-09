@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/calendarPage.dart';
 import 'package:tyskacz/Pages/homePage.dart';
 
-import '../constatntValues.dart';
+import '../constantValues.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
 
