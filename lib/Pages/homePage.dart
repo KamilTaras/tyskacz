@@ -20,33 +20,35 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(child: FilledButton(onPressed: () {}, child: Container())),
-                SizedBox(width: 10,),
                 SizedBox(
-                  height: 100,
-                  width: 100,
-                  child:  FilledButton(
-
-                    style: FilledButton.styleFrom(
-                      shadowColor: Colors.black54,
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-    context).colorScheme.primary,
-    shadowColor: Colors.black54,
-    elevation: 4,
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.                          borderRadius: BorderRadius.circular(20.0)),
-
-                    ),
-                    onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>AttractionDescriptionPage()));},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Atraction'),
-                      ],
-                    ),
-                  )
-                )
+                    child: FilledButton(onPressed: () {}, child: Container())),
+                SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        shadowColor: Colors.black54,
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AttractionDescriptionPage()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Atraction'),
+                        ],
+                      ),
+                    ))
               ],
             ),
             Text(
