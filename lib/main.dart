@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/atttractionDescription.dart';
-import 'package:tyskacz/constantValues.dart';
+import 'package:tyskacz/Utils/constantValues.dart';
 import 'package:window_manager/window_manager.dart';
 import 'Pages/navBar.dart';
-import 'colors.dart';
-import 'configForDebugWindows.dart';
+import 'Utils/Theme/colors.dart';
+import 'Utils/Theme/themeManager.dart';
+import 'Utils/configForDebugWindows.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,16 +22,41 @@ void main() async {
   }
   runApp(MyApp());
 }
+ThemeManager themeManager = ThemeManager();
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  void dispose() {
+    themeManager.removeListener(themeListener);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    themeManager.addListener(themeListener);
+    super.initState();
+  }
+
+  void themeListener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: maingreen
+        primarySwatch: mainGreen
       ),
       // darkTheme: ThemeData.dark(),
       home: NavBarClass(),

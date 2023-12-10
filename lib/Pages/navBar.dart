@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/calendarPage.dart';
 import 'package:tyskacz/Pages/homePage.dart';
 
-import '../constantValues.dart';
+import '../Utils/constantValues.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
 
@@ -24,7 +24,6 @@ class _NavBarClassState extends State<NavBarClass> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     allPages = [homePage, planPage, calendarPage, mapPage];
   }
@@ -41,6 +40,7 @@ class _NavBarClassState extends State<NavBarClass> {
     return Theme(
         data: ThemeData(canvasColor: Constant.mainGreenColor),
         child: BottomNavigationBar(
+
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -61,6 +61,7 @@ class _NavBarClassState extends State<NavBarClass> {
             ],
             type: BottomNavigationBarType.shifting,
             currentIndex: selectedItem,
+
             onTap: (index) {
               setState(() {
                 selectedItem = index;

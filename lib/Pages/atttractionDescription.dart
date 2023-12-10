@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constantValues.dart';
+import '../Utils/constantValues.dart';
 
 class AttractionDescriptionPage extends StatelessWidget {
   final double componentsMargin = 5.0;
