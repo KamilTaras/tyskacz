@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/calendarPage.dart';
 import 'package:tyskacz/Pages/homePage.dart';
+import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
+import '../Utils/Theme/colors.dart';
 import '../Utils/constantValues.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
@@ -37,8 +39,12 @@ class _NavBarClassState extends State<NavBarClass> {
   }
 
   Widget MyBottomNavBar() {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    var navBarColor = isDarkMode ? darkTheme.canvasColor : lightTheme.canvasColor;
+    print(navBarColor.toString());// mainGreen is your light theme color
+
     return Theme(
-        data: ThemeData(canvasColor: Constant.mainGreenColor),
+        data: ThemeData(canvasColor: navBarColor),
         child: BottomNavigationBar(
 
             items: [

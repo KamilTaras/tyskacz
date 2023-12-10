@@ -9,10 +9,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-ThemeManager themeManager = ThemeManager();
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +20,9 @@ class _HomePageState extends State<HomePage> {
           Switch(
               value: themeManager.themeMode == ThemeMode.dark,
               onChanged: (newValue) {
-                themeManager.toggleTheme(newValue);
+                setState(() {
+                  themeManager.toggleTheme(newValue);
+                });
               })
         ],
       ),
@@ -43,15 +43,9 @@ class _HomePageState extends State<HomePage> {
                 width: 10,
               ),
               SizedBox(
-                  height: 120,
-                  width: 120,
+                  height: 150,
+                  width: 150,
                   child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      shadowColor: Colors.black54,
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                    ),
                     onPressed: () {
                       Navigator.push(
                           context,

@@ -102,6 +102,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
+
       options: const MapOptions(
         initialCenter: LatLng(51.509364, -0.128928),
         initialZoom: 9.2,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
+    canvasColor: mainGreen,
     switchTheme: SwitchThemeData(
         trackColor: MaterialStateProperty.all<Color>(mainGreen),
         trackOutlineColor: MaterialStateProperty.all<Color>(Colors.white)),

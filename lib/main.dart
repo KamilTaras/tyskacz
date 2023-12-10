@@ -4,6 +4,7 @@ import 'package:tyskacz/Utils/constantValues.dart';
 import 'package:window_manager/window_manager.dart';
 import 'Pages/navBar.dart';
 import 'Utils/Theme/colors.dart';
+import 'Utils/Theme/themeConstant.dart';
 import 'Utils/Theme/themeManager.dart';
 import 'Utils/configForDebugWindows.dart';
 
@@ -33,6 +34,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  @override
   void dispose() {
     themeManager.removeListener(themeListener);
     super.dispose();
@@ -55,9 +58,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: mainGreen
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeManager.themeMode,
       // darkTheme: ThemeData.dark(),
       home: NavBarClass(),
     );
