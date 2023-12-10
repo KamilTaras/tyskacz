@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/Utils/constantValues.dart';
 
 import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: mainBackgroundColor, // Set the background color for Scaffold widgets
     canvasColor: mainGreen,
     switchTheme: SwitchThemeData(
         trackColor: MaterialStateProperty.all<Color>(mainGreen),
-        trackOutlineColor: MaterialStateProperty.all<Color>(Colors.white)),
+        trackOutlineColor: MaterialStateProperty.all<Color>(mainBackgroundColor)),
     brightness: Brightness.light,
     primaryColor: mainGreen,
     floatingActionButtonTheme:
@@ -22,7 +24,6 @@ ThemeData lightTheme = ThemeData(
     textTheme: TextTheme(
         displayLarge:
         TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
-    navigationBarTheme:  NavigationBarThemeData(backgroundColor: mainGreen),
 );
 
 ThemeData darkTheme = ThemeData(brightness: Brightness.dark);

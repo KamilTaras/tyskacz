@@ -24,3 +24,5 @@ const MaterialColor mainGreenAccent = MaterialColor(_mainGreenAccentValue, <int,
   700: Color(0xFF5FFFBA),
 });
 const int _mainGreenAccentValue = 0xFFACFFDB;
+
+const  mainBackgroundColor = Color(0xFFFFEEEA);

@@ -15,6 +15,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black.withOpacity(0), // 50% Opacity
+        elevation: 0,
         title: Text('Test'),
         actions: [
           Switch(
