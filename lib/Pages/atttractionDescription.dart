@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
 import 'mapsPage.dart';
 
-class AttractionDescriptionPage extends StatelessWidget {
+class AttractionDescriptionPage extends StatefulWidget {
+  const AttractionDescriptionPage({super.key});
+
+  @override
+  State<AttractionDescriptionPage> createState() => _AttractionDescriptionPage();
+}
+
+class _AttractionDescriptionPage extends State<AttractionDescriptionPage> {
   final double componentsMargin = 5.0;
   final double ratingFontSize = 20.0;
   final double titleFontSize = 25.0;
