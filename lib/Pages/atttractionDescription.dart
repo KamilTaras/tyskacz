@@ -12,6 +12,7 @@ class AttractionDescriptionPage extends StatelessWidget {
   final double titleFontSize = 25.0;
   final double mainContainerMargin = 10.0;
   final double topBarHeight = 20.0;
+  final double sizedBoxHeight= 10;
   final String text =
       "New the her nor case that lady paid read. Invitation friendship travelling eat everything the out two. Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth spirit it to hearts. Downs those still witty an balls so chief so. Moment an little remain no up lively no. Way brought may off our regular country towards adapted cheered.Literature admiration frequently indulgence announcing are who you her. Was least quick ";
 
@@ -56,17 +57,26 @@ class AttractionDescriptionPage extends StatelessWidget {
 
   Widget buildElevatedTextContainer(double height, Color color, String name, double fontSize, Color textColor) {
     return buildElevatedContainer(
-      child: buildTextContainer(
-        height,
-        color,
-        name,
-        fontSize,
-        textColor,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: color,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: buildTextContainer(
+            height,
+            color,
+            name,
+            fontSize,
+            textColor,
+          ),
+        ),
       ),
-
-      backgroundColor: Colors.white, // Set the desired background color for the elevated container
+      backgroundColor: Colors.white,
     );
   }
+
 
   Widget buildRowWithChildrenList(List<Widget> children, double sizedBoxWidth) {
     List<Widget> rowChildren = [SizedBox(width: sizedBoxWidth)];
@@ -163,13 +173,13 @@ class AttractionDescriptionPage extends StatelessWidget {
                       fallbackWidth: 300,
                       fallbackHeight: 200,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: sizedBoxHeight),
                     buildElevatedTextContainer(40,Constant.mainGreenColor, 'Attraction Name', titleFontSize, Colors.black, ),
-                    SizedBox(height: 20),
+                    SizedBox(height: sizedBoxHeight),
                     buildRatingContainer(),
-                    SizedBox(height: 20),
-                    buildElevatedTextContainer(200, Constant.mainBackgroundColor, text, 15, Colors.black),
-                    SizedBox(height: 20),
+                    SizedBox(height: sizedBoxHeight),
+                    buildElevatedTextContainer(220, Constant.mainBackgroundColor, text, 15, Colors.black),
+                    SizedBox(height: sizedBoxHeight),
                     buildInfoContainer(context),
                   ],
                 ),
