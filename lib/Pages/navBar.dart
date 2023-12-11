@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/calendarPage.dart';
 import 'package:tyskacz/Pages/homePage.dart';
+import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
-import '../constatntValues.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
 
@@ -17,14 +17,13 @@ class _NavBarClassState extends State<NavBarClass> {
   int selectedItem = 0;
   late List allPages;
 
-  HomePage homePage = HomePage();
-  PlanPage planPage = PlanPage();
-  CalendarPage calendarPage = CalendarPage();
-  MapPage mapPage = MapPage();
+  HomePage homePage = const HomePage();
+  PlanPage planPage = const PlanPage();
+  CalendarPage calendarPage = const CalendarPage();
+  MapPage mapPage = const MapPage();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     allPages = [homePage, planPage, calendarPage, mapPage];
   }
@@ -38,9 +37,14 @@ class _NavBarClassState extends State<NavBarClass> {
   }
 
   Widget MyBottomNavBar() {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    Color navBarColor = isDarkMode ? darkTheme.canvasColor : lightTheme.canvasColor;
+    // print(navBarColor.toString());// mainGreen is your light theme color
+
     return Theme(
-        data: ThemeData(canvasColor: Constant.mainGreenColor),
+        data: ThemeData(canvasColor: navBarColor),
         child: BottomNavigationBar(
+
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -61,6 +65,7 @@ class _NavBarClassState extends State<NavBarClass> {
             ],
             type: BottomNavigationBarType.shifting,
             currentIndex: selectedItem,
+
             onTap: (index) {
               setState(() {
                 selectedItem = index;
