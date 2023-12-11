@@ -1,7 +1,10 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constatntValues.dart';
+
+import 'mapsPage.dart';
 
 class AttractionDescriptionPage extends StatelessWidget {
   final double componentsMargin = 5.0;
@@ -57,7 +60,7 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buildIconButton({required IconData icon, required VoidCallback onPressed}) {
+  Widget buildIconButton({required IconData icon, required VoidCallback onPressed,}) {
     return IconButton(
       icon: Icon(icon),
       onPressed: onPressed,
@@ -70,7 +73,7 @@ class AttractionDescriptionPage extends StatelessWidget {
 
     return buildStyledContainer(
       height: 70,
-      color: Colors.pink,
+      color: Constant.mainRedColor,
       child: Column(
         children: <Widget>[
           buildRowWithChildrenList(firstRow,  8),
@@ -80,11 +83,13 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buildInfoContainer(){
-    Widget mapButton = buildIconButton(icon: Icons.map, onPressed: () {} );
-    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {} );
+  Widget buildInfoContainer(BuildContext context){
+    Widget mapButton = buildIconButton(icon: Icons.map, onPressed: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage())); // Use MapsPage instead of mapsPage
+    });
+    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
 
-    List<Widget> firstRow = [Icon(Icons.accessible_forward_outlined), buildTextContainer(55, Constant.mainRedColor, 'date', 20, Colors.black),];
+    List<Widget> firstRow = [Icon(Icons.calendar_month), buildTextContainer(55, Constant.mainRedColor, 'date', 20, Colors.black),];
     List<Widget> secondRow = [Icon(Icons.accessibility_sharp), buildTextContainer(55, Constant.mainRedColor, 'Localization', 20, Colors.black), mapButton, editButton];
 
     return buildStyledContainer(
@@ -94,11 +99,11 @@ class AttractionDescriptionPage extends StatelessWidget {
         children: <Widget>[
           buildRowWithChildrenList(firstRow,  20),
           buildRowWithChildrenList(secondRow,  20),
-        ]
-      )
-    ) ;  
-    
+        ],
+      ),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +141,7 @@ class AttractionDescriptionPage extends StatelessWidget {
                     SizedBox(height: 20),
                     buildTextContainer(240, Constant.mainBackgroundColor, text, 15, Colors.black),
                     SizedBox(height: 20),
-                    buildInfoContainer(),
+                    buildInfoContainer(context),
                   ],
                 ),
               ),
