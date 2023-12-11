@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/atttractionDescription.dart';
-import 'package:tyskacz/constantValues.dart';
+import 'package:tyskacz/constatntValues.dart';
 import 'package:window_manager/window_manager.dart';
 import 'Pages/navBar.dart';
 import 'colors.dart';
