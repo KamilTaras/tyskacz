@@ -26,6 +26,18 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
+  Widget buildElevatedContainer({required Widget child, double elevation = 8.0, double borderRadius = 8.0, Color backgroundColor = Colors.white,}) {
+    return Card(
+      elevation: elevation,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      color: backgroundColor,
+      child: child,
+    );
+  }
+
+
   Widget buildTextContainer(double height, Color color, String name, double fontSize, Color textColor) {
     return buildStyledContainer(
       height: height,
@@ -39,6 +51,20 @@ class AttractionDescriptionPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildElevatedTextContainer(double height, Color color, String name, double fontSize, Color textColor) {
+    return buildElevatedContainer(
+      child: buildTextContainer(
+        height,
+        color,
+        name,
+        fontSize,
+        textColor,
+      ),
+
+      backgroundColor: Colors.white, // Set the desired background color for the elevated container
     );
   }
 
@@ -71,38 +97,40 @@ class AttractionDescriptionPage extends StatelessWidget {
     List<Widget>  firstRow = [buildTextContainer(35, Constant.mainRedColor, 'Average Rating:', ratingFontSize, Colors.black),Placeholder(fallbackWidth: 150, fallbackHeight: 30,) ];
     List<Widget> secondRow = [buildTextContainer(35, Constant.mainRedColor, 'Your Rating:', ratingFontSize, Colors.black),SizedBox(width: 25), Placeholder(fallbackWidth: 150, fallbackHeight: 30,)];
 
-    return buildStyledContainer(
-      height: 70,
-      color: Constant.mainRedColor,
+    Widget elevatedContainer =  buildElevatedContainer(
       child: Column(
         children: <Widget>[
           buildRowWithChildrenList(firstRow,  8),
           buildRowWithChildrenList(secondRow, 8),
         ],
       ),
+      backgroundColor: Constant.mainRedColor,
     );
+    return elevatedContainer;
   }
 
-  Widget buildInfoContainer(BuildContext context){
+  Widget buildInfoContainer(BuildContext context) {
     Widget mapButton = buildIconButton(icon: Icons.map, onPressed: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage())); // Use MapsPage instead of mapsPage
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage()));
     });
-    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
+    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: (){});
 
-    List<Widget> firstRow = [Icon(Icons.calendar_month), buildTextContainer(55, Constant.mainRedColor, 'date', 20, Colors.black),];
+    List<Widget> firstRow = [Icon(Icons.calendar_month), buildTextContainer(55, Constant.mainRedColor, 'date', 20, Colors.black)];
     List<Widget> secondRow = [Icon(Icons.accessibility_sharp), buildTextContainer(55, Constant.mainRedColor, 'Localization', 20, Colors.black), mapButton, editButton];
 
-    return buildStyledContainer(
-      height: 110,
-      color: Constant.mainRedColor,
+    Widget elevatedContainer = buildElevatedContainer(
       child: Column(
         children: <Widget>[
-          buildRowWithChildrenList(firstRow,  20),
-          buildRowWithChildrenList(secondRow,  20),
+          buildRowWithChildrenList(firstRow, 20),
+          buildRowWithChildrenList(secondRow, 20),
         ],
       ),
+      backgroundColor: Constant.mainRedColor,
     );
+
+    return elevatedContainer;
   }
+
 
 
   @override
@@ -118,6 +146,7 @@ class AttractionDescriptionPage extends StatelessWidget {
               height: topBarHeight,
             ),
             Container(
+              color: Constant.mainBackgroundColor,
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(
                   vertical: mainContainerMargin, horizontal: mainContainerMargin),
@@ -135,11 +164,11 @@ class AttractionDescriptionPage extends StatelessWidget {
                       fallbackHeight: 200,
                     ),
                     SizedBox(height: 20),
-                    buildTextContainer(40,Constant.mainGreenColor, 'Attraction Name', titleFontSize, Colors.black),
+                    buildElevatedTextContainer(40,Constant.mainGreenColor, 'Attraction Name', titleFontSize, Colors.black, ),
                     SizedBox(height: 20),
                     buildRatingContainer(),
                     SizedBox(height: 20),
-                    buildTextContainer(240, Constant.mainBackgroundColor, text, 15, Colors.black),
+                    buildElevatedTextContainer(200, Constant.mainBackgroundColor, text, 15, Colors.black),
                     SizedBox(height: 20),
                     buildInfoContainer(context),
                   ],
