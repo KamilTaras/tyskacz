@@ -58,6 +58,7 @@ flutter:
   assets:
     - assets/photos/logo_TySkacz_light.png
     - assets/photos/Pin.png
+    - assets/photos/createBusinessTrip.png
   fonts:
     - family: Inter
       fonts:
