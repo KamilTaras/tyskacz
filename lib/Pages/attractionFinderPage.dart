@@ -9,15 +9,13 @@ class AttractionFinderPage extends StatefulWidget {
 }
 class _AttractionFinderPage extends State<AttractionFinderPage> {
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Text(
-            'Plans page',
-            style: TextStyle(fontSize: 25),
-          ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.0),
+        child: AppBar(
+          backgroundColor: Colors.transparent,
         ),
-      ],
+      ),
     );
   }
 }

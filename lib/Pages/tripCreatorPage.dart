@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tyskacz/Pages/attractionFinderPage.dart';
 
 import '../Utils/constantValues.dart';
 
@@ -49,7 +50,8 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       children: [
         IconButton(
           iconSize: 60,
-          onPressed: () {},
+          onPressed: (){ Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const AttractionFinderPage()));},
           icon: Image.asset(
             path,
             width: 170,
@@ -100,8 +102,8 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
               ]
             ),
-            ]
-        )
+          ]
+        ),
       ),
     );
   }

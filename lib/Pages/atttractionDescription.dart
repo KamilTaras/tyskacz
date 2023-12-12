@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'attractionFinderPage.dart';
 import '../Utils/constantValues.dart';
 import 'mapsPage.dart';
 
