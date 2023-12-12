@@ -44,17 +44,27 @@ class _CreatePlanPage extends State<CreatePlanPage> {
     );
   }
 
-  Widget createButtonWithImage(String path){
-    return IconButton(
-      iconSize: 60, // Adjust the size of the IconButton
-      icon: Image.asset(
-        path,
-        width: 150, // Adjust the width of the image
-        height: 250, // Adjust the height of the image
-      ),
-      onPressed: () {},
+  Widget createButtonWithImage(String path, String label) {
+    return Column(
+      children: [
+        IconButton(
+          iconSize: 60,
+          onPressed: () {},
+          icon: Image.asset(
+            path,
+            width: 170,
+            height: 170,
+            fit: BoxFit.cover, // Ensure the image covers the square container
+          ),
+        ), // Adjust the spacing between the button and label
+        Text(
+          label,
+          style: TextStyle(fontSize: 16),
+        ),
+      ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,18 +77,27 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       body:SafeArea(
         child: Column(
           children: <Widget> [
-            buildTextContainer(pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
-            SizedBox(height: 40),
-            buildTextContainer(40, Colors.transparent, searchLabel, 15),
-            Placeholder(fallbackHeight: 40, fallbackWidth: 100,),
             Column(
               children: <Widget>[
+                buildTextContainer(pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
+                SizedBox(height: 30),
+                buildTextContainer(40, Colors.transparent, searchLabel, 15),
+                Placeholder(fallbackHeight: 60, fallbackWidth: 100,),
+                SizedBox(height: 30),
 
                 Row(
                   children: <Widget>[
-                    createButtonWithImage('assets/photos/createBusinessTrip.png'),
+                    createButtonWithImage('assets/photos/createBusinessTrip.png', 'Business Trip'),
+                    createButtonWithImage('assets/photos/createSightSeeingTrip.png', 'Sight  Seeing Trip'),
                   ]
                 ),
+                Row(
+                    children: <Widget>[
+                      createButtonWithImage('assets/photos/createBusinessTrip.png','Educational Trip'),
+                      createButtonWithImage('assets/photos/createSightSeeingTrip.png', 'Leisure Trip'),
+                    ]
+                ),
+
               ]
             ),
             ]
