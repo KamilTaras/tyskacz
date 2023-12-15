@@ -19,7 +19,15 @@ class _AttractionDescriptionPage extends State<AttractionDescriptionPage> {
   final double topBarHeight = 20.0;
   final double sizedBoxHeight = 5;
   final String text =
-      "New the her nor case that lady paid read. Invitation friendship travelling eat everything the out two.New New the her nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship travelling eat everything the out two.New the her nor case that lady paid read.hing the out two.New the her nor case that lady paid read.lling eat everything the out two.New the her nor case that lady paid read.the her nor case that lady paid read. InvitaNew the her nor case that lady paid read. Invitation friendship travelling eat everything the out two. Shy you who sction friendship travelling eat everything the out two. Shy you who sc Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth spirit it to hearts. Downs those still witty an balls so chief so. Moment an little remain no up lively no. Way brought may off our regular country towards adapted cheered.Literature admiration frequently indulgence announcing are who you her. Was least quick ";
+      """New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
+      Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship travelling eat 
+      everything the out two.New the her nor case that lady paid read.hing the out two.New the her nor case that lady paid read.
+      lling eat everything the out two.New the her nor case that lady paid read.the her nor case that lady paid read. 
+      InvitaNew the her nor case that lady paid read. Invitation friendship travelling eat everything the out two.
+       Shy you who sction friendship travelling eat everything the out two. Shy you who sc Shy you who scarcely expenses debating 
+       hastened resolved. Always polite moment on is warmth spirit it to hearts. Downs those still witty an balls so chief so. 
+       Moment an little remain no up lively no. Way brought may off our regular country towards adapted cheered.
+       Literature admiration frequently indulgence announcing are who you her. Was least quick """;
   final String date = '24.10.2023 - 11.11.2023';
   final String localization = 'Szczecin, Dabie 33';
 
