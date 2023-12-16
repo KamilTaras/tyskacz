@@ -41,7 +41,7 @@ app.*.map.json
 # Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
-/android/app/release
+/android/agit pp/release
 
 # Flutter auto-generated files
 lib/Utils/configForDebugWindows.dart
