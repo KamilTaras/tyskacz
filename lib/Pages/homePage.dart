@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Utils/Theme/themeManager.dart';
 import '../main.dart';
 import 'atttractionDescription.dart';
 

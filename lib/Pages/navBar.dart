@@ -3,8 +3,6 @@ import 'package:tyskacz/Pages/calendarPage.dart';
 import 'package:tyskacz/Pages/homePage.dart';
 import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
-import '../Utils/Theme/colors.dart';
-import '../Utils/constantValues.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
 
@@ -19,10 +17,10 @@ class _NavBarClassState extends State<NavBarClass> {
   int selectedItem = 0;
   late List allPages;
 
-  HomePage homePage = HomePage();
-  PlanPage planPage = PlanPage();
-  CalendarPage calendarPage = CalendarPage();
-  MapPage mapPage = MapPage();
+  HomePage homePage = const HomePage();
+  PlanPage planPage = const PlanPage();
+  CalendarPage calendarPage = const CalendarPage();
+  MapPage mapPage = const MapPage();
 
   @override
   void initState() {

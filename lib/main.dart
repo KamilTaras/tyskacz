@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tyskacz/Pages/atttractionDescription.dart';
-import 'package:tyskacz/Utils/constantValues.dart';
 import 'package:window_manager/window_manager.dart';
 import 'Pages/navBar.dart';
-import 'Utils/Theme/colors.dart';
 import 'Utils/Theme/themeConstant.dart';
 import 'Utils/Theme/themeManager.dart';
 import 'Utils/configForDebugWindows.dart';
@@ -21,7 +18,7 @@ void main() async {
       await windowManager.focus();
     });
   }
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 ThemeManager themeManager = ThemeManager();
 
@@ -57,12 +54,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // useMaterial3:true,
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeManager.themeMode,
       // darkTheme: ThemeData.dark(),
-      home: NavBarClass(),
+      home: const NavBarClass(),
     );
   }
 }
