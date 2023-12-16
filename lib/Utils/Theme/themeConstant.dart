@@ -22,7 +22,7 @@ ThemeData lightTheme = ThemeData(
             backgroundColor: MaterialStateProperty.all<Color>(mainGreen))),
     textTheme: TextTheme(
         displayLarge:
-        TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
+        TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
 );
 
 ThemeData darkTheme = ThemeData(brightness: Brightness.dark);
