@@ -25,4 +25,27 @@ const MaterialColor mainGreenAccent = MaterialColor(_mainGreenAccentValue, <int,
 });
 const int _mainGreenAccentValue = 0xFFACFFDB;
 
+const MaterialColor mainRed = MaterialColor(_mainredPrimaryValue, <int, Color>{
+  50: Color(0xFFFCEFF1),
+  100: Color(0xFFF8D8DD),
+  200: Color(0xFFF4BEC7),
+  300: Color(0xFFEFA3B0),
+  400: Color(0xFFEB909F),
+  500: Color(_mainredPrimaryValue),
+  600: Color(0xFFE57486),
+  700: Color(0xFFE2697B),
+  800: Color(0xFFDE5F71),
+  900: Color(0xFFD84C5F),
+});
+const int _mainredPrimaryValue = 0xFFE87C8E;
+
+const MaterialColor mainRedAccent = MaterialColor(_mainRedAccentValue, <int, Color>{
+  100: Color(0xFFFFFFFF),
+  200: Color(_mainRedAccentValue),
+  400: Color(0xFFFFCDD3),
+  700: Color(0xFFFFB3BD),
+});
+const int _mainRedAccentValue = 0xFFFFFFFF;
+
+
 const  mainBackgroundColor = Color(0xFFFFEEEA);

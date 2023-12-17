@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+    ),
     scaffoldBackgroundColor: mainBackgroundColor, // Set the background color for Scaffold widgets
     canvasColor: mainGreen,
     switchTheme: SwitchThemeData(

@@ -31,18 +31,20 @@ class Location {
 }
 
 class Event extends Attraction {
-  DateTime startDate;
-  DateTime endDate;
+  final DateTime startDate;
+  final DateTime endDate;
+  final List<String>? listOfEquipment;
 
   Event({
-    required String name,
-    required String description,
-    required Location location,
-    required Image photo,
+    required String name, //x
+    required String description, //x
+    required Location location, //x
+    required Image photo, //x
     String? review,
     String? link,
-    required this.startDate,
-    required this.endDate,
+    required this.startDate, //x
+    required this.endDate, //x
+    List<String>? this.listOfEquipment //x
   }) : super(
     name: name,
     description: description,

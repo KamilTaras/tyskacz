@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tyskacz/Pages/calendarPage.dart';
-import 'package:tyskacz/Pages/homePage.dart';
 import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
+import 'calendarPage.dart';
+import 'homePage.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
+
+
 
 class NavBarClass extends StatefulWidget {
   const NavBarClass({super.key});

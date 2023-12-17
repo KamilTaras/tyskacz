@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
-import 'atttractionDescription.dart';
-import 'tripCreatorPage.dart';
+import '../../main.dart';
+import '../atttractionDescription.dart';
+import '../tripCreatorPage.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

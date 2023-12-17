@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tyskacz/Utils/Theme/colors.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 
-class AttractionDescriptionPage extends StatelessWidget {
-  const AttractionDescriptionPage({super.key});
+class AttractionCreationPage extends StatelessWidget {
+  const AttractionCreationPage({super.key});
 
   final double componentsMargin = 5.0;
 
@@ -19,7 +20,7 @@ class AttractionDescriptionPage extends StatelessWidget {
   final double sizedBoxHeight = 5;
 
   final String text =
-      """New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
+  """New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
       Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship travelling eat 
       everything the out two.New the her nor case that lady paid read.hing the out two.New the her nor case that lady paid read.
       lling eat everything the out two.New the her nor case that lady paid read.the her nor case that lady paid read. 
@@ -179,7 +180,7 @@ class AttractionDescriptionPage extends StatelessWidget {
           buildRowWithChildrenList(secondRow, 20),
         ],
       ),
-      backgroundColor: Constant.mainRedColor,
+      backgroundColor: mainRed,
     );
 
     return elevatedContainer;
@@ -191,7 +192,7 @@ class AttractionDescriptionPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(30.0),
         child: AppBar(
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
         ),
       ),
       body: SafeArea(

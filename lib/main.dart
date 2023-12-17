@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
-import 'Pages/navBar.dart';
+import 'Pages/navBarPages/navBar.dart';
 import 'Utils/Theme/themeConstant.dart';
 import 'Utils/Theme/themeManager.dart';
 import 'Utils/configForDebugWindows.dart';
