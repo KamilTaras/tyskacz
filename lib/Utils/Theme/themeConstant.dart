@@ -17,8 +17,8 @@ ThemeData lightTheme = ThemeData(
     const FloatingActionButtonThemeData(backgroundColor: mainGreen),
     filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0)),
+            // padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            //     EdgeInsets.symmetric(horizontal: 70.0, vertical: 70.0)),
             shape: MaterialStateProperty.all<OutlinedBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0))),

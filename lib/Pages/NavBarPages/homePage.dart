@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../main.dart';
+import '../attractionCreatorPage.dart';
 import '../atttractionDescription.dart';
 import '../tripCreatorPage.dart';
 
@@ -39,7 +40,18 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                  child: FilledButton(onPressed: () {}, child: Container())),
+                  height: 150,
+                  width: 150,
+                  child: FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  CreatePlanPage()));
+                    },
+                    child: Text('Create a Plan'),
+                  )),
               SizedBox(
                 width: 10,
               ),
@@ -52,35 +64,13 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  AttractionDescriptionPage()));
+                                  AttractionCreationPage()));
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Atraction'),
-                      ],
-                    ),
+                    child: Text('Create an\nAtraction'),
                   ))
             ],
           ),
-          SizedBox(
-              height: 50,
-              width: 150,
-              child: FilledButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              CreatePlanPage()));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Create Trip'),
-                  ],
-                ),
-              )),
+          SizedBox(height: 30,),
           Text(
             'Home Page',
             style: TextStyle(fontSize: 25),
