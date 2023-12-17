@@ -46,3 +46,11 @@ app.*.map.json
 # Flutter auto-generated files
 lib/Utils/configForDebugWindows.dart
 lib/playground.dart
+
+# Ignore generated plugin registrants and cmake files for Linux and Windows builds
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugin_registrant.h
+linux/flutter/generated_plugins.cmgit sake
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugin_registrant.h
+windows/flutter/generated_plugins.cmake
