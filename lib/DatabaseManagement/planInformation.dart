@@ -38,6 +38,7 @@ class Plan {
     }
   }
 }
+
 enum TripType {
   businessTrip,
   sightseeingTrip,
@@ -45,4 +46,3 @@ enum TripType {
   leisureTrip,
   differentTypeTrip
 }
-

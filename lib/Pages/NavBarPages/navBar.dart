@@ -6,8 +6,6 @@ import 'homePage.dart';
 import 'mapsPage.dart';
 import 'plansPage.dart';
 
-
-
 class NavBarClass extends StatefulWidget {
   const NavBarClass({super.key});
 
@@ -40,13 +38,13 @@ class _NavBarClassState extends State<NavBarClass> {
 
   Widget MyBottomNavBar() {
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    Color navBarColor = isDarkMode ? darkTheme.canvasColor : lightTheme.canvasColor;
+    Color navBarColor =
+        isDarkMode ? darkTheme.canvasColor : lightTheme.canvasColor;
     // print(navBarColor.toString());// mainGreen is your light theme color
 
     return Theme(
         data: ThemeData(canvasColor: navBarColor),
         child: BottomNavigationBar(
-
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -67,7 +65,6 @@ class _NavBarClassState extends State<NavBarClass> {
             ],
             type: BottomNavigationBarType.shifting,
             currentIndex: selectedItem,
-
             onTap: (index) {
               setState(() {
                 selectedItem = index;

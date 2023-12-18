@@ -34,9 +34,7 @@ class AttractionDescriptionPage extends StatelessWidget {
   final String localization = 'Szczecin, Dabie 33';
 
   Widget buildStyledContainer(
-      {required double height,
-        required Color color,
-        required Widget child}) {
+      {required double height, required Color color, required Widget child}) {
     return Container(
       height: height,
       decoration: BoxDecoration(
@@ -100,8 +98,7 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buildRowWithChildrenList(
-      List<Widget> children, double sizedBoxWidth) {
+  Widget buildRowWithChildrenList(List<Widget> children, double sizedBoxWidth) {
     List<Widget> rowChildren = [SizedBox(width: sizedBoxWidth)];
 
     for (int i = 0; i < children.length; i++) {
@@ -129,15 +126,21 @@ class AttractionDescriptionPage extends StatelessWidget {
 
   Widget buildRatingContainer() {
     List<Widget> firstRow = [
-      buildTextContainer(
-          35, Colors.transparent, 'Average Rating:', ratingFontSize, Colors.black),
-      Placeholder(fallbackWidth: 150, fallbackHeight: 30,)
+      buildTextContainer(35, Colors.transparent, 'Average Rating:',
+          ratingFontSize, Colors.black),
+      Placeholder(
+        fallbackWidth: 150,
+        fallbackHeight: 30,
+      )
     ];
     List<Widget> secondRow = [
       buildTextContainer(
           35, Colors.transparent, 'Your Rating:', ratingFontSize, Colors.black),
       SizedBox(width: 25),
-      Placeholder(fallbackWidth: 150, fallbackHeight: 30,)
+      Placeholder(
+        fallbackWidth: 150,
+        fallbackHeight: 30,
+      )
     ];
 
     Widget elevatedContainer = buildElevatedContainer(
@@ -156,8 +159,8 @@ class AttractionDescriptionPage extends StatelessWidget {
     Widget mapButton = buildIconButton(
         icon: Icons.map,
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const MapPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const MapPage()));
         });
     Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
 
@@ -167,7 +170,8 @@ class AttractionDescriptionPage extends StatelessWidget {
     ];
     List<Widget> secondRow = [
       Icon(Icons.accessibility_sharp),
-      buildTextContainer(55, Colors.transparent, localization, 15, Colors.black),
+      buildTextContainer(
+          55, Colors.transparent, localization, 15, Colors.black),
       mapButton,
       editButton
     ];
@@ -203,7 +207,8 @@ class AttractionDescriptionPage extends StatelessWidget {
               margin: EdgeInsets.symmetric(
                   vertical: mainContainerMargin,
                   horizontal: mainContainerMargin),
-              width: MediaQuery.of(context).size.width - 2 * mainContainerMargin,
+              width:
+                  MediaQuery.of(context).size.width - 2 * mainContainerMargin,
               height: MediaQuery.of(context).size.height -
                   30 -
                   2 * mainContainerMargin,

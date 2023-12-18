@@ -20,8 +20,8 @@ void main() async {
   }
   runApp(const MyApp());
 }
-ThemeManager themeManager = ThemeManager();
 
+ThemeManager themeManager = ThemeManager();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -31,7 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void dispose() {
     themeManager.removeListener(themeListener);
@@ -49,7 +48,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {});
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

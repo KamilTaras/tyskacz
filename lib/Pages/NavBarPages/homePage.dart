@@ -4,7 +4,6 @@ import '../attractionCreatorPage.dart';
 import '../atttractionDescription.dart';
 import '../tripCreatorPage.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -47,8 +46,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  CreatePlanPage()));
+                              builder: (context) => CreatePlanPage()));
                     },
                     child: Text('Create a Plan'),
                   )),
@@ -63,14 +61,15 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  AttractionCreationPage()));
+                              builder: (context) => AttractionCreationPage()));
                     },
                     child: Text('Create an\nAtraction'),
                   ))
             ],
           ),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           Text(
             'Home Page',
             style: TextStyle(fontSize: 25),

@@ -4,9 +4,6 @@ import 'package:tyskacz/Pages/attractionFinderPage.dart';
 
 import '../Utils/constantValues.dart';
 
-
-
-
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});
 
@@ -20,8 +17,8 @@ class _CreatePlanPage extends State<CreatePlanPage> {
   final double pageNameHeight = 100;
   final double pageNameFontSize = 40;
 
-
-  Widget buildStyledContainer({required double height, required Color color, required Widget child}) {
+  Widget buildStyledContainer(
+      {required double height, required Color color, required Widget child}) {
     return Container(
       height: height,
       decoration: BoxDecoration(
@@ -32,7 +29,8 @@ class _CreatePlanPage extends State<CreatePlanPage> {
     );
   }
 
-  Widget buildTextContainer(double height, Color color, String name, double fontSize) {
+  Widget buildTextContainer(
+      double height, Color color, String name, double fontSize) {
     return buildStyledContainer(
       height: height,
       color: color,
@@ -50,8 +48,12 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       children: [
         IconButton(
           iconSize: 60,
-          onPressed: (){ Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AttractionFinderPage()));},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AttractionFinderPage()));
+          },
           icon: Image.asset(
             path,
             width: 170,
@@ -76,34 +78,32 @@ class _CreatePlanPage extends State<CreatePlanPage> {
           backgroundColor: Colors.transparent,
         ),
       ),
-      body:SafeArea(
-        child: Column(
-          children: <Widget> [
-            Column(
-              children: <Widget>[
-                buildTextContainer(pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
-                SizedBox(height: 30),
-                buildTextContainer(40, Colors.transparent, searchLabel, 15),
-                Placeholder(fallbackHeight: 60, fallbackWidth: 100,),
-                SizedBox(height: 30),
-
-                Row(
-                  children: <Widget>[
-                    createButtonWithImage('assets/photos/createBusinessTrip.png', 'Business Trip'),
-                    createButtonWithImage('assets/photos/createSightSeeingTrip.png', 'Sight  Seeing Trip'),
-                  ]
-                ),
-                Row(
-                    children: <Widget>[
-                      createButtonWithImage('assets/photos/createBusinessTrip.png','Educational Trip'),
-                      createButtonWithImage('assets/photos/createSightSeeingTrip.png', 'Leisure Trip'),
-                    ]
-                ),
-
-              ]
+      body: SafeArea(
+        child: Column(children: <Widget>[
+          Column(children: <Widget>[
+            buildTextContainer(
+                pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
+            SizedBox(height: 30),
+            buildTextContainer(40, Colors.transparent, searchLabel, 15),
+            Placeholder(
+              fallbackHeight: 60,
+              fallbackWidth: 100,
             ),
-          ]
-        ),
+            SizedBox(height: 30),
+            Row(children: <Widget>[
+              createButtonWithImage(
+                  'assets/photos/createBusinessTrip.png', 'Business Trip'),
+              createButtonWithImage('assets/photos/createSightSeeingTrip.png',
+                  'Sight  Seeing Trip'),
+            ]),
+            Row(children: <Widget>[
+              createButtonWithImage(
+                  'assets/photos/createBusinessTrip.png', 'Educational Trip'),
+              createButtonWithImage(
+                  'assets/photos/createSightSeeingTrip.png', 'Leisure Trip'),
+            ]),
+          ]),
+        ]),
       ),
     );
   }
