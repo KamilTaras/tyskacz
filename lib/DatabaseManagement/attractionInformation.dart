@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 class Attraction {
   String name;
   String description;
-  Location location;
+  LatLng coordinates;
   Image photo;
   String? review; // Optional property
   String? link; // Optional property
@@ -13,7 +13,7 @@ class Attraction {
   Attraction({
     required this.name,
     required this.description,
-    required this.location,
+    required this.coordinates,
     required this.photo,
     this.review,
     this.link,
@@ -22,34 +22,15 @@ class Attraction {
 // Other methods and functionality can be added here
 }
 
-class Location {
-  final String name;
-  final LatLng coordinates;
-
-  Location({required this.name, required this.coordinates});
-}
-
-class Event extends Attraction {
+class Event {
+  final Attraction attractionWithinEvent;
   final DateTime startDate;
   final DateTime endDate;
   final List<String>? listOfEquipment;
 
   Event(
-      {required String name,
-      required String description,
-      required Location location,
-      required Image photo,
-      String? review,
-      String? link,
+      {required this.attractionWithinEvent,
       required this.startDate,
       required this.endDate,
-      List<String>? this.listOfEquipment})
-      : super(
-          name: name,
-          description: description,
-          location: location,
-          photo: photo,
-          review: review,
-          link: link,
-        );
+      this.listOfEquipment});
 }
