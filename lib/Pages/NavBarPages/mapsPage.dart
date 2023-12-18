@@ -65,8 +65,8 @@ class AttractionMapMarkers extends StatelessWidget {
   var attractions = [
     AttractionMock(latitude: 30, longitude: 40),
     AttractionMock(
-        latitude: 40,
-        longitude: 40,
+        latitude: 50.1999325404822,
+        longitude: 19.04639177968384,
         imageUrl:
             'https://obiektowe.tarkett.pl/media/img/M/TH_3917011_3707003_3708011_3912011_3914011_800_800.jpg')
   ];
@@ -77,7 +77,8 @@ class AttractionMapMarkers extends StatelessWidget {
             .map((e) => Marker(
                   point: LatLng(e.latitude, e.longitude),
                   width: pinSize,
-                  height: pinSize * 1.5,
+                  height: pinSize * 1.155,
+                  alignment: Alignment.topCenter,
                   child: AttractionMapMarker(
                     attraction: e,
                     pinSize: pinSize,
