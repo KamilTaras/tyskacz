@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-class Attraction {
+class AttractionMock {
   //temporary class for testing purposes, a real attraction object will be used in the future
   double latitude;
   double longitude;
   String imageUrl;
-  Attraction(
+  AttractionMock(
       {required this.latitude,
       required this.longitude,
       this.imageUrl = "https://i.ibb.co/VC549LS/Fat-Pig.png"});
@@ -16,7 +16,7 @@ class Attraction {
 class AttractionMapMarker extends StatelessWidget {
   final double imageSize;
   final double pinSize;
-  Attraction attraction;
+  AttractionMock attraction;
 
   AttractionMapMarker({
     super.key,
@@ -63,8 +63,8 @@ class AttractionMapMarkers extends StatelessWidget {
   AttractionMapMarkers({super.key, this.pinSize = 60});
 
   var attractions = [
-    Attraction(latitude: 30, longitude: 40),
-    Attraction(
+    AttractionMock(latitude: 30, longitude: 40),
+    AttractionMock(
         latitude: 40,
         longitude: 40,
         imageUrl:
@@ -100,8 +100,8 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return FlutterMap(
       options: const MapOptions(
-        initialCenter: LatLng(51.509364, -0.128928),
-        initialZoom: 9.2,
+        initialCenter: LatLng(50.198814799396956, 19.047174666857792),
+        initialZoom: 13.0,
       ),
       children: [
         TileLayer(
