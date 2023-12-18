@@ -36,15 +36,15 @@ class Event extends Attraction {
   final List<String>? listOfEquipment;
 
   Event({
-    required String name, //x
-    required String description, //x
-    required Location location, //x
-    required Image photo, //x
+    required String name,
+    required String description,
+    required Location location,
+    required Image photo,
     String? review,
     String? link,
-    required this.startDate, //x
-    required this.endDate, //x
-    List<String>? this.listOfEquipment //x
+    required this.startDate,
+    required this.endDate,
+    List<String>? this.listOfEquipment
   }) : super(
     name: name,
     description: description,
