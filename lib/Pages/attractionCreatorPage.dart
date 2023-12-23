@@ -218,6 +218,7 @@ class AttractionCreationPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
+                    //TODO: insert pic
                     Placeholder(
                       fallbackWidth: 300,
                       fallbackHeight: 200,
@@ -226,7 +227,7 @@ class AttractionCreationPage extends StatelessWidget {
                     buildElevatedTextContainer(
                       40,
                       Constant.mainGreenColor,
-                      'Attraction Name',
+                      attraction.name,
                       titleFontSize,
                       Colors.black,
                     ),
@@ -235,12 +236,13 @@ class AttractionCreationPage extends StatelessWidget {
                     SizedBox(height: sizedBoxHeight),
                     Container(
                       height: 220,
+                      //TODO: container size dependant length of description
                       child: ListView(
                         children: [
                           buildElevatedTextContainer(
                             500,
                             Constant.mainBackgroundColor,
-                            text,
+                            attraction.description,
                             15,
                             Colors.black,
                           ),
@@ -259,3 +261,21 @@ class AttractionCreationPage extends StatelessWidget {
     );
   }
 }
+class MockAttraction {
+
+  String name;
+  String picPath;
+  String description;
+
+  MockAttraction({required this.name, required this.picPath, required this.description});
+}
+MockAttraction attraction = MockAttraction(name: 'Eiffel Tower', picPath: 'picPath', description:
+"""New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
+      Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship 
+      travelling eat everything the out two.New the her nor case that lady paid read.hing the out two.New the
+       her nor case that lady paid read.Illing eat everything the out two.New the her nor case that lady paid read.
+       the her nor case that lady paid read.  InvitaNew the her nor case that lady paid read. Invitation friendship 
+       travelling eat everything the out two.Shy you who sction friendship travelling eat everything the out two. 
+       Shy you who sc Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth 
+       spirit it to hearts. Downs those still witty an balls so chief so.  Moment an little remain no up lively no.
+        Way brought may off our regular country towards adapted cheered. Literature admiration frequently indulgence announcing are who you her. Was least quick """);

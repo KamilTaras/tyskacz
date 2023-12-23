@@ -85,6 +85,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                 pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
             SizedBox(height: 30),
             buildTextContainer(40, Colors.transparent, searchLabel, 15),
+            //TODO: Search bar
             Placeholder(
               fallbackHeight: 60,
               fallbackWidth: 100,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'atttractionDescription.dart';
 
 class AttractionFinderPage extends StatefulWidget {
   const AttractionFinderPage({super.key});
@@ -22,28 +22,25 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     );
   }
 
-List <Attraction> attractionList=[
-  Attraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: '''najbardziej znany obiekt architektoniczny Paryża, uznawany za symbol tego miasta i 
+List <MockAttraction> attractionList=[
+  MockAttraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: '''najbardziej znany obiekt architektoniczny Paryża, uznawany za symbol tego miasta i 
   niekiedy całej Francji. Jest najwyższą budowlą w Paryżu, a w momencie powstania była najwyższą budowlą na świecie. „Żelazna dama” stoi w zachodniej części miasta, 
   nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'''),
-  Attraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'building'),
-  Attraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  Attraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  Attraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: 'zachodniej części miasta, nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'),
-  Attraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  Attraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  Attraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin')
+  MockAttraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'building'),
+  MockAttraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
+  MockAttraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
+  MockAttraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: 'zachodniej części miasta, nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'),
+  MockAttraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
+  MockAttraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
+  MockAttraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin')
 ];
 
   final double pageNameFontSize = 15;
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-        ),
+      appBar: AppBar(
+        // preferredSize: Size.fromHeight(30.0),s
       ),
       body: SafeArea(
         child: Column(
@@ -91,38 +88,50 @@ List <Attraction> attractionList=[
 }
 class AttractionEntry extends StatelessWidget {
   AttractionEntry({super.key, required this.attraction});
-  final Attraction attraction;
+  final MockAttraction attraction;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        //set border radius more than 50% of height and width to make circle
-        ),
-        color: Colors.white,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-                height:100,
-                width:120,
-                child: Image(
-                  image: AssetImage(attraction.picPath),
+    return GestureDetector(
+      //TODO: on drag add to plan
+      onTap: (){
+        Navigator.push(
+        context,
+        MaterialPageRoute(
+        builder: (context) => AttractionDescriptionPage()));
+        },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          //set border radius more than 50% of height and width to make circle
+          ),
+          color: Colors.white,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  height:100,
+                  width:120,
+                  child: Image(
+                    image: AssetImage(attraction.picPath),
+                  ),
                 ),
-            ),
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Text(attraction.name),
-                  Container(height:70,
-                      child: Text(attraction.description,style:TextStyle(fontSize: 10))
-                  )
-                  // Other widgets if needed
-                ],
               ),
-            ),
-        ],
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Text(attraction.name),
+                    Container(height:70,
+                        child: Text(attraction.description,style:TextStyle(fontSize: 10))
+                    )
+                    // Other widgets if needed
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -133,11 +142,11 @@ class AttractionEntry extends StatelessWidget {
 }
 
 
-class Attraction {
+class MockAttraction {
 
   String name;
   String picPath;
   String description;
 
-  Attraction({required this.name, required this.picPath, required this.description});
+  MockAttraction({required this.name, required this.picPath, required this.description});
 }
