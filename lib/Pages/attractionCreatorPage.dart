@@ -4,8 +4,16 @@ import 'package:tyskacz/Utils/Theme/colors.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 
-class AttractionCreationPage extends StatelessWidget {
+class AttractionCreationPage extends StatefulWidget {
   const AttractionCreationPage({super.key});
+
+  @override
+  State<AttractionCreationPage> createState() => _AttractionCreationPageState();
+}
+
+class _AttractionCreationPageState extends State<AttractionCreationPage> {
+
+  TextEditingController textController = TextEditingController();
 
   final double componentsMargin = 5.0;
 
@@ -185,8 +193,8 @@ class AttractionCreationPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(30.0),
         child: AppBar(
-            // backgroundColor: Colors.transparent,
-            ),
+          // backgroundColor: Colors.transparent,
+        ),
       ),
       body: SafeArea(
         child: ListView(
@@ -198,7 +206,7 @@ class AttractionCreationPage extends StatelessWidget {
                   vertical: mainContainerMargin,
                   horizontal: mainContainerMargin),
               width:
-                  MediaQuery.of(context).size.width - 2 * mainContainerMargin,
+              MediaQuery.of(context).size.width - 2 * mainContainerMargin,
               height: MediaQuery.of(context).size.height -
                   30 -
                   2 * mainContainerMargin,
