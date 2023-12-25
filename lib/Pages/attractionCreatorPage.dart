@@ -61,6 +61,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                 Container(
                   height: 100,
                   child:FilledButton(
+                    //TODO: create attraction after pressing the button
                     onPressed: (){},
                     child: Text('Save'),
                   ),
