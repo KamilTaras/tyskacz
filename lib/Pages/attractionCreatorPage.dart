@@ -192,7 +192,7 @@ class AttractionCreationPage extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             Container(
-
+              color: Constant.mainBackgroundColor,
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(
                   vertical: mainContainerMargin,
@@ -211,12 +211,6 @@ class AttractionCreationPage extends StatelessWidget {
                     Placeholder(
                       fallbackWidth: 300,
                       fallbackHeight: 200,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: 'Enter name of the attraction',
-                          border: OutlineInputBorder()
-                      ),
                     ),
                     SizedBox(height: sizedBoxHeight),
                     buildElevatedTextContainer(
