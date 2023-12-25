@@ -1,191 +1,30 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tyskacz/Utils/Theme/colors.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 
 class AttractionCreationPage extends StatefulWidget {
-  const AttractionCreationPage({super.key});
+  const AttractionCreationPage({Key? key}) : super(key: key);
 
   @override
-  State<AttractionCreationPage> createState() => _AttractionCreationPageState();
+  _AttractionCreationPageState createState() => _AttractionCreationPageState();
 }
 
 class _AttractionCreationPageState extends State<AttractionCreationPage> {
-
-  TextEditingController textController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _localizationController = TextEditingController();
 
   final double componentsMargin = 5.0;
-
   final double ratingFontSize = 20.0;
-
   final double titleFontSize = 25.0;
-
   final double mainContainerMargin = 10.0;
-
   final double topBarHeight = 20.0;
-
   final double sizedBoxHeight = 5;
 
   final String date = '24.10.2023 - 11.11.2023';
-
   final String localization = 'Szczecin, Dabie 33';
 
-  Widget buildStyledContainer(
-      {required double height, required Color color, required Widget child}) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: child,
-    );
-  }
-
-  Widget buildElevatedContainer({
-    required Widget child,
-    double elevation = 8.0,
-    double borderRadius = 8.0,
-    Color backgroundColor = Colors.white,
-  }) {
-    return Card(
-      elevation: elevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
-      color: backgroundColor,
-      child: child,
-    );
-  }
-
-  Widget buildTextContainer(double height, Color color, String name,
-      double fontSize, Color textColor) {
-    return buildStyledContainer(
-      height: height,
-      color: color,
-      child: Center(
-        child: Text(
-          name,
-          style: TextStyle(fontSize: fontSize, color: textColor),
-        ),
-      ),
-    );
-  }
-
-  Widget buildElevatedTextContainer(double height, Color color, String name,
-      double fontSize, Color textColor) {
-    return buildElevatedContainer(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: color,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: buildTextContainer(
-            height,
-            color,
-            name,
-            fontSize,
-            textColor,
-          ),
-        ),
-      ),
-      backgroundColor: Colors.white,
-    );
-  }
-
-  Widget buildRowWithChildrenList(List<Widget> children, double sizedBoxWidth) {
-    List<Widget> rowChildren = [SizedBox(width: sizedBoxWidth)];
-
-    for (int i = 0; i < children.length; i++) {
-      // Add the child widget
-      rowChildren.add(children[i]);
-
-      // Add a SizedBox after each child except the last one
-      if (i < children.length - 1) {
-        rowChildren.add(SizedBox(width: sizedBoxWidth));
-      }
-    }
-
-    return Row(
-      children: rowChildren,
-    );
-  }
-
-  Widget buildIconButton(
-      {required IconData icon, required VoidCallback onPressed}) {
-    return IconButton(
-      icon: Icon(icon),
-      onPressed: onPressed,
-    );
-  }
-
-  Widget buildRatingContainer() {
-    List<Widget> firstRow = [
-      buildTextContainer(35, Colors.transparent, 'Average Rating:',
-          ratingFontSize, Colors.black),
-      Placeholder(
-        fallbackWidth: 150,
-        fallbackHeight: 30,
-      )
-    ];
-    List<Widget> secondRow = [
-      buildTextContainer(
-          35, Colors.transparent, 'Your Rating:', ratingFontSize, Colors.black),
-      SizedBox(width: 25),
-      Placeholder(
-        fallbackWidth: 150,
-        fallbackHeight: 30,
-      )
-    ];
-
-    Widget elevatedContainer = buildElevatedContainer(
-      child: Column(
-        children: <Widget>[
-          buildRowWithChildrenList(firstRow, 8),
-          buildRowWithChildrenList(secondRow, 8),
-        ],
-      ),
-      backgroundColor: Constant.mainRedColor,
-    );
-    return elevatedContainer;
-  }
-
-  Widget buildInfoContainer(BuildContext context) {
-    Widget mapButton = buildIconButton(
-        icon: Icons.map,
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const MapPage()));
-        });
-    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
-
-    List<Widget> firstRow = [
-      Icon(Icons.calendar_month),
-      buildTextContainer(55, Colors.transparent, date, 15, Colors.black)
-    ];
-    List<Widget> secondRow = [
-      Icon(Icons.accessibility_sharp),
-      buildTextContainer(
-          55, Colors.transparent, localization, 15, Colors.black),
-      mapButton,
-      editButton
-    ];
-
-    Widget elevatedContainer = buildElevatedContainer(
-      child: Column(
-        children: <Widget>[
-          buildRowWithChildrenList(firstRow, 20),
-          buildRowWithChildrenList(secondRow, 20),
-        ],
-      ),
-      backgroundColor: mainRed,
-    );
-
-    return elevatedContainer;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +39,6 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
         child: ListView(
           children: <Widget>[
             Container(
-              color: Constant.mainBackgroundColor,
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(
                   vertical: mainContainerMargin,
@@ -221,33 +59,19 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                       fallbackHeight: 200,
                     ),
                     SizedBox(height: sizedBoxHeight),
-                    buildElevatedTextContainer(
-                      40,
-                      Constant.mainGreenColor,
-                      attraction.name,
-                      titleFontSize,
-                      Colors.black,
-                    ),
+                    AttractionTextField(controller: _nameController, hintText:'Attraction Name', height: 70),
                     SizedBox(height: sizedBoxHeight),
-                    buildRatingContainer(),
+                    AttractionTextField(controller: _descriptionController, hintText:'Description', height: 250),
+                    SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(controller: _localizationController, hintText:'Description', height: 70),
                     SizedBox(height: sizedBoxHeight),
                     Container(
-                      height: 220,
-                      //TODO: container size dependant length of description
-                      child: ListView(
-                        children: [
-                          buildElevatedTextContainer(
-                            500,
-                            Constant.mainBackgroundColor,
-                            attraction.description,
-                            15,
-                            Colors.black,
-                          ),
-                        ],
-                      ),
+                      height: 100,
+                      child:FilledButton(
+                        onPressed: (){},
+                        child: Text('Save'),
+                        ),
                     ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildInfoContainer(context),
                   ],
                 ),
               ),
@@ -258,14 +82,50 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
     );
   }
 }
-class MockAttraction {
 
+class AttractionTextField extends StatefulWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final double height;
+
+  AttractionTextField({
+    required this.controller,
+    required this.hintText,
+    required this.height,
+  });
+
+  @override
+  _AttractionTextFieldState createState() => _AttractionTextFieldState();
+}
+
+class _AttractionTextFieldState extends State<AttractionTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: widget.height,
+      child: TextField(
+        controller: widget.controller,
+        decoration: InputDecoration(
+          hintText: widget.hintText,
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(vertical: widget.height),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class MockAttraction {
   String name;
   String picPath;
   String description;
 
-  MockAttraction({required this.name, required this.picPath, required this.description});
+  MockAttraction(
+      {required this.name, required this.picPath, required this.description});
 }
+
 MockAttraction attraction = MockAttraction(name: 'Eiffel Tower', picPath: 'picPath', description:
 """New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
       Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship 
@@ -276,3 +136,4 @@ MockAttraction attraction = MockAttraction(name: 'Eiffel Tower', picPath: 'picPa
        Shy you who sc Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth 
        spirit it to hearts. Downs those still witty an balls so chief so.  Moment an little remain no up lively no.
         Way brought may off our regular country towards adapted cheered. Literature admiration frequently indulgence announcing are who you her. Was least quick """);
+
