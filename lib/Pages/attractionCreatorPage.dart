@@ -36,47 +36,38 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
         ),
       ),
       body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(
-                  vertical: mainContainerMargin,
-                  horizontal: mainContainerMargin),
-              width:
-              MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-              height: MediaQuery.of(context).size.height -
-                  30 -
-                  2 * mainContainerMargin,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    //TODO: insert pic
-                    Placeholder(
-                      fallbackWidth: 300,
-                      fallbackHeight: 200,
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    AttractionTextField(controller: _nameController, hintText:'Attraction Name', height: 70),
-                    SizedBox(height: sizedBoxHeight),
-                    AttractionTextField(controller: _descriptionController, hintText:'Description', height: 250),
-                    SizedBox(height: sizedBoxHeight),
-                    AttractionTextField(controller: _localizationController, hintText:'Description', height: 70),
-                    SizedBox(height: sizedBoxHeight),
-                    Container(
-                      height: 100,
-                      child:FilledButton(
-                        onPressed: (){},
-                        child: Text('Save'),
-                        ),
-                    ),
-                  ],
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(vertical: mainContainerMargin, horizontal: mainContainerMargin),
+          width: MediaQuery.of(context).size.width - 2 * mainContainerMargin,
+          height: MediaQuery.of(context).size.height - 30 - 2 * mainContainerMargin,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                //TODO: insert pic
+                Placeholder(
+                  fallbackWidth: 300,
+                  fallbackHeight: 200,
                 ),
-              ),
+                SizedBox(height: sizedBoxHeight),
+                AttractionTextField(controller: _nameController, hintText:'Attraction Name', height: 70, fontSize: 25, maxLines:2),
+                SizedBox(height: sizedBoxHeight),
+                AttractionTextField(controller: _descriptionController, hintText:'Description', height: 250, fontSize: 16, maxLines: 12),
+                SizedBox(height: sizedBoxHeight),
+                AttractionTextField(controller: _localizationController, hintText:'Localization', height: 70, fontSize: 16),
+                SizedBox(height: sizedBoxHeight),
+                Container(
+                  height: 100,
+                  child:FilledButton(
+                    onPressed: (){},
+                    child: Text('Save'),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -87,11 +78,15 @@ class AttractionTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final double height;
+  final double fontSize;
+  final int? maxLines;
 
   AttractionTextField({
     required this.controller,
     required this.hintText,
     required this.height,
+    required this.fontSize,
+    this.maxLines = 1,
   });
 
   @override
@@ -101,17 +96,27 @@ class AttractionTextField extends StatefulWidget {
 class _AttractionTextFieldState extends State<AttractionTextField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: widget.height,
-      child: TextField(
-        controller: widget.controller,
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          border: OutlineInputBorder(),
-          contentPadding: EdgeInsets.symmetric(vertical: widget.height),
+    return Card(
+      elevation: 8.0, // Adjust the elevation as needed
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0), // Adjust the border radius as needed
+      ),
+      child: Container(
+        height: widget.height,
+        child: TextField(
+          controller: widget.controller,
+          style: TextStyle(fontSize: widget.fontSize),
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            // border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          ),
+          maxLines: null,
+          minLines: 1,
         ),
       ),
     );
+
   }
 }
 
@@ -125,15 +130,3 @@ class MockAttraction {
   MockAttraction(
       {required this.name, required this.picPath, required this.description});
 }
-
-MockAttraction attraction = MockAttraction(name: 'Eiffel Tower', picPath: 'picPath', description:
-"""New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
-      Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship 
-      travelling eat everything the out two.New the her nor case that lady paid read.hing the out two.New the
-       her nor case that lady paid read.Illing eat everything the out two.New the her nor case that lady paid read.
-       the her nor case that lady paid read.  InvitaNew the her nor case that lady paid read. Invitation friendship 
-       travelling eat everything the out two.Shy you who sction friendship travelling eat everything the out two. 
-       Shy you who sc Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth 
-       spirit it to hearts. Downs those still witty an balls so chief so.  Moment an little remain no up lively no.
-        Way brought may off our regular country towards adapted cheered. Literature admiration frequently indulgence announcing are who you her. Was least quick """);
-
