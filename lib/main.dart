@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 import 'Pages/navBarPages/navBar.dart';
 import 'Utils/Theme/themeConstant.dart';
 import 'Utils/Theme/themeManager.dart';
-import 'Utils/configForDebugWindows.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Must add this line.
-  await windowManager.ensureInitialized();
-  // windowManager
-  WindowOptions? windowOptions = configForDebug();
-  if (windowOptions != null) {
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
-
-      await windowManager.focus();
-    });
-  }
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 ThemeManager themeManager = ThemeManager();
