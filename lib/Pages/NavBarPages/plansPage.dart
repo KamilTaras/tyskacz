@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/exportCalendar.dart';
 
 class PlanPage extends StatelessWidget {
   const PlanPage({super.key});
@@ -25,7 +26,7 @@ class PlanPage extends StatelessWidget {
             width: double
                 .infinity, // Makes the button stretch to the width of the screen
             child: FilledButton(
-              onPressed: () {}, //TODO: Fill for export
+              onPressed: () {export(mockPlan);}, //TODO: Fill for export
               child: const Text("Export Data To Calendar"),
             ),
           ),
