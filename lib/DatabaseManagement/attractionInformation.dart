@@ -26,11 +26,9 @@ class Event {
   final Attraction attractionWithinEvent;
   final DateTime startDate;
   final DateTime endDate;
-  final List<String>? listOfEquipment;
 
   Event(
       {required this.attractionWithinEvent,
       required this.startDate,
-      required this.endDate,
-      this.listOfEquipment});
+      required this.endDate,});
 }

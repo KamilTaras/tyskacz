@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'Pages/navBarPages/navBar.dart';
@@ -6,7 +7,8 @@ import 'Utils/Theme/themeManager.dart';
 import 'Utils/configForDebugWindows.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    WidgetsFlutterBinding.ensureInitialized();
   // Must add this line.
   await windowManager.ensureInitialized();
   // windowManager
@@ -18,7 +20,8 @@ void main() async {
       await windowManager.focus();
     });
   }
-  runApp(const MyApp());
+}
+  runApp(MyApp());
 }
 
 ThemeManager themeManager = ThemeManager();

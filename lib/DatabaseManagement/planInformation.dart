@@ -5,8 +5,10 @@ class Plan {
   final TripType tripType;
   DateTime? theEarliestDateInTheList;
   DateTime? theLatestDateInTheList;
+  final List<String>? listOfEquipment;
 
-  Plan({required this.listOfEvents, required this.tripType});
+
+  Plan({required this.listOfEvents, required this.tripType, this.listOfEquipment});
 
   void addEvent(Event event) {
     listOfEvents.add(event);
