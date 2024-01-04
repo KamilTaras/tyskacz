@@ -1,65 +1,114 @@
 import 'package:flutter/material.dart';
-import 'MockEvents.dart';
 
 class CalendarPage extends StatelessWidget {
-  const CalendarPage({super.key});
-
-  final List<MockEvent> listOfEvents = [
-    MockEvent(
-      attractionWithinEvent: MockAttraction(
-        name: 'Pigs in Paris',
-        picPath: 'assets/photos/logo_TySkacz_light.png',
-        description: 'building',
-      ),
-      startDate: DateTime(2023, 1, 1),
-      endDate: DateTime(2023, 1, 1),
-    )
-    // Add more attractions as needed
-  ];
-  final DayOfEvents day1 = DayOfEvents(eventsList: listOfEvents);
-  final List<DayOfEvents> listOfDays = [day1];
+  const CalendarPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    // Initialize listOfDays here in the constructor body
-
-    return Column(
-      children: [
-        Center(
-          child: Column(
-            children: [
-              Text(
-                'Calendar Page',
-                style: TextStyle(fontSize: 25),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: listOfEvents.length,
-                  itemBuilder: (context, index) {
-                    return DayOfEventsEntry(dayOfEvents: listOfDays[index]);
-                  },
-                ),
-              ),
-            ],
-          ),
+    final Map<DateTime, List<MockAttraction>> eventsMap = {
+      DateTime(2023, 1, 1): [
+        MockAttraction(
+          name: 'Pigs in Paris',
+          picPath: 'assets/photos/logo_TySkacz_light.png',
+          description: 'building',
+        ),
+        MockAttraction(
+          name: 'Działeczka',
+          picPath: 'assets/photos/logo_TySkacz_light.png',
+          description: 'deep in the forrest',
         ),
       ],
+      DateTime(2023, 1, 2): [
+        MockAttraction(
+          name: 'Tank U',
+          picPath: 'assets/photos/logo_TySkacz_light.png',
+          description: 'building',
+        ),
+        MockAttraction(
+          name: 'Paprykarz',
+          picPath: 'assets/photos/logo_TySkacz_light.png',
+          description: 'building',
+        ),
+      ],
+    };
+
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.0),
+        child: AppBar(),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    'Calendar Page',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  Container(
+                    height: 500,
+                    child: ListView.builder(
+                      itemCount: eventsMap.length,
+                      itemBuilder: (context, index) {
+                        DateTime date = eventsMap.keys.elementAt(index);
+                        List<MockAttraction> attractions = eventsMap[date]!;
+
+                        return DayOfEventsEntry(date: date, attractions: attractions);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class DayOfEventsEntry extends StatelessWidget {
-  const DayOfEventsEntry({Key? key, required this.dayOfEvents});
-  final DayOfEvents dayOfEvents;
+  const DayOfEventsEntry({Key? key, required this.date, required this.attractions});
+  final DateTime date;
+  final List<MockAttraction> attractions;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      color: Colors.white,
+      child: Column(
+        children: [
+          Text(
+            'Date: ${date.toLocal()}',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Column(
+            children: attractions.map((attraction) {
+              return ListTile(
+                title: Text(attraction.name),
+                subtitle: Text(attraction.description),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
   }
 }
 
-class DayOfEvents {
-  List<MockEvent> eventsList = [];
+class MockAttraction {
+  String name;
+  String picPath;
+  String description;
 
-  DayOfEvents({required this.eventsList});
+  MockAttraction({
+    required this.name,
+    required this.picPath,
+    required this.description,
+  });
 }
