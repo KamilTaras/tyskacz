@@ -100,6 +100,7 @@ class AttractionEntry extends StatelessWidget {
         MaterialPageRoute(
         builder: (context) => AttractionDescriptionPage()));
         },
+      //TODO: in dark mode, text is not visible
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
