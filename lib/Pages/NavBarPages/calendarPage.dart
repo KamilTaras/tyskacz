@@ -84,12 +84,21 @@ class DayOfEventsEntry extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Date: ${date.toLocal()}',
+            'Date: ${date}',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Column(
             children: attractions.map((attraction) {
               return ListTile(
+                leading: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 50,
+                    minHeight: 50,
+                    maxWidth: 70,
+                    maxHeight: 70,
+                  ),
+                  child: Image.asset(attraction.picPath, fit: BoxFit.cover),
+                ),
                 title: Text(attraction.name),
                 subtitle: Text(attraction.description),
               );
@@ -100,6 +109,46 @@ class DayOfEventsEntry extends StatelessWidget {
     );
   }
 }
+
+class ListTileExample extends StatelessWidget {
+  const ListTileExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('ListTile Sample')),
+      body: ListView(
+        children: const <Widget>[
+          ListTile(
+            leading: CircleAvatar(child: Text('A')),
+            title: Text('Headline'),
+            subtitle: Text('Supporting text'),
+            trailing: Icon(Icons.favorite_rounded),
+          ),
+          Divider(height: 0),
+          ListTile(
+            leading: CircleAvatar(child: Text('B')),
+            title: Text('Headline'),
+            subtitle: Text(
+                'Longer supporting text to demonstrate how the text wraps and how the leading and trailing widgets are centered vertically with the text.'),
+            trailing: Icon(Icons.favorite_rounded),
+          ),
+          Divider(height: 0),
+          ListTile(
+            leading: CircleAvatar(child: Text('C')),
+            title: Text('Headline'),
+            subtitle: Text(
+                "Longer supporting text to demonstrate how the text wraps and how setting 'ListTile.isThreeLine = true' aligns leading and trailing widgets to the top vertically with the text."),
+            trailing: Icon(Icons.favorite_rounded),
+            isThreeLine: true,
+          ),
+          Divider(height: 0),
+        ],
+      ),
+    );
+  }
+}
+
 
 class MockAttraction {
   String name;
