@@ -34,64 +34,15 @@ class _SignUpState extends State<SignUp> {
                           //decoration: BoxDecoration(
                           //borderRadius: BorderRadius.circular(40),
                           //border: Border.all(color: Colors.blueGrey)),
-                          child: Image.asset('assets/logo.png'),
+                          child: Image.asset('assets/photos/logo_Tyskacz_light.png'),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: TextFormField(
-
-
-                        decoration: InputDecoration(
-                            hintText: 'Enter first Name',
-                            labelText: 'first named',
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: Colors.green,
-                            ),
-                            errorStyle: TextStyle(fontSize: 18.0),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(9.0)))),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: 'Enter last Name',
-                            labelText: 'Last named',
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: Colors.grey,
-                            ),
-                            errorStyle: TextStyle(fontSize: 18.0),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(9.0)))),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: 'Email',
-                            labelText: 'Email',
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.lightBlue,
-                            ),
-                            errorStyle: TextStyle(fontSize: 18.0),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(9.0)))),
-                      ),
-                    ),
-                    InputField(name: 'Repeat password'),
+                    SizedBox(height:20),
+                    InputField(name: 'Login'),
+                    InputField(name: 'Password'),
+                    InputField(name: 'Repeat Password'),
+                    InputField(name: 'Email'),
                     Center(
                         child: Padding(
                           padding: const EdgeInsets.all(18.0),
@@ -121,29 +72,25 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
-class InputField{
-  String name;
+class InputField extends StatelessWidget {
+  final String name;
 
   InputField({required this.name});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         decoration: InputDecoration(
-            hintText: 'Mobile',
-            labelText: 'Mobile',
-            prefixIcon: Icon(
-              Icons.phone,
-              color: Colors.grey,
-            ),
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red),
-                borderRadius:
-                BorderRadius.all(Radius.circular(9)))),
+          hintText: name,
+          labelText: name,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.all(Radius.circular(9)),
+          ),
+        ),
       ),
     );
   }
-
 }

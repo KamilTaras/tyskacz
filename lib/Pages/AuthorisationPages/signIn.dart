@@ -16,7 +16,20 @@ class _SignInState extends State<SignIn> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Center(
+                child: Container(
+                  width: 200,
+                  height: 150,
+                  //decoration: BoxDecoration(
+                  //borderRadius: BorderRadius.circular(40),
+                  //border: Border.all(color: Colors.blueGrey)),
+                  child: Image.asset('assets/photos/logo_Tyskacz_light.png'),
+                ),
+              ),
+            ),
+            SizedBox(height:20),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
