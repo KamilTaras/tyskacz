@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Container(
-          height: 80,
+
           width: 150,
           decoration: BoxDecoration(
               color: Colors.blue, borderRadius: BorderRadius.circular(10)),
