@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'signUp.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -79,16 +80,18 @@ class _SignInState extends State<SignIn> {
 
                       Padding(
                         padding: const EdgeInsets.only(left: 62),
-                        child: Text('Forgot your login details? '),
+                        child: Text('Don\'t have an account? '),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(left:1.0),
                         child: InkWell(
                             onTap: (){
-                              print('hello');
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUp()));
                             },
-                            child: Text('Get help logging in.', style: TextStyle(fontSize: 14, color: Colors.blue),)),
+                            child: Text('Create an account.', style: TextStyle(fontSize: 14, color: Colors.blue),)),
                       )
                     ],
                   ),
