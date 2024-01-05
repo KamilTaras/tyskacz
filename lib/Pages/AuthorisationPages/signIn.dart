@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signUp.dart';
+import 'changePassword.dart';
+import 'widgetClasses.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -10,7 +12,6 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
       ),
       body: SingleChildScrollView(
@@ -64,6 +65,7 @@ class _SignInState extends State<SignIn> {
                     hintText: 'Enter secure password'),
               ),
             ),
+            TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
 
             SizedBox(
               height: 65,
@@ -87,10 +89,10 @@ class _SignInState extends State<SignIn> {
               height: 50,
             ),
             Container(
-                child: Center(
+                child: Align(
+                  alignment: Alignment.centerRight,
                   child: Row(
                     children: [
-
                       Padding(
                         padding: const EdgeInsets.only(left: 62),
                         child: Text('Don\'t have an account? '),
@@ -109,7 +111,7 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 )
-            )
+            ),
           ],
         ),
       ),
