@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PlanPage extends StatelessWidget {
+class PlanPage extends StatefulWidget {
   const PlanPage({super.key});
 
+  @override
+  State<PlanPage> createState() => _PlanPageState();
+}
+
+class _PlanPageState extends State<PlanPage> {
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
       height: height,
@@ -54,7 +59,9 @@ class PlanPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: attractionList.length,
                 itemBuilder:(context, index){
-                  return AttractionEntry(attraction: attractionList[index]);
+                  return AttractionEntry(attraction: attractionList[index],
+                      onDelete: () {setState(() {attractionList.removeAt(index);});}
+                  );
                 },
               ),
             ),
@@ -79,15 +86,18 @@ class PlanPage extends StatelessWidget {
 }
 
 
+
+
 class AttractionEntry extends StatelessWidget {
-  AttractionEntry({super.key, required this.attraction});
+  AttractionEntry({super.key, required this.attraction, required this.onDelete});
   final MockAttraction attraction;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       //TODO: on drag add to plan
-      onTap: (){},
+      onTap: onDelete,
       //TODO: in dark mode, text is not visible
       child: Card(
         shape: RoundedRectangleBorder(
@@ -139,3 +149,4 @@ class MockAttraction {
 
   MockAttraction({required this.name, required this.picPath, required this.description});
 }
+
