@@ -1,12 +1,13 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:latlong2/latlong.dart';
 
 class Attraction {
   String name;
   String description;
   LatLng coordinates;
-  Image photo;
+  String photoURL; //temporary, in the future replaced with API solution
   String? review; // Optional property
   String? link; // Optional property
 
@@ -14,7 +15,7 @@ class Attraction {
     required this.name,
     required this.description,
     required this.coordinates,
-    required this.photo,
+    required this.photoURL,
     this.review,
     this.link,
   });
