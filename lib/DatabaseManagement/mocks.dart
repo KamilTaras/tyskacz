@@ -3,6 +3,7 @@ import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:latlong2/latlong.dart';
 
 var mockPlan = Plan(
+  name:'Mock Plan',
   listOfEvents: [
     Event(
       attractionWithinEvent: Attraction(
@@ -27,7 +28,6 @@ var mockPlan = Plan(
       ),
       startDate: DateTime(2023, 12, 2, 9, 0),
       endDate: DateTime(2023, 12, 2, 12, 0),
-      listOfEquipment: ['Camera', 'Comfortable Shoes'],
     ),
   ],
   tripType: TripType.sightseeingTrip,

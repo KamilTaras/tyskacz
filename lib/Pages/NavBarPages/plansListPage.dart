@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
+import 'package:tyskacz/DatabaseManagement/mocks.dart';
+
+import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
   const PlanListPage({super.key});
@@ -25,6 +28,10 @@ class _PlanListPageState extends State<PlanListPage> {
 
   @override
   Widget build(BuildContext context) {
+  var plansList = [
+    mockPlan,
+    mockPlan
+  ];
 
     return Scaffold(
       appBar: AppBar(
@@ -44,10 +51,10 @@ class _PlanListPageState extends State<PlanListPage> {
             ,
             Expanded(
               child: ListView.builder(
-                itemCount: attractionList.length,
+                itemCount: plansList.length,
                 itemBuilder:(context, index){
-                  return PlanEntry(plan: attractionList[index],
-                      onDelete: () {setState(() {attractionList.removeAt(index);});}
+                  return PlanEntry(plan: plansList[index],
+                      onDelete: () {setState(() {plansList.removeAt(index);});}
                   );
                 },
               ),
@@ -83,8 +90,20 @@ class PlanEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onHorizontalDragEnd: (DragEndDetails details) {
+        if (details.primaryVelocity! > 0) {
+          // Swiped from left to right (right direction)
+          onDelete();
+        }
+      },
+      onTap: () {
+        // Navigate to the new page when the card is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PlanPage(plan: plan)),
+        );
+      },
       //TODO: on drag add to plan
-      onTap: onDelete,
       //TODO: in dark mode, text is not visible
       child: Card(
         shape: RoundedRectangleBorder(
@@ -95,7 +114,8 @@ class PlanEntry extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-
+            Text(plan.name),
+            Text(plan.tripType.name)
           ],
         ),
       ),

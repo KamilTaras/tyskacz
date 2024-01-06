@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/planInformation.dart';
+import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 
 class PlanPage extends StatefulWidget {
-  const PlanPage({super.key});
-
+  PlanPage({super.key, required this.plan});
+  Plan plan;
   @override
   State<PlanPage> createState() => _PlanPageState();
 }
@@ -24,20 +26,7 @@ class _PlanPageState extends State<PlanPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    List <MockAttraction> attractionList=[
-      MockAttraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: '''najbardziej znany obiekt architektoniczny Paryża, uznawany za symbol tego miasta i 
-  niekiedy całej Francji. Jest najwyższą budowlą w Paryżu, a w momencie powstania była najwyższą budowlą na świecie. „Żelazna dama” stoi w zachodniej części miasta, 
-  nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'''),
-      MockAttraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'building'),
-      MockAttraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-      MockAttraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-      MockAttraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: 'zachodniej części miasta, nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'),
-      MockAttraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-      MockAttraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-      MockAttraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin')
-    ];
+    var plan = widget.plan;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,10 +46,10 @@ class _PlanPageState extends State<PlanPage> {
             ,
             Expanded(
               child: ListView.builder(
-                itemCount: attractionList.length,
+                itemCount: plan.listOfEvents.length,
                 itemBuilder:(context, index){
-                  return AttractionEntry(attraction: attractionList[index],
-                      onDelete: () {setState(() {attractionList.removeAt(index);});}
+                  return EventEntry(event: plan.listOfEvents[index],
+                      onDelete: () {setState(() {plan.listOfEvents.removeAt(index);});}
                   );
                 },
               ),
@@ -88,9 +77,9 @@ class _PlanPageState extends State<PlanPage> {
 
 
 
-class AttractionEntry extends StatelessWidget {
-  AttractionEntry({super.key, required this.attraction, required this.onDelete});
-  final MockAttraction attraction;
+class EventEntry extends StatelessWidget {
+  EventEntry({super.key, required this.event, required this.onDelete});
+  final Event event;
   final VoidCallback onDelete;
 
   @override
@@ -114,16 +103,16 @@ class AttractionEntry extends StatelessWidget {
                 height:100,
                 width:120,
                 child: Image(
-                  image: AssetImage(attraction.picPath),
+                  image: AssetImage(event.attractionWithinEvent.photoURL),
                 ),
               ),
             ),
             Expanded(
               child: Column(
                 children: <Widget>[
-                  Text(attraction.name),
+                  Text(event.attractionWithinEvent.name),
                   Container(height:70,
-                      child: Text(attraction.description,style:TextStyle(fontSize: 10))
+                      child: Text(event.attractionWithinEvent.description,style:TextStyle(fontSize: 10))
                   )
                   // Other widgets if needed
                 ],

@@ -27,7 +27,6 @@ class Event {
   final Attraction attractionWithinEvent;
   final DateTime startDate;
   final DateTime endDate;
-
   Event(
       {required this.attractionWithinEvent,
       required this.startDate,
