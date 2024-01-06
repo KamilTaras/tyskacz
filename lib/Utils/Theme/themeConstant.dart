@@ -6,6 +6,18 @@ ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
     ),
+    listTileTheme: ListTileThemeData(
+        tileColor: Colors.white, // Background color of the ListTile
+        iconColor: Colors.grey, // Color of the leading/trailing icons
+        textColor: Colors.grey, // Color for the text
+        selectedColor: Colors.grey[300], // Color when the ListTile is selected
+        selectedTileColor: Colors.grey[200], // Background color when selected
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Padding inside the ListTile
+        shape: RoundedRectangleBorder( // Shape of the ListTile
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(color: Colors.grey[300]!), // Border color
+        ),
+    ),
     scaffoldBackgroundColor: mainBackgroundColor, // Set the background color for Scaffold widgets
     canvasColor: mainGreen,
     switchTheme: SwitchThemeData(

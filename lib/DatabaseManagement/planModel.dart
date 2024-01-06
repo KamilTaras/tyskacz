@@ -1,4 +1,6 @@
-import 'attractionInformation.dart';
+
+import 'attractionModel.dart';
+import 'eventModel.dart';
 
 class Plan {
   List<Event> listOfEvents;
@@ -10,6 +12,8 @@ class Plan {
 
   Plan({required this.listOfEvents, required this.tripType, this.listOfEquipment});
 
+
+
   void addEvent(Event event) {
     listOfEvents.add(event);
     updateEarliestAndLatestDates();
@@ -19,6 +23,7 @@ class Plan {
     listOfEvents.remove(event);
     updateEarliestAndLatestDates();
   }
+
 
   void updateEarliestAndLatestDates() {
     if (listOfEvents.isEmpty) {
@@ -31,10 +36,10 @@ class Plan {
     theLatestDateInTheList = listOfEvents.first.endDate;
 
     for (Event event in listOfEvents) {
-      if (event.startDate.isBefore(theEarliestDateInTheList!)) {
+      if (event.startDate!.isBefore(theEarliestDateInTheList!)) {
         theEarliestDateInTheList = event.startDate;
       }
-      if (event.endDate.isAfter(theLatestDateInTheList!)) {
+      if (event.endDate!.isAfter(theLatestDateInTheList!)) {
         theLatestDateInTheList = event.endDate;
       }
     }
@@ -48,3 +53,4 @@ enum TripType {
   leisureTrip,
   differentTypeTrip
 }
+

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 import 'Pages/navBarPages/navBar.dart';
 import 'Utils/Theme/themeConstant.dart';
@@ -21,7 +22,7 @@ void main() async {
     });
   }
 }
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 ThemeManager themeManager = ThemeManager();
