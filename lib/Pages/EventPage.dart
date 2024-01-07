@@ -5,8 +5,8 @@ import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 
 
-class AttractionDescriptionPage extends StatelessWidget {
-  AttractionDescriptionPage({super.key, required this.event});
+class EventDescriptionPage extends StatelessWidget {
+  EventDescriptionPage({super.key, required this.event});
   final Event event;
 
   final double componentsMargin = 5.0;
@@ -145,7 +145,7 @@ class AttractionDescriptionPage extends StatelessWidget {
         icon: Icons.map,
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const MapPage()));
+              MaterialPageRoute(builder: (context) => MapPage(attractions:[event.attractionWithinEvent])));
         });
     Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
 
@@ -155,8 +155,8 @@ class AttractionDescriptionPage extends StatelessWidget {
     ];
     List<Widget> secondRow = [
       Icon(Icons.accessibility_sharp),
-      buildTextContainer(
-          55, Colors.transparent, event.attractionWithinEvent.coordinates.toString(), 15, Colors.black),
+      //buildTextContainer(
+      //    55, Colors.transparent, event.attractionWithinEvent.coordinates.toString(), 15, Colors.black),
       mapButton,
       editButton
     ];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../main.dart';
 import '../attractionCreatorPage.dart';
-import '../atttractionDescription.dart';
+import '../EventPage.dart';
 import '../tripCreatorPage.dart';
 import '../AuthorisationPages/signIn.dart';
 
