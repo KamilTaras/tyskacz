@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
+import 'Pages/AuthorisationPages/signIn.dart';
 import 'Pages/navBarPages/navBar.dart';
 import 'Utils/Theme/themeConstant.dart';
 import 'Utils/Theme/themeManager.dart';
@@ -61,7 +62,8 @@ class _MyAppState extends State<MyApp> {
       darkTheme: darkTheme,
       themeMode: themeManager.themeMode,
       // darkTheme: ThemeData.dark(),
-      home: const NavBarClass(),
+      //home: const NavBarClass(),
+      home:SignIn(),
     );
   }
 }
