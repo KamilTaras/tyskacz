@@ -20,7 +20,7 @@ class _NavBarClassState extends State<NavBarClass> {
 
   HomePage homePage = const HomePage();
   PlanListPage planPage = PlanListPage();
-  CalendarPage calendarPage = const CalendarPage();
+  CalendarPage calendarPage = CalendarPage(eventList: mockUserPlanList.map((e) => e.listOfEvents).expand((e) => e).toList());
   MapPage mapPage = MapPage(attractions: mockAttractionList);
 
   @override
