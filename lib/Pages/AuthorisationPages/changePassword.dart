@@ -3,22 +3,22 @@ import 'package:flutter/foundation.dart';
 import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 
-
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<ChangePassword> createState() => _ChangePassword();
 }
 
-class _SignUpState extends State<SignUp> {
+class _ChangePassword extends State<ChangePassword> {
   Map userData = {};
+  String info = 'Enter a code from our e-mail and your new password below';
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('register'),
+          title: Text('Change password'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -28,19 +28,11 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Center(
-                        child: Container(
-                          width: 200,
-                          height: 150,
-                          //decoration: BoxDecoration(
-                          //borderRadius: BorderRadius.circular(40),
-                          //border: Border.all(color: Colors.blueGrey)),
-                          child: Image.asset('assets/photos/logo_Tyskacz_light.png'),
-                        ),
-                      ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Check your email', style: Theme.of(context).textTheme.displayLarge),
                     ),
+                    Text(info),
                     SizedBox(height:20),
                     InputField(name: 'Login'),
                     InputField(name: 'Password'),
@@ -53,7 +45,7 @@ class _SignUpState extends State<SignUp> {
                             // margin: EdgeInsets.fromLTRB(200, 20, 50, 0),
                             child: FilledButton(
                               child: Text(
-                                'Register',
+                                'Change password',
                                 style: TextStyle(color: Colors.white, fontSize: 22),
                               ),
                               onPressed: () {
@@ -75,5 +67,3 @@ class _SignUpState extends State<SignUp> {
         ));
   }
 }
-
-

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../main.dart';
 import '../attractionCreatorPage.dart';
-import '../atttractionDescription.dart';
+import '../EventPage.dart';
 import '../tripCreatorPage.dart';
+import '../AuthorisationPages/signIn.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,6 +37,19 @@ class _HomePageState extends State<HomePage> {
               image: AssetImage('assets/photos/logo_TySkacz_light.png'),
             ),
           ),
+          //TODO: DELETE BUTTON
+          SizedBox(
+              height: 30,
+              width: 150,
+              child: FilledButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SignIn()));
+                },
+                child: Text('sign in'),
+              )),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

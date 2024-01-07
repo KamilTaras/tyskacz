@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
 import 'calendarPage.dart';
 import 'homePage.dart';
 import 'mapsPage.dart';
-import 'plansPage.dart';
+import 'plansListPage.dart';
 
 class NavBarClass extends StatefulWidget {
   const NavBarClass({super.key});
@@ -18,9 +19,9 @@ class _NavBarClassState extends State<NavBarClass> {
   late List allPages;
 
   HomePage homePage = const HomePage();
-  PlanPage planPage = const PlanPage();
+  PlanListPage planPage = PlanListPage();
   CalendarPage calendarPage = const CalendarPage();
-  MapPage mapPage = const MapPage();
+  MapPage mapPage = MapPage(attractions: mockAttractionList);
 
   @override
   void initState() {

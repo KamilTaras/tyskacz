@@ -52,7 +52,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const AttractionFinderPage()));
+                    builder: (context) => AttractionFinderPage()));
           },
           icon: Image.asset(
             path,
