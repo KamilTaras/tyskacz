@@ -2,25 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
+import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
+
 
 class AttractionDescriptionPage extends StatelessWidget {
-  const AttractionDescriptionPage({super.key});
+  AttractionDescriptionPage({super.key, required this.event});
+  final Event event;
 
   final double componentsMargin = 5.0;
-
   final double ratingFontSize = 20.0;
-
   final double titleFontSize = 25.0;
-
   final double mainContainerMargin = 10.0;
-
   final double topBarHeight = 20.0;
-
   final double sizedBoxHeight = 5;
 
-  final String date = '24.10.2023 - 11.11.2023';
 
-  final String localization = 'Szczecin, Dabie 33';
 
   Widget buildStyledContainer(
       {required double height, required Color color, required Widget child}) {
@@ -155,12 +151,12 @@ class AttractionDescriptionPage extends StatelessWidget {
 
     List<Widget> firstRow = [
       Icon(Icons.calendar_month),
-      buildTextContainer(55, Colors.transparent, date, 15, Colors.black)
+      buildTextContainer(55, Colors.transparent, event.startDate.toString(), 15, Colors.black)
     ];
     List<Widget> secondRow = [
       Icon(Icons.accessibility_sharp),
       buildTextContainer(
-          55, Colors.transparent, localization, 15, Colors.black),
+          55, Colors.transparent, event.attractionWithinEvent.coordinates.toString(), 15, Colors.black),
       mapButton,
       editButton
     ];
@@ -207,15 +203,19 @@ class AttractionDescriptionPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     //TODO: insert pic
-                    Placeholder(
-                      fallbackWidth: 300,
-                      fallbackHeight: 200,
+                    Container(
+                      width: 300,
+                      height:200,
+                      child: Image.network(
+                        event.attractionWithinEvent.photoURL,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     SizedBox(height: sizedBoxHeight),
                     buildElevatedTextContainer(
                       40,
                       Constant.mainGreenColor,
-                      attraction.name,
+                      event.attractionWithinEvent.name,
                       titleFontSize,
                       Colors.black,
                     ),
@@ -230,7 +230,7 @@ class AttractionDescriptionPage extends StatelessWidget {
                           buildElevatedTextContainer(
                             500,
                             Constant.mainBackgroundColor,
-                            attraction.description,
+                            event.attractionWithinEvent.description,
                             15,
                             Colors.black,
                           ),
@@ -249,21 +249,3 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 }
-class MockAttraction {
-
-  String name;
-  String picPath;
-  String description;
-
-  MockAttraction({required this.name, required this.picPath, required this.description});
-}
-MockAttraction attraction = MockAttraction(name: 'Eiffel Tower', picPath: 'picPath', description:
-"""New theher nor case that lady paid read. Invitation friendship traveNew the her nor case that lady paid read. 
-      Invitation friendship travelling eat everytNew the her nor case that lady paid read. Invitation friendship 
-      travelling eat everything the out two.New the her nor case that lady paid read.hing the out two.New the
-       her nor case that lady paid read.Illing eat everything the out two.New the her nor case that lady paid read.
-       the her nor case that lady paid read.  InvitaNew the her nor case that lady paid read. Invitation friendship 
-       travelling eat everything the out two.Shy you who sction friendship travelling eat everything the out two. 
-       Shy you who sc Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth 
-       spirit it to hearts. Downs those still witty an balls so chief so.  Moment an little remain no up lively no.
-        Way brought may off our regular country towards adapted cheered. Literature admiration frequently indulgence announcing are who you her. Was least quick """);

@@ -95,10 +95,11 @@ class AttractionEntry extends StatelessWidget {
     return GestureDetector(
       //TODO: on drag add to plan
       onTap: (){
-        Navigator.push(
-        context,
-        MaterialPageRoute(
-        builder: (context) => AttractionDescriptionPage()));
+        //Navigator.push(
+        //context,
+        //MaterialPageRoute(
+        //TODO: AttractionDescription now needs Event, maybe change to attraction?
+        //builder: (context) => AttractionDescriptionPage()));
         },
       //TODO: in dark mode, text is not visible
       child: Card(

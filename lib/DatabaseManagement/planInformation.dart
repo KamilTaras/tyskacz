@@ -1,6 +1,7 @@
 import 'attractionInformation.dart';
 
 class Plan {
+  final name;
   List<Event> listOfEvents;
   final TripType tripType;
   DateTime? theEarliestDateInTheList;
@@ -8,7 +9,7 @@ class Plan {
   final List<String>? listOfEquipment;
 
 
-  Plan({required this.listOfEvents, required this.tripType, this.listOfEquipment});
+  Plan({required this.name, required this.listOfEvents, required this.tripType, this.listOfEquipment});
 
   void addEvent(Event event) {
     listOfEvents.add(event);
