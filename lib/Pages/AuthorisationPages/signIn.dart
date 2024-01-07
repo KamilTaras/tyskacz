@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import '../NavBarPages/homePage.dart';
+import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 import 'signUp.dart';
 import 'changePassword.dart';
@@ -54,6 +56,8 @@ class _SignInState extends State<SignIn> {
                     ),
                     onPressed: (){
                       print('Successfully log in ');
+                      //go to home page with navbar
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
                     },
 
                   ),

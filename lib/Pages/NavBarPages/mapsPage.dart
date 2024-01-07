@@ -2,21 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-class AttractionMock {
-  //temporary class for testing purposes, a real attraction object will be used in the future
-  double latitude;
-  double longitude;
-  String imageUrl;
-  AttractionMock(
-      {required this.latitude,
-      required this.longitude,
-      this.imageUrl = "https://i.ibb.co/VC549LS/Fat-Pig.png"});
+import '../../DatabaseManagement/attractionInformation.dart';
+import '../AttractionPage.dart';
+import '../EventPage.dart';
+
+
+class MapPage extends StatefulWidget {
+  MapPage({super.key, required this.attractions});
+  List<Attraction> attractions;
+  @override
+  State<MapPage> createState() => _MapPageState();
 }
+
+class _MapPageState extends State<MapPage> {
+  @override
+  Widget build(BuildContext context) {
+    var attractions = widget.attractions;
+    return Stack(
+      children:[
+       FlutterMap(
+        options: MapOptions(
+          initialCenter: attractions[0].coordinates,
+          initialZoom: 13.0,
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'com.example.app',
+          ),
+          AttractionMapMarkers(attractions: attractions),
+        ],
+      ),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+         // child: IgnorePointer(
+           // ignoring: true,
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0, // Optional: Set elevation to 0 to remove the shadow
+            ),
+          //),
+        ),
+      ]
+    );
+  }
+}
+
 
 class AttractionMapMarker extends StatelessWidget {
   final double imageSize;
   final double pinSize;
-  AttractionMock attraction;
+  Attraction attraction;
 
   AttractionMapMarker({
     super.key,
@@ -30,7 +68,16 @@ class AttractionMapMarker extends StatelessWidget {
     return Container(
       width: pinSize,
       //height: pinSize,
-      child: Stack(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AttractionDescriptionPage(attraction: attraction),
+              )
+          );
+        },
+        child: Stack(
         children: [
           Positioned(
             child: Image.asset(
@@ -44,15 +91,16 @@ class AttractionMapMarker extends StatelessWidget {
             child: Container(
               child: ClipOval(
                 child: Image.network(
-                  attraction.imageUrl,
+                  attraction.photoURL,
                   width: imageSize,
                   height: imageSize,
-                  fit: BoxFit.contain,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
           ),
         ],
+      ),
       ),
     );
   }
@@ -60,22 +108,15 @@ class AttractionMapMarker extends StatelessWidget {
 
 class AttractionMapMarkers extends StatelessWidget {
   double pinSize;
-  AttractionMapMarkers({super.key, this.pinSize = 60});
+  AttractionMapMarkers({super.key, this.pinSize = 60, required this.attractions});
 
-  var attractions = [
-    AttractionMock(latitude: 30, longitude: 40),
-    AttractionMock(
-        latitude: 50.1999325404822,
-        longitude: 19.04639177968384,
-        imageUrl:
-            'https://obiektowe.tarkett.pl/media/img/M/TH_3917011_3707003_3708011_3912011_3914011_800_800.jpg')
-  ];
+  List<Attraction> attractions;
   @override
   Widget build(BuildContext context) {
     return MarkerLayer(
         markers: attractions
             .map((e) => Marker(
-                  point: LatLng(e.latitude, e.longitude),
+                  point: e.coordinates,
                   width: pinSize,
                   height: pinSize * 1.155,
                   alignment: Alignment.topCenter,
@@ -89,28 +130,3 @@ class AttractionMapMarkers extends StatelessWidget {
   }
 }
 
-class MapPage extends StatefulWidget {
-  const MapPage({super.key});
-
-  @override
-  State<MapPage> createState() => _MapPageState();
-}
-
-class _MapPageState extends State<MapPage> {
-  @override
-  Widget build(BuildContext context) {
-    return FlutterMap(
-      options: const MapOptions(
-        initialCenter: LatLng(50.198814799396956, 19.047174666857792),
-        initialZoom: 13.0,
-      ),
-      children: [
-        TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.example.app',
-        ),
-        AttractionMapMarkers(),
-      ],
-    );
-  }
-}

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
+import 'package:tyskacz/Pages/SwipableListEntry.dart';
 
 import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
   PlanListPage({super.key});
-  final plansList = [
-    mockPlan,
-    mockPlan
-  ];
+  final plansList = mockUserPlanList;
   @override
   State<PlanListPage> createState() => _PlanListPageState();
 }
@@ -65,15 +63,15 @@ class _PlanListPageState extends State<PlanListPage> {
             SizedBox(height: 50), // Optional spacing
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: 69,
-                width: double
-                    .infinity, // Makes the button stretch to the width of the screen
-                child: FilledButton(
-                  onPressed: () {}, //TODO: Fill for export
-                  child: const Text("Export Data To Calendar"),
-                ),
-              ),
+              // child: SizedBox(
+              //   height: 69,
+              //   width: double
+              //       .infinity, // Makes the button stretch to the width of the screen
+              //   child: FilledButton(
+              //     onPressed: () {}, //TODO: Fill for export
+              //     child: const Text("Export Data To Calendar"),
+              //   ),
+              // ),
             ),
           ] ,
         ),
@@ -99,34 +97,7 @@ class _PlanEntryState extends State<PlanEntry> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragUpdate: (DragUpdateDetails details) {
-        setState(() {
-          _offsetX += details.primaryDelta!;
-          if(_offsetX<0) {
-            _offsetX=0;
-          }
-        });
-      },
-      onHorizontalDragEnd: (DragEndDetails details) {
-        if (_offsetX > 50) {
-          // Swiped from left to right (right direction)
-          widget.onSwipe();
-        }
-        // Reset the offset after the drag ends
-        setState(() {
-          _offsetX = 0.0;
-        });
-      },
-      onTap: () {
-        // Navigate to the new page when the card is tapped
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PlanPage(plan: widget.plan)),
-        );
-      },
-      child: Transform.translate(
-        offset: Offset(_offsetX, 0.0),
+    return SwipableListEntry(
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -143,7 +114,13 @@ class _PlanEntryState extends State<PlanEntry> {
             ),
           ),
         ),
-      ),
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PlanPage(plan: widget.plan)),
+          );
+        },
+        onSwipe: widget.onSwipe
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
 import 'calendarPage.dart';
@@ -20,7 +21,7 @@ class _NavBarClassState extends State<NavBarClass> {
   HomePage homePage = const HomePage();
   PlanListPage planPage = PlanListPage();
   CalendarPage calendarPage = const CalendarPage();
-  MapPage mapPage = const MapPage();
+  MapPage mapPage = MapPage(attractions: mockAttractionList);
 
   @override
   void initState() {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
+import 'package:tyskacz/Pages/SwipableListEntry.dart';
 
-import 'atttractionDescription.dart';
+import 'EventPage.dart';
 
 class PlanPage extends StatefulWidget {
   PlanPage({super.key, required this.plan});
@@ -55,8 +56,10 @@ class _PlanPageState extends State<PlanPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-
-                      builder: (context) => AttractionDescriptionPage(event:plan.listOfEvents[index])));},
+                          builder: (context) => EventDescriptionPage(event:plan.listOfEvents[index])
+                      )
+                    );
+                    },
 
                       onSwipe: () {setState(() {plan.listOfEvents.removeAt(index);});}
                   );
@@ -67,7 +70,7 @@ class _PlanPageState extends State<PlanPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
-                height: 69,
+                height: 50,//not nice
                 width: double
                     .infinity, // Makes the button stretch to the width of the screen
                 child: FilledButton(
@@ -102,32 +105,10 @@ class EventEntry extends StatefulWidget {
 }
 
 class _EventEntryState extends State<EventEntry> {
-  double _offsetX = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragUpdate: (DragUpdateDetails details) {
-        setState(() {
-          _offsetX += details.primaryDelta!;
-          if(_offsetX<0) {
-            _offsetX=0;
-          }
-        });
-      },
-      onHorizontalDragEnd: (DragEndDetails details) {
-        if (_offsetX > 50) {
-          // Swiped from left to right (right direction)
-          widget.onSwipe();
-        }
-        // Reset the offset after the drag ends
-        setState(() {
-          _offsetX = 0.0;
-        });
-      },
-      onTap: widget.onTap,
-      child: Transform.translate(
-        offset: Offset(_offsetX, 0.0),
+    return SwipableListEntry(
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -142,8 +123,8 @@ class _EventEntryState extends State<EventEntry> {
                   height: 100,
                   width: 120,
                   child: Image.network(
-                      widget.event.attractionWithinEvent.photoURL,
-                      fit: BoxFit.fill,
+                    widget.event.attractionWithinEvent.photoURL,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -165,7 +146,8 @@ class _EventEntryState extends State<EventEntry> {
             ],
           ),
         ),
-      ),
+        onTap: widget.onTap,
+        onSwipe: widget.onSwipe
     );
   }
 }

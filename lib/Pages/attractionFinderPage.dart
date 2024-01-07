@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'atttractionDescription.dart';
+import '../DatabaseManagement/attractionInformation.dart';
+import '../DatabaseManagement/mocks.dart';
+import '../DatabaseManagement/planInformation.dart';
+import 'AttractionPage.dart';
+import 'SwipableListEntry.dart';
+
 
 class AttractionFinderPage extends StatefulWidget {
-  const AttractionFinderPage({super.key});
-
+  AttractionFinderPage({super.key});
+  var chosenAttractions = <Attraction>[];
   @override
   State<AttractionFinderPage> createState() => _AttractionFinderPage();
 }
@@ -22,22 +27,11 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     );
   }
 
-List <MockAttraction> attractionList=[
-  MockAttraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: '''najbardziej znany obiekt architektoniczny Paryża, uznawany za symbol tego miasta i 
-  niekiedy całej Francji. Jest najwyższą budowlą w Paryżu, a w momencie powstania była najwyższą budowlą na świecie. „Żelazna dama” stoi w zachodniej części miasta, 
-  nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'''),
-  MockAttraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'building'),
-  MockAttraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  MockAttraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  MockAttraction(name: 'Eiffel Tower', picPath:'assets/photos/logo_TySkacz_light.png',description: 'zachodniej części miasta, nad Sekwaną, na północno-zachodnim krańcu Pola Marsowego'),
-  MockAttraction(name: 'Pigs in Paris', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  MockAttraction(name: 'Tank u', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin'),
-  MockAttraction(name: 'Paprikash monument', picPath:'assets/photos/logo_TySkacz_light.png',description: 'buildin')
-];
 
   final double pageNameFontSize = 15;
 
   Widget build(BuildContext context) {
+    var attractionList = mockAttractionList;
     return Scaffold(
       appBar: AppBar(
         // preferredSize: Size.fromHeight(30.0),s
@@ -58,7 +52,21 @@ List <MockAttraction> attractionList=[
                child: ListView.builder(
                  itemCount: attractionList.length,
                  itemBuilder:(context, index){
-                   return AttractionEntry(attraction: attractionList[index]);
+                   return AttractionEntry(
+                       attraction: attractionList[index],
+                   onSwipe: () {
+                         widget.chosenAttractions.add(attractionList[index]);
+                     //setState(() {attractionList.removeAt(index);});
+                   },
+                   onTap: () {
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(
+                           builder: (context) => AttractionDescriptionPage(attraction:attractionList[index])
+                       )
+                     );
+                   }
+                   );
                  },
                ),
              ),
@@ -74,7 +82,16 @@ List <MockAttraction> attractionList=[
                     borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // mockUserPlanList.add(
+                    //     Plan(
+                    //         name: 'Plan',
+                    //         listOfEvents: widget.chosenAttractions.map((e) => Event(attractionWithinEvent: e, startDate: DateTime.now(), endDate: DateTime.now())),
+                    //         listOfAttractions: widget.chosenAttractions,
+                    //         tripType: TripType.Sightseeing,
+                    //     )
+                    // )
+                  },
                   child: Text('Pack Your Bags'),
                 ),
               ),
@@ -86,26 +103,38 @@ List <MockAttraction> attractionList=[
     );
   }
 }
-class AttractionEntry extends StatelessWidget {
-  AttractionEntry({super.key, required this.attraction});
-  final MockAttraction attraction;
+
+
+
+
+
+
+class AttractionEntry extends StatefulWidget {
+  AttractionEntry({
+    super.key,
+    required this.attraction,
+    required this.onTap,
+    required this.onSwipe,
+  });
+
+  final Attraction attraction;
+  final VoidCallback onTap;
+  final VoidCallback onSwipe;
+
+  @override
+  _AttractionEntryState createState() => _AttractionEntryState();
+}
+
+class _AttractionEntryState extends State<AttractionEntry> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      //TODO: on drag add to plan
-      onTap: (){
-        //Navigator.push(
-        //context,
-        //MaterialPageRoute(
-        //TODO: AttractionDescription now needs Event, maybe change to attraction?
-        //builder: (context) => AttractionDescriptionPage()));
-        },
-      //TODO: in dark mode, text is not visible
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          //set border radius more than 50% of height and width to make circle
+    var attraction = widget.attraction;
+    return SwipableListEntry(
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            //set border radius more than 50% of height and width to make circle
           ),
           color: Colors.white,
           child: Row(
@@ -116,9 +145,10 @@ class AttractionEntry extends StatelessWidget {
                 child: Container(
                   height:100,
                   width:120,
-                  child: Image(
-                    image: AssetImage(attraction.picPath),
-                  ),
+                  child: Image.network(
+                      attraction.photoURL,
+                      fit: BoxFit.fill,
+                    ),
                 ),
               ),
               Expanded(
@@ -132,23 +162,11 @@ class AttractionEntry extends StatelessWidget {
                   ],
                 ),
               ),
-          ],
+            ],
+          ),
         ),
-      ),
+        onTap: widget.onTap,
+        onSwipe: widget.onSwipe
     );
   }
-
-  // Widget buildIconWithText(){
-  //
-  // }
-}
-
-
-class MockAttraction {
-
-  String name;
-  String picPath;
-  String description;
-
-  MockAttraction({required this.name, required this.picPath, required this.description});
 }

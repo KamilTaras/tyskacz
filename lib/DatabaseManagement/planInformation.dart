@@ -40,6 +40,13 @@ class Plan {
       }
     }
   }
+  List<Attraction> getAttractions() {
+    List<Attraction> attractions = [];
+    for (Event event in listOfEvents) {
+      attractions.add(event.attractionWithinEvent);
+    }
+    return attractions;
+  }
 }
 
 enum TripType {
