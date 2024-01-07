@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/Pages/packingListPage.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
@@ -91,6 +92,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     //         tripType: TripType.Sightseeing,
                     //     )
                     // )
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PackingListPage()));
                   },
                   child: Text('Pack Your Bags'),
                 ),
