@@ -18,7 +18,7 @@ class _NavBarClassState extends State<NavBarClass> {
   late List allPages;
 
   HomePage homePage = const HomePage();
-  PlanListPage planPage = const PlanListPage();
+  PlanListPage planPage = PlanListPage();
   CalendarPage calendarPage = const CalendarPage();
   MapPage mapPage = const MapPage();
 

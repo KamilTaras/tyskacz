@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 
+import 'atttractionDescription.dart';
+
 class PlanPage extends StatefulWidget {
   PlanPage({super.key, required this.plan});
   Plan plan;
@@ -49,7 +51,14 @@ class _PlanPageState extends State<PlanPage> {
                 itemCount: plan.listOfEvents.length,
                 itemBuilder:(context, index){
                   return EventEntry(event: plan.listOfEvents[index],
-                      onDelete: () {setState(() {plan.listOfEvents.removeAt(index);});}
+                      onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+
+                      builder: (context) => AttractionDescriptionPage(event:plan.listOfEvents[index])));},
+
+                      onSwipe: () {setState(() {plan.listOfEvents.removeAt(index);});}
                   );
                 },
               ),
@@ -76,66 +85,88 @@ class _PlanPageState extends State<PlanPage> {
 
 
 
+class EventEntry extends StatefulWidget {
+  EventEntry({
+    super.key,
+    required this.event,
+    required this.onTap,
+    required this.onSwipe,
+  });
 
-class EventEntry extends StatelessWidget {
-  EventEntry({super.key, required this.event, required this.onDelete});
   final Event event;
-  final VoidCallback onDelete;
+  final VoidCallback onTap;
+  final VoidCallback onSwipe;
+
+  @override
+  _EventEntryState createState() => _EventEntryState();
+}
+
+class _EventEntryState extends State<EventEntry> {
+  double _offsetX = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      //TODO: on drag add to plan
-      onTap: onDelete,
-      //TODO: in dark mode, text is not visible
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          //set border radius more than 50% of height and width to make circle
-        ),
-        color: Colors.white,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: Container(
-                height:100,
-                width:120,
-                child: Image(
-                  image: AssetImage(event.attractionWithinEvent.photoURL),
+      onHorizontalDragUpdate: (DragUpdateDetails details) {
+        setState(() {
+          _offsetX += details.primaryDelta!;
+          if(_offsetX<0) {
+            _offsetX=0;
+          }
+        });
+      },
+      onHorizontalDragEnd: (DragEndDetails details) {
+        if (_offsetX > 50) {
+          // Swiped from left to right (right direction)
+          widget.onSwipe();
+        }
+        // Reset the offset after the drag ends
+        setState(() {
+          _offsetX = 0.0;
+        });
+      },
+      onTap: widget.onTap,
+      child: Transform.translate(
+        offset: Offset(_offsetX, 0.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          color: Colors.white,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  height: 100,
+                  width: 120,
+                  child: Image.network(
+                      widget.event.attractionWithinEvent.photoURL,
+                      fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Text(event.attractionWithinEvent.name),
-                  Container(height:70,
-                      child: Text(event.attractionWithinEvent.description,style:TextStyle(fontSize: 10))
-                  )
-                  // Other widgets if needed
-                ],
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Text(widget.event.attractionWithinEvent.name),
+                    Container(
+                      height: 70,
+                      child: Text(
+                        widget.event.attractionWithinEvent.description,
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ),
+                    // Other widgets if needed
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-
-// Widget buildIconWithText(){
-//
-// }
-}
-
-
-class MockAttraction {
-
-  String name;
-  String picPath;
-  String description;
-
-  MockAttraction({required this.name, required this.picPath, required this.description});
 }
 

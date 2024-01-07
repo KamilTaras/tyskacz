@@ -5,8 +5,11 @@ import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
-  const PlanListPage({super.key});
-
+  PlanListPage({super.key});
+  final plansList = [
+    mockPlan,
+    mockPlan
+  ];
   @override
   State<PlanListPage> createState() => _PlanListPageState();
 }
@@ -28,10 +31,7 @@ class _PlanListPageState extends State<PlanListPage> {
 
   @override
   Widget build(BuildContext context) {
-  var plansList = [
-    mockPlan,
-    mockPlan
-  ];
+    var plansList = widget.plansList;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,8 +53,11 @@ class _PlanListPageState extends State<PlanListPage> {
               child: ListView.builder(
                 itemCount: plansList.length,
                 itemBuilder:(context, index){
-                  return PlanEntry(plan: plansList[index],
-                      onDelete: () {setState(() {plansList.removeAt(index);});}
+                  return PlanEntry(
+                      plan: plansList[index],
+                      onSwipe: () {
+                        setState(() {plansList.removeAt(index);});
+                      }
                   );
                 },
               ),
@@ -81,51 +84,71 @@ class _PlanListPageState extends State<PlanListPage> {
 
 
 
+class PlanEntry extends StatefulWidget {
+  PlanEntry({super.key, required this.plan, required this.onSwipe});
 
-class PlanEntry extends StatelessWidget {
-  PlanEntry({super.key, required this.plan, required this.onDelete});
   final Plan plan;
-  final VoidCallback onDelete;
+  final VoidCallback onSwipe;
+
+  @override
+  _PlanEntryState createState() => _PlanEntryState();
+}
+
+class _PlanEntryState extends State<PlanEntry> {
+  double _offsetX = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onHorizontalDragUpdate: (DragUpdateDetails details) {
+        setState(() {
+          _offsetX += details.primaryDelta!;
+          if(_offsetX<0) {
+            _offsetX=0;
+          }
+        });
+      },
       onHorizontalDragEnd: (DragEndDetails details) {
-        if (details.primaryVelocity! > 0) {
+        if (_offsetX > 50) {
           // Swiped from left to right (right direction)
-          onDelete();
+          widget.onSwipe();
         }
+        // Reset the offset after the drag ends
+        setState(() {
+          _offsetX = 0.0;
+        });
       },
       onTap: () {
         // Navigate to the new page when the card is tapped
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PlanPage(plan: plan)),
+          MaterialPageRoute(builder: (context) => PlanPage(plan: widget.plan)),
         );
       },
-      //TODO: on drag add to plan
-      //TODO: in dark mode, text is not visible
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          //set border radius more than 50% of height and width to make circle
-        ),
-        color: Colors.white,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(plan.name),
-            Text(plan.tripType.name)
-          ],
+      child: Transform.translate(
+        offset: Offset(_offsetX, 0.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          color: Colors.white,
+          child: Container(
+            height: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(widget.plan.name),
+                Text(widget.plan.tripType.name),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
-
-// Widget buildIconWithText(){
-//
-// }
 }
+
+
 
 
 

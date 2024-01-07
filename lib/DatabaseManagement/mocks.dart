@@ -7,7 +7,7 @@ var mockPlan = Plan(
   listOfEvents: [
     Event(
       attractionWithinEvent: Attraction(
-        name: 'Visit Museum',
+        name: 'Museum',
         description: 'Explore the fascinating world of art',
         coordinates: LatLng(0, 0),
         photoURL: "https://cdn.britannica.com/51/194651-050-747F0C18/Interior-National-Gallery-of-Art-Washington-DC.jpg",
@@ -19,7 +19,7 @@ var mockPlan = Plan(
     ),
     Event(
       attractionWithinEvent: Attraction(
-        name: 'Explore Botanical Garden',
+        name: 'Botanical Garden',
         description: 'Enjoy the beauty of nature at the botanical garden',
         coordinates: LatLng(0, 0),
         photoURL: "https://www.tasteaway.pl/wp-content/uploads/2021/04/Dubai-Miracle-Garden_wejscie-990x742.jpg",
