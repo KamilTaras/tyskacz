@@ -152,8 +152,20 @@ class AttractionDescriptionPage extends StatelessWidget {
 
     List<Widget> secondRow = [
       Icon(Icons.accessibility_sharp),
-      //buildTextContainer(
-      //    55, Colors.transparent, event.attractionWithinEvent.coordinates.toString(), 15, Colors.black),
+
+      FutureBuilder<String?>(
+        future: attraction.getAddress,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text("Error loading address");
+          } else {
+            String address = snapshot.data ?? "No address available";
+            return buildTextContainer(55, Colors.transparent, address, 15, Colors.black);
+          }
+        },
+      ),
       mapButton,
       editButton
     ];

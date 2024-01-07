@@ -5,7 +5,7 @@ import '../DatabaseManagement/attractionInformation.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
-
+import 'package:geocode/geocode.dart';
 
 class AttractionCreationPage extends StatefulWidget {
   const AttractionCreationPage({Key? key}) : super(key: key);
@@ -66,14 +66,43 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                   height: 100,
                   child:FilledButton(
                     //TODO: create attraction after pressing the button
-                    onPressed: (){
-                      mockAttractionList.add(
-                          Attraction(
-                            photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
-                        name: _nameController.text,
-                        description: _descriptionController.text,
-                        coordinates: LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1])),
-                      ));
+                    onPressed: () async {
+                      try{
+                        var coords=LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1]));
+                        mockAttractionList.add(
+                            Attraction(
+                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              coordinates: coords,
+                              //,
+                            )
+                        );
+                      }catch(e){
+                        print(e);
+                      }
+
+                      GeoCode geoCode = GeoCode();
+
+                      try {
+                        Coordinates coordinates = await geoCode.forwardGeocoding(
+                            address: _localizationController.text);
+                        mockAttractionList.add(
+                            Attraction(
+                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+
+                              coordinates: LatLng(coordinates.latitude!.toDouble(), coordinates.longitude!.toDouble()),
+                              //,
+                            )
+                        );
+                        //print("Latitude: ${coordinates.latitude}");
+                        //print("Longitude: ${coordinates.longitude}");
+                      } catch (e) {
+                        print(e);
+                      }
+
                     },
                     child: Text('Save'),
                   ),
