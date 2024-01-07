@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/Pages/packingListPage.dart';
 import 'atttractionDescription.dart';
 
 class AttractionFinderPage extends StatefulWidget {
@@ -74,7 +75,12 @@ List <MockAttraction> attractionList=[
                     borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PackingListPage()));
+                  },
                   child: Text('Pack Your Bags'),
                 ),
               ),
