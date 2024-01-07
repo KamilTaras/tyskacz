@@ -7,8 +7,8 @@ import 'SwipableListEntry.dart';
 
 
 class AttractionFinderPage extends StatefulWidget {
-  AttractionFinderPage({super.key});
-  var chosenAttractions = <Attraction>[];
+  AttractionFinderPage({super.key, required this.plan});
+  Plan plan;
   @override
   State<AttractionFinderPage> createState() => _AttractionFinderPage();
 }
@@ -55,7 +55,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                    return AttractionEntry(
                        attraction: attractionList[index],
                    onSwipe: () {
-                         widget.chosenAttractions.add(attractionList[index]);
+                         widget.plan.listOfEvents.add(Event(attractionWithinEvent:attractionList[index],startDate: DateTime.now(), endDate: DateTime.now()));//TODO: add date choice
                      //setState(() {attractionList.removeAt(index);});
                    },
                    onTap: () {

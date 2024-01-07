@@ -70,7 +70,7 @@ link: 'garden_website_url',
 ),
 Attraction(
 name: 'Pigs in Paris',
-description: 'Yoooooo the fat minecraft pigs really are in the capital of France!',
+description: 'Yoooooo the fat minecraft pigs really are chillin in the capital of France!',
 coordinates: LatLng(48.84819668323813, 2.3356259252416267),
 photoURL: "https://i.ibb.co/VC549LS/Fat-Pig.png",
 review: 'Great experience!',

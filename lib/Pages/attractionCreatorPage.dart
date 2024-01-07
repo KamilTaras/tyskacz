@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/colors.dart';
+import '../DatabaseManagement/attractionInformation.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
+import 'package:latlong2/latlong.dart';
+
 
 class AttractionCreationPage extends StatefulWidget {
   const AttractionCreationPage({Key? key}) : super(key: key);
@@ -62,7 +66,15 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                   height: 100,
                   child:FilledButton(
                     //TODO: create attraction after pressing the button
-                    onPressed: (){},
+                    onPressed: (){
+                      mockAttractionList.add(
+                          Attraction(
+                            photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                        name: _nameController.text,
+                        description: _descriptionController.text,
+                        coordinates: LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1])),
+                      ));
+                    },
                     child: Text('Save'),
                   ),
                 ),
@@ -121,13 +133,3 @@ class _AttractionTextFieldState extends State<AttractionTextField> {
   }
 }
 
-
-
-class MockAttraction {
-  String name;
-  String picPath;
-  String description;
-
-  MockAttraction(
-      {required this.name, required this.picPath, required this.description});
-}

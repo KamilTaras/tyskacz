@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/exportCalendar.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
 
 import 'EventPage.dart';
+import 'NavBarPages/mapsPage.dart';
+import 'attractionFinderPage.dart';
 
 class PlanPage extends StatefulWidget {
   PlanPage({super.key, required this.plan});
@@ -69,15 +72,53 @@ class _PlanPageState extends State<PlanPage> {
             SizedBox(height: 50), // Optional spacing
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                height: 50,//not nice
-                width: double
-                    .infinity, // Makes the button stretch to the width of the screen
-                child: FilledButton(
-                  onPressed: () {}, //TODO: Fill for export
-                  child: const Text("Export Data To Calendar"),
-                ),
-              ),
+              child:Column(
+                children:[
+                  SizedBox(
+                    height: 50,//not nice
+                    width: double
+                        .infinity, // Makes the button stretch to the width of the screen
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MapPage(attractions: plan.getAttractions(),)
+                            )
+                        );
+                      }, //TODO: Fill for export
+                      child: const Text("Show on map"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,//not nice
+                    width: double
+                        .infinity, // Makes the button stretch to the width of the screen
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AttractionFinderPage(plan:plan)
+                            )
+                        );
+                      }, //TODO: Fill for export
+                      child: const Text("Add Event"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,//not nice
+                    width: double
+                        .infinity, // Makes the button stretch to the width of the screen
+                    child: FilledButton(
+                      onPressed: () {
+                        export(plan);
+                      }, //TODO: Fill for export
+                      child: const Text("Export Data To Calendar"),
+                    ),
+                  ),
+                ]
+              )
             ),
           ] ,
         ),

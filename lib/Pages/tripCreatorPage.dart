@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Pages/attractionFinderPage.dart';
 
+import '../DatabaseManagement/planInformation.dart';
 import '../Utils/constantValues.dart';
 
 class CreatePlanPage extends StatefulWidget {
@@ -43,16 +45,18 @@ class _CreatePlanPage extends State<CreatePlanPage> {
     );
   }
 
-  Widget createButtonWithImage(String path, String label) {
+  Widget createButtonWithImage(String path, String label, int type) {
     return Column(
       children: [
         IconButton(
           iconSize: 60,
           onPressed: () {
+            var plan = Plan(name: 'newPlan', listOfEvents: [], tripType: TripType.values[type]);
+            mockUserPlanList.add(plan);
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AttractionFinderPage()));
+                    builder: (context) => AttractionFinderPage(plan:plan)));
           },
           icon: Image.asset(
             path,
@@ -93,15 +97,15 @@ class _CreatePlanPage extends State<CreatePlanPage> {
             SizedBox(height: 30),
             Row(children: <Widget>[
               createButtonWithImage(
-                  'assets/photos/createBusinessTrip.png', 'Business Trip'),
+                  'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
               createButtonWithImage('assets/photos/createSightSeeingTrip.png',
-                  'Sight  Seeing Trip'),
+                  'Sight  Seeing Trip', 1),
             ]),
             Row(children: <Widget>[
               createButtonWithImage(
-                  'assets/photos/createBusinessTrip.png', 'Educational Trip'),
+                  'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
               createButtonWithImage(
-                  'assets/photos/createSightSeeingTrip.png', 'Leisure Trip'),
+                  'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
             ]),
           ]),
         ]),
