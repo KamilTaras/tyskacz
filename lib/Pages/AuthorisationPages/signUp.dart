@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 
 
@@ -58,6 +59,7 @@ class _SignUpState extends State<SignUp> {
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
                                   print('form submiitted');
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
                                 }
                               },
                             ),

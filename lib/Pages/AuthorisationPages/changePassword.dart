@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -17,7 +18,7 @@ class _ChangePassword extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('register'),
+          title: Text('Change password'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -44,12 +45,13 @@ class _ChangePassword extends State<ChangePassword> {
                             // margin: EdgeInsets.fromLTRB(200, 20, 50, 0),
                             child: FilledButton(
                               child: Text(
-                                'Register',
+                                'Change password',
                                 style: TextStyle(color: Colors.white, fontSize: 22),
                               ),
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
                                   print('form submiitted');
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
                                 }
                               },
                             ),
