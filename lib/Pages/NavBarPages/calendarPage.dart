@@ -1,36 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 
 class CalendarPage extends StatelessWidget {
-  const CalendarPage({Key? key});
+  CalendarPage({Key? key, required this.eventList});
+  List<Event> eventList;
 
   @override
   Widget build(BuildContext context) {
-    final Map<DateTime, List<MockAttraction>> eventsMap = {
-      DateTime(2023, 1, 1): [
-        MockAttraction(
-          name: 'Pigs in Paris',
-          picPath: 'assets/photos/logo_TySkacz_light.png',
-          description: 'building',
-        ),
-        MockAttraction(
-          name: 'Działeczka',
-          picPath: 'assets/photos/logo_TySkacz_light.png',
-          description: 'deep in the forrest',
-        ),
-      ],
-      DateTime(2023, 1, 2): [
-        MockAttraction(
-          name: 'Tank U',
-          picPath: 'assets/photos/logo_TySkacz_light.png',
-          description: 'building',
-        ),
-        MockAttraction(
-          name: 'Paprykarz',
-          picPath: 'assets/photos/logo_TySkacz_light.png',
-          description: 'building',
-        ),
-      ],
-    };
+    print(eventList);
+    final Map<DateTime, List<Attraction>> eventsMap = {};
+
+    eventList.forEach((event) {
+      DateTime startDate = event.startDate;
+      DateTime endDate = event.endDate;
+
+      for (var date = startDate; date.isBefore(endDate); date = date.add(Duration(days: 1))) {
+        eventsMap.putIfAbsent(date, () => []);
+        eventsMap[date]!.add(event.attractionWithinEvent);
+      }
+    });
+
+    // final Map<DateTime, List<Attraction>> eventsMap = eventList.fold({}, (Map<DateTime, List<Attraction>> map, Event event) {
+    //   DateTime startDate = event.startDate;
+    //   DateTime endDate = event.endDate;
+    //   List<Attraction> attractions = [event.attractionWithinEvent];
+    //
+    //   for (var date = startDate; date.isBefore(endDate); date = date.add(Duration(days: 1))) { //If takes longer than a day add on multiple days
+    //     if (map.containsKey(date)) {
+    //       map[date]!.addAll(attractions);
+    //     } else {
+    //       map[date] = attractions;
+    //     }
+    //   }
+    //
+    //   return map;
+    // });
+    print(eventsMap);
+    // {
+    //   DateTime(2023, 1, 1): [
+    //     MockAttraction(
+    //       name: 'Pigs in Paris',
+    //       picPath: 'assets/photos/logo_TySkacz_light.png',
+    //       description: 'building',
+    //     ),
+    //     MockAttraction(
+    //       name: 'Działeczka',
+    //       picPath: 'assets/photos/logo_TySkacz_light.png',
+    //       description: 'deep in the forrest',
+    //     ),
+    //   ],
+    //   DateTime(2023, 1, 2): [
+    //     MockAttraction(
+    //       name: 'Tank U',
+    //       picPath: 'assets/photos/logo_TySkacz_light.png',
+    //       description: 'building',
+    //     ),
+    //     MockAttraction(
+    //       name: 'Paprykarz',
+    //       picPath: 'assets/photos/logo_TySkacz_light.png',
+    //       description: 'building',
+    //     ),
+    //   ],
+    // };
 
     return Scaffold(
       appBar: PreferredSize(
@@ -53,7 +84,7 @@ class CalendarPage extends StatelessWidget {
                       itemCount: eventsMap.length,
                       itemBuilder: (context, index) {
                         DateTime date = eventsMap.keys.elementAt(index);
-                        List<MockAttraction> attractions = eventsMap[date]!;
+                        List<Attraction> attractions = eventsMap[date]!;
 
                         return DayOfEventsEntry(date: date, attractions: attractions);
                       },
@@ -72,7 +103,7 @@ class CalendarPage extends StatelessWidget {
 class DayOfEventsEntry extends StatelessWidget {
   const DayOfEventsEntry({Key? key, required this.date, required this.attractions});
   final DateTime date;
-  final List<MockAttraction> attractions;
+  final List<Attraction> attractions;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +128,10 @@ class DayOfEventsEntry extends StatelessWidget {
                     maxWidth: 70,
                     maxHeight: 70,
                   ),
-                  child: Image.asset(attraction.picPath, fit: BoxFit.cover),
+                  child: Image.network(
+                    attraction.photoURL,
+                    fit: BoxFit.cover,
+                  )
                 ),
                 title: Text(attraction.name),
                 subtitle: Text(attraction.description),
@@ -110,14 +144,4 @@ class DayOfEventsEntry extends StatelessWidget {
   }
 }
 
-class MockAttraction {
-  String name;
-  String picPath;
-  String description;
 
-  MockAttraction({
-    required this.name,
-    required this.picPath,
-    required this.description,
-  });
-}

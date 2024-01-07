@@ -27,6 +27,10 @@ class Event {
   final Attraction attractionWithinEvent;
   final DateTime startDate;
   final DateTime endDate;
+  @override
+  toString() {
+    return 'Event: ${attractionWithinEvent.name}, ${startDate.toString()}, ${endDate.toString()}';
+  }
   Event(
       {required this.attractionWithinEvent,
       required this.startDate,
