@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../DatabaseManagement/attractionInformation.dart';
+import '../AttractionPage.dart';
 import '../EventPage.dart';
 
 
@@ -17,18 +18,34 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     var attractions = widget.attractions;
-    return FlutterMap(
-      options: MapOptions(
-        initialCenter: attractions[0].coordinates,
-        initialZoom: 13.0,
-      ),
-      children: [
-        TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.example.app',
+    return Stack(
+      children:[
+       FlutterMap(
+        options: MapOptions(
+          initialCenter: attractions[0].coordinates,
+          initialZoom: 13.0,
         ),
-        AttractionMapMarkers(attractions: attractions),
-      ],
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'com.example.app',
+          ),
+          AttractionMapMarkers(attractions: attractions),
+        ],
+      ),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+         // child: IgnorePointer(
+           // ignoring: true,
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0, // Optional: Set elevation to 0 to remove the shadow
+            ),
+          //),
+        ),
+      ]
     );
   }
 }
@@ -56,9 +73,8 @@ class AttractionMapMarker extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EventDescriptionPage(event:Event(attractionWithinEvent: attraction,startDate: DateTime.now(),endDate: DateTime.now())
+                  builder: (context) => AttractionDescriptionPage(attraction: attraction),
               )
-          ),
           );
         },
         child: Stack(

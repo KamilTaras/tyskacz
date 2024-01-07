@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
+import '../DatabaseManagement/planInformation.dart';
 import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
 
 
 class AttractionFinderPage extends StatefulWidget {
-  const AttractionFinderPage({super.key});
-
+  AttractionFinderPage({super.key});
+  var chosenAttractions = <Attraction>[];
   @override
   State<AttractionFinderPage> createState() => _AttractionFinderPage();
 }
@@ -54,7 +55,8 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                    return AttractionEntry(
                        attraction: attractionList[index],
                    onSwipe: () {
-                     setState(() {attractionList.removeAt(index);});
+                         widget.chosenAttractions.add(attractionList[index]);
+                     //setState(() {attractionList.removeAt(index);});
                    },
                    onTap: () {
                      Navigator.push(
@@ -80,7 +82,16 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // mockUserPlanList.add(
+                    //     Plan(
+                    //         name: 'Plan',
+                    //         listOfEvents: widget.chosenAttractions.map((e) => Event(attractionWithinEvent: e, startDate: DateTime.now(), endDate: DateTime.now())),
+                    //         listOfAttractions: widget.chosenAttractions,
+                    //         tripType: TripType.Sightseeing,
+                    //     )
+                    // )
+                  },
                   child: Text('Pack Your Bags'),
                 ),
               ),

@@ -70,7 +70,7 @@ class _PlanPageState extends State<PlanPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
-                height: 69,
+                height: 50,//not nice
                 width: double
                     .infinity, // Makes the button stretch to the width of the screen
                 child: FilledButton(
