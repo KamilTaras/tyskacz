@@ -29,6 +29,7 @@ class _PlanPageState extends State<PlanPage> {
   }
 
   final double pageNameFontSize = 15;
+  final double spaceBetweenButtons = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _PlanPageState extends State<PlanPage> {
                 width: 200,
                 child: Text(
                   'Your Plan',
-                  style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.displayMedium,
                 )
             )
             ,
@@ -90,6 +91,7 @@ class _PlanPageState extends State<PlanPage> {
                       child: const Text("Show on map"),
                     ),
                   ),
+                  SizedBox(height: spaceBetweenButtons),
                   SizedBox(
                     height: 50,//not nice
                     width: double
@@ -106,6 +108,7 @@ class _PlanPageState extends State<PlanPage> {
                       child: const Text("Add Event"),
                     ),
                   ),
+                  SizedBox(height: spaceBetweenButtons),
                   SizedBox(
                     height: 50,//not nice
                     width: double

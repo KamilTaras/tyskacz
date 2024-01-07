@@ -45,9 +45,8 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                 child: Text(
                   'Select attractions you would like to visit',
                   style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
-                )
-            )
-            ,
+                ),
+            ),
              Expanded(
                child: ListView.builder(
                  itemCount: attractionList.length,

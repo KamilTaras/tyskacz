@@ -76,8 +76,9 @@ class CalendarPage extends StatelessWidget {
                 children: [
                   Text(
                     'Calendar Page',
-                    style: TextStyle(fontSize: 25),
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
+                  SizedBox(height:20),
                   Container(
                     height: 500,
                     child: ListView.builder(

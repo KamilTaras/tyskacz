@@ -39,7 +39,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       child: Center(
         child: Text(
           name,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -85,8 +85,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       body: SafeArea(
         child: Column(children: <Widget>[
           Column(children: <Widget>[
-            buildTextContainer(
-                pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
+            Text('Create new trip', style: Theme.of(context).textTheme.displayMedium),
             SizedBox(height: 30),
             buildTextContainer(40, Colors.transparent, searchLabel, 15),
             //TODO: Search bar
