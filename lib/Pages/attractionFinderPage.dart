@@ -3,7 +3,7 @@ import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
 import '../../Utils/Theme/colors.dart';
-
+import 'background.dart';
 
 import 'package:tyskacz/Pages/SearchField.dart';
 import 'AttractionPage.dart';
@@ -37,69 +37,74 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
 
   Widget build(BuildContext context) {
     var attractionList = mockAttractionList;
-    return Scaffold(
-      appBar: AppBar(
-        // preferredSize: Size.fromHeight(30.0),s
-      ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget> [
-            Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
-            SizedBox(height: 10),
-            SearchField(controller: _textController, hintText:'Search for attractions', height: 50, fontSize: 20, maxLines:2),
-            SizedBox(height: 10),
-            Expanded(
-               child: ListView.builder(
-                 itemCount: attractionList.length,
-                 itemBuilder:(context, index){
-                   return AttractionEntry(
-                       attraction: attractionList[index],
-                   onSwipe: () {
-                         widget.plan.listOfEvents.add(Event(attractionWithinEvent:attractionList[index],startDate: DateTime.now(), endDate: DateTime.now()));//TODO: add date choice
-                     //setState(() {attractionList.removeAt(index);});
-                   },
-                   onTap: () {
-                     Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                           builder: (context) => AttractionDescriptionPage(attraction:attractionList[index])
-                       )
-                     );
-                   }
-                   );
-                 },
-               ),
-             ),
-            SizedBox(height: 10), // Optional spacing
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Container(
-                width: double.infinity,
-                height: 100,
-                child: FilledButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
-                    ),
-                  ),
-                  onPressed: () {
-                    // mockUserPlanList.add(
-                    //     Plan(
-                    //         name: 'Plan',
-                    //         listOfEvents: widget.chosenAttractions.map((e) => Event(attractionWithinEvent: e, startDate: DateTime.now(), endDate: DateTime.now())),
-                    //         listOfAttractions: widget.chosenAttractions,
-                    //         tripType: TripType.Sightseeing,
-                    //     )
-                    // )
+    return Stack(
+      children:[
+        Background(),
+        Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          // preferredSize: Size.fromHeight(30.0),s
+        ),
+        body: SafeArea(
+          child: Column(
+            children: <Widget> [
+              Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
+              SizedBox(height: 10),
+              SearchField(controller: _textController, hintText:'Search for attractions', height: 50, fontSize: 20, maxLines:2),
+              SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: attractionList.length,
+                  itemBuilder:(context, index){
+                    return AttractionEntry(
+                        attraction: attractionList[index],
+                        onSwipe: () {
+                          widget.plan.listOfEvents.add(Event(attractionWithinEvent:attractionList[index],startDate: DateTime.now(), endDate: DateTime.now()));//TODO: add date choice
+                          //setState(() {attractionList.removeAt(index);});
+                        },
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AttractionDescriptionPage(attraction:attractionList[index])
+                              )
+                          );
+                        }
+                    );
                   },
-                  child: Text('Pack Your Bags'),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-          ] ,
+              SizedBox(height: 10), // Optional spacing
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 100,
+                  child: FilledButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
+                      ),
+                    ),
+                    onPressed: () {
+                      // mockUserPlanList.add(
+                      //     Plan(
+                      //         name: 'Plan',
+                      //         listOfEvents: widget.chosenAttractions.map((e) => Event(attractionWithinEvent: e, startDate: DateTime.now(), endDate: DateTime.now())),
+                      //         listOfAttractions: widget.chosenAttractions,
+                      //         tripType: TripType.Sightseeing,
+                      //     )
+                      // )
+                    },
+                    child: Text('Pack Your Bags'),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+            ] ,
+          ),
         ),
-      ),
+      ),]
     );
   }
 }

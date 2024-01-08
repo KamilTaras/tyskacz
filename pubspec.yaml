@@ -63,6 +63,7 @@ flutter:
     - assets/photos/Pin.png
     - assets/photos/createBusinessTrip.png
     - assets/photos/createSightSeeingTrip.png
+    - assets/photos/background.png
   fonts:
     - family: Inter
       fonts:
@@ -70,6 +71,10 @@ flutter:
     - family: Anton-Regular
       fonts:
             - asset: assets/fonts//Anton-Regular.ttf
+    - family: MainFont
+      fonts:
+        - asset: assets\fonts\DMSans.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
+import '../background.dart';
 
 import '../planPage.dart';
 
@@ -31,51 +32,56 @@ class _PlanListPageState extends State<PlanListPage> {
   Widget build(BuildContext context) {
     var plansList = widget.plansList;
 
-    return Scaffold(
-      appBar: AppBar(
-        // preferredSize: Size.fromHeight(30.0),s
-      ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget> [
-            Container(
-                height: 50,
-                width: 200,
-                child: Text(
-                  'Your Plan',
-                  style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
-                )
-            )
-            ,
-            Expanded(
-              child: ListView.builder(
-                itemCount: plansList.length,
-                itemBuilder:(context, index){
-                  return PlanEntry(
-                      plan: plansList[index],
-                      onSwipe: () {
-                        setState(() {plansList.removeAt(index);});
-                      }
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 50), // Optional spacing
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              // child: SizedBox(
-              //   height: 69,
-              //   width: double
-              //       .infinity, // Makes the button stretch to the width of the screen
-              //   child: FilledButton(
-              //     onPressed: () {}, //TODO: Fill for export
-              //     child: const Text("Export Data To Calendar"),
-              //   ),
-              // ),
-            ),
-          ] ,
+    return Stack(
+      children:[
+        Background(),
+        Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          // preferredSize: Size.fromHeight(30.0),s
         ),
-      ),
+        body: SafeArea(
+          child: Column(
+            children: <Widget> [
+              Container(
+                  height: 50,
+                  width: 200,
+                  child: Text(
+                    'Your Plan',
+                    style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
+                  )
+              )
+              ,
+              Expanded(
+                child: ListView.builder(
+                  itemCount: plansList.length,
+                  itemBuilder:(context, index){
+                    return PlanEntry(
+                        plan: plansList[index],
+                        onSwipe: () {
+                          setState(() {plansList.removeAt(index);});
+                        }
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 50), // Optional spacing
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                // child: SizedBox(
+                //   height: 69,
+                //   width: double
+                //       .infinity, // Makes the button stretch to the width of the screen
+                //   child: FilledButton(
+                //     onPressed: () {}, //TODO: Fill for export
+                //     child: const Text("Export Data To Calendar"),
+                //   ),
+                // ),
+              ),
+            ] ,
+          ),
+        ),
+      ),]
     );
   }
 }

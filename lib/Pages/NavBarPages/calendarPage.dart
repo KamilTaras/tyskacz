@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:intl/intl.dart';
-
+import '../background.dart';
 
 import '../../Utils/constantValues.dart';
 import '../../Utils/Theme/colors.dart';
@@ -68,37 +68,42 @@ class CalendarPage extends StatelessWidget {
     //   ],
     // };
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Text(
-                    'Calendar Page',
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  SizedBox(height:20),
-                  Container(
-                    height: 500,
-                    child: ListView.builder(
-                      itemCount: eventsMap.length,
-                      itemBuilder: (context, index) {
-                        DateTime date = eventsMap.keys.elementAt(index);
-                        List<Attraction> attractions = eventsMap[date]!;
-
-                        return DayOfEventsEntry(date: date, attractions: attractions);
-                      },
+    return Stack(
+      children:[
+        Background(),
+        Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'Calendar Page',
+                      style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    SizedBox(height:20),
+                    Container(
+                      height: 500,
+                      child: ListView.builder(
+                        itemCount: eventsMap.length,
+                        itemBuilder: (context, index) {
+                          DateTime date = eventsMap.keys.elementAt(index);
+                          List<Attraction> attractions = eventsMap[date]!;
+
+                          return DayOfEventsEntry(date: date, attractions: attractions);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      ),]
     );
   }
 }
@@ -150,9 +155,9 @@ class DayOfEventsEntry extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(attraction.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            Text(attraction.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Anton-Regular')),
                             SizedBox(height: 4),
-                            Text(attraction.description),
+                            Text(attraction.description, style: TextStyle(fontSize: 15,  fontFamily: 'Anton-Regular')),
                           ],
                         ),
                       ),

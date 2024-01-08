@@ -5,7 +5,7 @@ import '../DatabaseManagement/attractionInformation.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
-
+import 'background.dart';
 
 class AttractionCreationPage extends StatefulWidget {
   const AttractionCreationPage({Key? key}) : super(key: key);
@@ -32,57 +32,62 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(
-          // backgroundColor: Colors.transparent,
+    return Stack(
+      children:[
+        Background(),
+        Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(30.0),
+          child: AppBar(
+            // backgroundColor: Colors.transparent,
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.symmetric(vertical: mainContainerMargin, horizontal: mainContainerMargin),
-          width: MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-          height: MediaQuery.of(context).size.height - 30 - 2 * mainContainerMargin,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                //TODO: insert pic
-                Placeholder(
-                  fallbackWidth: 300,
-                  fallbackHeight: 200,
-                ),
-                SizedBox(height: sizedBoxHeight),
-                AttractionTextField(controller: _nameController, hintText:'Attraction Name', height: 70, fontSize: 25, maxLines:2),
-                SizedBox(height: sizedBoxHeight),
-                AttractionTextField(controller: _descriptionController, hintText:'Description', height: 250, fontSize: 16, maxLines: 12),
-                SizedBox(height: sizedBoxHeight),
-                AttractionTextField(controller: _localizationController, hintText:'Localization', height: 70, fontSize: 16),
-                SizedBox(height: sizedBoxHeight),
-                Container(
-                  height: 100,
-                  child:FilledButton(
-                    //TODO: create attraction after pressing the button
-                    onPressed: (){
-                      mockAttractionList.add(
-                          Attraction(
-                            photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
-                        name: _nameController.text,
-                        description: _descriptionController.text,
-                        coordinates: LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1])),
-                      ));
-                    },
-                    child: Text('Save'),
+        body: SafeArea(
+          child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(vertical: mainContainerMargin, horizontal: mainContainerMargin),
+            width: MediaQuery.of(context).size.width - 2 * mainContainerMargin,
+            height: MediaQuery.of(context).size.height - 30 - 2 * mainContainerMargin,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  //TODO: insert pic
+                  Placeholder(
+                    fallbackWidth: 300,
+                    fallbackHeight: 200,
                   ),
-                ),
-              ],
+                  SizedBox(height: sizedBoxHeight),
+                  AttractionTextField(controller: _nameController, hintText:'Attraction Name', height: 70, fontSize: 25, maxLines:2),
+                  SizedBox(height: sizedBoxHeight),
+                  AttractionTextField(controller: _descriptionController, hintText:'Description', height: 250, fontSize: 16, maxLines: 12),
+                  SizedBox(height: sizedBoxHeight),
+                  AttractionTextField(controller: _localizationController, hintText:'Localization', height: 70, fontSize: 16),
+                  SizedBox(height: sizedBoxHeight),
+                  Container(
+                    height: 100,
+                    child:FilledButton(
+                      //TODO: create attraction after pressing the button
+                      onPressed: (){
+                        mockAttractionList.add(
+                            Attraction(
+                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              coordinates: LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1])),
+                            ));
+                      },
+                      child: Text('Save'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      ),]
     );
   }
 }
