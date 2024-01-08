@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
+import 'package:intl/intl.dart';
+
+
+import '../../Utils/constantValues.dart';
+import '../../Utils/Theme/colors.dart';
 
 class CalendarPage extends StatelessWidget {
   CalendarPage({Key? key, required this.eventList});
@@ -108,36 +113,57 @@ class DayOfEventsEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Date: ${date}',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Center(
+            child: Text(
+              DateFormat('dd MMMM yyyy').format(date),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: mainGreen[200], fontFamily: 'Anton-Regular'),
+            ),
           ),
-          Column(
-            children: attractions.map((attraction) {
-              return ListTile(
-                leading: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: 50,
-                    minHeight: 50,
-                    maxWidth: 70,
-                    maxHeight: 70,
+          SizedBox(height: 8),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            color: Colors.white,
+            child: Column(
+              children: attractions.map((attraction) {
+                return Container(
+                  padding: const EdgeInsets.all(8.0),
+                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 16),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          child: Image.network(
+                            attraction.photoURL,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(attraction.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            SizedBox(height: 4),
+                            Text(attraction.description),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Image.network(
-                    attraction.photoURL,
-                    fit: BoxFit.cover,
-                  )
-                ),
-                title: Text(attraction.name),
-                subtitle: Text(attraction.description),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ],
       ),

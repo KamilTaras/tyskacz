@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Pages/attractionFinderPage.dart';
+import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
-import '../Utils/constantValues.dart';
+
 
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});
@@ -14,6 +15,8 @@ class CreatePlanPage extends StatefulWidget {
 }
 
 class _CreatePlanPage extends State<CreatePlanPage> {
+
+  TextEditingController _textController = TextEditingController();
   final String pageName = 'Create New Trip';
   final String searchLabel = 'Search for destinations';
   final double pageNameHeight = 100;
@@ -76,23 +79,17 @@ class _CreatePlanPage extends State<CreatePlanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-        ),
+      appBar: AppBar(
+        // preferredSize: Size.fromHeight(30.0),s
       ),
       body: SafeArea(
         child: Column(children: <Widget>[
           Column(children: <Widget>[
             Text('Create new trip', style: Theme.of(context).textTheme.displayMedium),
-            SizedBox(height: 30),
-            buildTextContainer(40, Colors.transparent, searchLabel, 15),
+            SizedBox(height: 10),
             //TODO: Search bar
-            Placeholder(
-              fallbackHeight: 60,
-              fallbackWidth: 100,
-            ),
+
+            SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
             SizedBox(height: 30),
             Row(children: <Widget>[
               createButtonWithImage(

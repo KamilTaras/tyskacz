@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
+
+import 'package:tyskacz/Pages/SearchField.dart';
 import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
 
@@ -14,6 +16,7 @@ class AttractionFinderPage extends StatefulWidget {
 }
 class _AttractionFinderPage extends State<AttractionFinderPage> {
 
+  TextEditingController _textController = TextEditingController();
 
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
@@ -39,15 +42,11 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
       body: SafeArea(
         child: Column(
           children: <Widget> [
-            Container(
-              height: 50,
-                width: 200,
-                child: Text(
-                  'Select attractions you would like to visit',
-                  style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
-                ),
-            ),
-             Expanded(
+            Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
+            SizedBox(height: 10),
+            SearchField(controller: _textController, hintText:'Search for attractions', height: 50, fontSize: 20, maxLines:2),
+            SizedBox(height: 10),
+            Expanded(
                child: ListView.builder(
                  itemCount: attractionList.length,
                  itemBuilder:(context, index){
@@ -69,7 +68,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                  },
                ),
              ),
-            SizedBox(height: 50), // Optional spacing
+            SizedBox(height: 10), // Optional spacing
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Container(
@@ -153,7 +152,7 @@ class _AttractionEntryState extends State<AttractionEntry> {
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(attraction.name),
+                    Text(attraction.name, style: TextStyle(fontWeight: FontWeight.bold)),
                     Container(height:70,
                         child: Text(attraction.description,style:TextStyle(fontSize: 10))
                     )

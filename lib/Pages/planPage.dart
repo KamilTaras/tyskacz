@@ -52,8 +52,7 @@ class _PlanPageState extends State<PlanPage> {
             )
             ,
             Expanded(
-              child: ListView.builder(
-                itemCount: plan.listOfEvents.length,
+              child: ListView.builder(                itemCount: plan.listOfEvents.length,
                 itemBuilder:(context, index){
                   return EventEntry(event: plan.listOfEvents[index],
                       onTap: () {
@@ -175,7 +174,7 @@ class _EventEntryState extends State<EventEntry> {
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(widget.event.attractionWithinEvent.name),
+                    Text(widget.event.attractionWithinEvent.name, style:TextStyle(fontWeight: FontWeight.bold)),
                     Container(
                       height: 70,
                       child: Text(
