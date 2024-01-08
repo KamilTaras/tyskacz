@@ -22,7 +22,7 @@ class Attraction {
   });
   Future<String?> get getAddress async {
     if(address == null){
-      GeoCode geoCode = GeoCode();
+      GeoCode geoCode = GeoCode(apiKey: "412336480991130498790x31447");
       var addressObj=geoCode.reverseGeocoding(latitude:coordinates.latitude, longitude: coordinates.longitude);
       address='${await addressObj.then((value) => value.streetAddress)??''} '
           '${await addressObj.then((value) => value.streetNumber)??''} '

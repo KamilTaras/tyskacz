@@ -82,7 +82,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                         print(e);
                       }
 
-                      GeoCode geoCode = GeoCode();
+                      GeoCode geoCode = GeoCode(apiKey: "412336480991130498790x31447");
 
                       try {
                         Coordinates coordinates = await geoCode.forwardGeocoding(
