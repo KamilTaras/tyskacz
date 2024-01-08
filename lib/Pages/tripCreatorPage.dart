@@ -5,7 +5,7 @@ import 'package:tyskacz/Pages/attractionFinderPage.dart';
 import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
-
+import 'background.dart';
 
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});
@@ -78,34 +78,38 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // preferredSize: Size.fromHeight(30.0),s
-      ),
-      body: SafeArea(
-        child: Column(children: <Widget>[
-          Column(children: <Widget>[
-            Text('Create new trip', style: Theme.of(context).textTheme.displayMedium),
-            SizedBox(height: 10),
-            //TODO: Search bar
+    return Stack(
+      children: [
+        Background(),
+        Scaffold(
+        appBar: AppBar(
+          // preferredSize: Size.fromHeight(30.0),s
+        ),
+        body: SafeArea(
+          child: Column(children: <Widget>[
+            Column(children: <Widget>[
+              Text('Create new trip', style: Theme.of(context).textTheme.displayMedium),
+              SizedBox(height: 10),
+              //TODO: Search bar
 
-            SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
-            SizedBox(height: 30),
-            Row(children: <Widget>[
-              createButtonWithImage(
-                  'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
-              createButtonWithImage('assets/photos/createSightSeeingTrip.png',
-                  'Sight  Seeing Trip', 1),
-            ]),
-            Row(children: <Widget>[
-              createButtonWithImage(
-                  'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
-              createButtonWithImage(
-                  'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
+              SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
+              SizedBox(height: 30),
+              Row(children: <Widget>[
+                createButtonWithImage(
+                    'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
+                createButtonWithImage('assets/photos/createSightSeeingTrip.png',
+                    'Sight  Seeing Trip', 1),
+              ]),
+              Row(children: <Widget>[
+                createButtonWithImage(
+                    'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
+                createButtonWithImage(
+                    'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
+              ]),
             ]),
           ]),
-        ]),
-      ),
+        ),
+      ),]
     );
   }
 }

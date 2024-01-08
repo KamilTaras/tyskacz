@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
-
+import 'background.dart';
 
 class AttractionDescriptionPage extends StatelessWidget {
   AttractionDescriptionPage({super.key, required this.attraction});
@@ -173,76 +173,80 @@ class AttractionDescriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
+    return Stack(
+      children: [
+        Background(),
+        Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(30.0),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              color: Constant.mainBackgroundColor,
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(
-                  vertical: mainContainerMargin,
-                  horizontal: mainContainerMargin),
-              width:
-                  MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-              height: MediaQuery.of(context).size.height -
-                  30 -
-                  2 * mainContainerMargin,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    //TODO: insert pic
-                    Container(
-                      width: 300,
-                      height:200,
-                      child: Image.network(
-                        attraction.photoURL,
-                        fit: BoxFit.fill,
+        body: SafeArea(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                color: Constant.mainBackgroundColor,
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(
+                    vertical: mainContainerMargin,
+                    horizontal: mainContainerMargin),
+                width:
+                MediaQuery.of(context).size.width - 2 * mainContainerMargin,
+                height: MediaQuery.of(context).size.height -
+                    30 -
+                    2 * mainContainerMargin,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      //TODO: insert pic
+                      Container(
+                        width: 300,
+                        height:200,
+                        child: Image.network(
+                          attraction.photoURL,
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildElevatedTextContainer(
-                      40,
-                      Constant.mainGreenColor,
-                      attraction.name,
-                      titleFontSize,
-                      Colors.black,
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildRatingContainer(),
-                    SizedBox(height: sizedBoxHeight),
-                    //TODO: container size dependant length of description
-                    Container(
-                      height: 220,
-                      child: ListView(
-                        children: [
-                          buildElevatedTextContainer(
-                            500,
-                            Constant.mainBackgroundColor,
-                            attraction.description,
-                            15,
-                            Colors.black,
-                          ),
-                        ],
+                      SizedBox(height: sizedBoxHeight),
+                      buildElevatedTextContainer(
+                        40,
+                        Constant.mainGreenColor,
+                        attraction.name,
+                        titleFontSize,
+                        Colors.black,
                       ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildInfoContainer(context),
-                  ],
+                      SizedBox(height: sizedBoxHeight),
+                      buildRatingContainer(),
+                      SizedBox(height: sizedBoxHeight),
+                      //TODO: container size dependant length of description
+                      Container(
+                        height: 220,
+                        child: ListView(
+                          children: [
+                            buildElevatedTextContainer(
+                              500,
+                              Constant.mainBackgroundColor,
+                              attraction.description,
+                              15,
+                              Colors.black,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: sizedBoxHeight),
+                      buildInfoContainer(context),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      ),]
     );
   }
 }
