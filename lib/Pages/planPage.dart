@@ -3,6 +3,7 @@ import 'package:tyskacz/DatabaseManagement/exportCalendar.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
+import '../../Utils/Theme/colors.dart';
 
 import 'EventPage.dart';
 import 'NavBarPages/mapsPage.dart';
@@ -49,8 +50,8 @@ class _PlanPageState extends State<PlanPage> {
                   'Your Plan',
                   style: Theme.of(context).textTheme.displayMedium,
                 )
-            )
-            ,
+            ),
+            SizedBox(height:10),
             Expanded(
               child: ListView.builder(                itemCount: plan.listOfEvents.length,
                 itemBuilder:(context, index){
@@ -74,39 +75,42 @@ class _PlanPageState extends State<PlanPage> {
               padding: const EdgeInsets.all(16.0),
               child:Column(
                 children:[
-                  SizedBox(
-                    height: 50,//not nice
-                    width: double
-                        .infinity, // Makes the button stretch to the width of the screen
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MapPage(attractions: plan.getAttractions(),)
-                            )
-                        );
-                      }, //TODO: Fill for export
-                      child: const Text("Show on map"),
-                    ),
+                  Row(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 50,//not nice
+                          width: 165, // Makes the button stretch to the width of the screen
+                          child: FilledButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MapPage(attractions: plan.getAttractions(),)
+                                  )
+                              );
+                            }, //TODO: Fill for export
+                            child: const Text("Show on map"),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          height: 50,//not nice
+                          width:165, // Makes the button stretch to the width of the screen
+                          child: FilledButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AttractionFinderPage(plan:plan)
+                                  )
+                              );
+                            }, //TODO: Fill for export
+                            child: const Text("Add Event"),
+                          ),
+                        ),
+                      ],
                   ),
-                  SizedBox(height: spaceBetweenButtons),
-                  SizedBox(
-                    height: 50,//not nice
-                    width: double
-                        .infinity, // Makes the button stretch to the width of the screen
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AttractionFinderPage(plan:plan)
-                            )
-                        );
-                      }, //TODO: Fill for export
-                      child: const Text("Add Event"),
-                    ),
-                  ),
+
                   SizedBox(height: spaceBetweenButtons),
                   SizedBox(
                     height: 50,//not nice
@@ -165,16 +169,31 @@ class _EventEntryState extends State<EventEntry> {
                 child: Container(
                   height: 100,
                   width: 120,
-                  child: Image.network(
-                    widget.event.attractionWithinEvent.photoURL,
-                    fit: BoxFit.fill,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+                    child: Image.network(
+                      widget.event.attractionWithinEvent.photoURL,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
+
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(widget.event.attractionWithinEvent.name, style:TextStyle(fontWeight: FontWeight.bold)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(widget.event.attractionWithinEvent.name, style:TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                    Container(
+                      width: 200,  // Set the desired width
+                      child: Divider(
+                        height: 20,
+                        thickness: 2,
+                        color: mainRed[400], // Choose the color you prefer
+                      ),
+                    ),
                     Container(
                       height: 70,
                       child: Text(

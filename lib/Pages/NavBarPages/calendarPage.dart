@@ -69,10 +69,7 @@ class CalendarPage extends StatelessWidget {
     // };
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Column(
           children: [

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
+import '../../Utils/Theme/colors.dart';
+
 
 import 'package:tyskacz/Pages/SearchField.dart';
 import 'AttractionPage.dart';
@@ -143,16 +145,28 @@ class _AttractionEntryState extends State<AttractionEntry> {
                 child: Container(
                   height:100,
                   width:120,
-                  child: Image.network(
-                      attraction.photoURL,
-                      fit: BoxFit.fill,
-                    ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                        attraction.photoURL,
+                        fit: BoxFit.fill,
+                      ),
+                  ),
                 ),
               ),
+
               Expanded(
                 child: Column(
                   children: <Widget>[
                     Text(attraction.name, style: TextStyle(fontWeight: FontWeight.bold)),
+                    Container(
+                      width: 200,  // Set the desired width
+                      child: Divider(
+                        height: 20,
+                        thickness: 2,
+                        color: mainRed[400], // Choose the color you prefer
+                      ),
+                    ),
                     Container(height:70,
                         child: Text(attraction.description,style:TextStyle(fontSize: 10))
                     )
