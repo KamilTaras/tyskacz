@@ -41,6 +41,14 @@ dependencies:
   ical: ^0.2.2
   path_provider: ^2.1.1
   geocode: ^1.0.3
+  flutter_native_splash: ^2.3.9
+
+flutter_native_splash:
+  background_image: assets/photos/Josh_photo.png
+  android_12:
+    image: assets/photos/Josh_photo.png
+    image_dark: assets/photos/Josh_photo.png
+
 
 
 dev_dependencies:
@@ -64,6 +72,8 @@ flutter:
     - assets/photos/Pin.png
     - assets/photos/createBusinessTrip.png
     - assets/photos/createSightSeeingTrip.png
+    - assets/photos/Josh_photo.png
+    - assets/sound/Josh_Hutcherson_whistle.mp4
   fonts:
     - family: Inter
       fonts:
