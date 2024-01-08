@@ -40,7 +40,7 @@ class _PlanPageState extends State<PlanPage> {
     return Stack(
       children: [
         Background(),
-        Scaffold(
+        Scaffold(backgroundColor: Colors.transparent,
         appBar: AppBar(
           // preferredSize: Size.fromHeight(30.0),s
         ),
@@ -57,7 +57,8 @@ class _PlanPageState extends State<PlanPage> {
               ),
               SizedBox(height:10),
               Expanded(
-                child: ListView.builder(                itemCount: plan.listOfEvents.length,
+                child: ListView.builder(
+                  itemCount: plan.listOfEvents.length,
                   itemBuilder:(context, index){
                     return EventEntry(event: plan.listOfEvents[index],
                         onTap: () {

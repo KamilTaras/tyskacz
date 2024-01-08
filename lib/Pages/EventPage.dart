@@ -180,6 +180,7 @@ class EventDescriptionPage extends StatelessWidget {
       children: [
         Background(),
         Scaffold(
+         backgroundColor: Colors.transparent,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(30.0),
           child: AppBar(
@@ -190,7 +191,7 @@ class EventDescriptionPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               Container(
-                color: Constant.mainBackgroundColor,
+                color: Colors.transparent,
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(
                     vertical: mainContainerMargin,

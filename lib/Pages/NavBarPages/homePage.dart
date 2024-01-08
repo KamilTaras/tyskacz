@@ -17,13 +17,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Stack(
       children: [
         Background(),
         Scaffold(
-          backgroundColor: Colors.transparent, // Set background color to transparent
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text('Test'),
+            elevation: 0,
             actions: [
               Switch(
                 value: themeManager.themeMode == ThemeMode.dark,
@@ -36,19 +38,21 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(
-                padding: EdgeInsets.all(70.0),
+              Container(
+                height: screenHeight * 0.30, // Adjust height based on screen height
+                width: screenHeight * 0.30,
                 child: Image(
                   image: AssetImage('assets/photos/logo_TySkacz_light.png'),
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    height: 150,
-                    width: 150,
+                    height: screenHeight * 0.25, // Adjust height based on screen height
+                    width: screenHeight * 0.25, // Adjust width based on screen height
                     child: FilledButton(
                       onPressed: () {
                         Navigator.push(
@@ -62,11 +66,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
-                  ),
-                  SizedBox(
-                    height: 150,
-                    width: 150,
+                    height: screenHeight * 0.25,
+                    width: screenHeight * 0.25,
                     child: FilledButton(
                       onPressed: () {
                         Navigator.push(
@@ -76,17 +77,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: Text('Create an\nAtraction'),
+                      child: Text('Create an\nAttraction'),
                     ),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Home Page',
-                style: TextStyle(fontSize: 25),
               ),
             ],
           ),

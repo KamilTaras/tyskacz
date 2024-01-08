@@ -50,8 +50,6 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
             children: <Widget> [
               Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
               SizedBox(height: 10),
-              SearchField(controller: _textController, hintText:'Search for attractions', height: 50, fontSize: 20, maxLines:2),
-              SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
                   itemCount: attractionList.length,

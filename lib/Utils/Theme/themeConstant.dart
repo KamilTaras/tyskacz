@@ -4,6 +4,8 @@ import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
+        scrolledUnderElevation: 0,
+        shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
     ),
     scaffoldBackgroundColor: Colors.transparent, // Set the background color for Scaffold widgets
@@ -13,6 +15,11 @@ ThemeData lightTheme = ThemeData(
         trackOutlineColor: MaterialStateProperty.all<Color>(mainBackgroundColor)),
     brightness: Brightness.light,
     primaryColor: mainGreen,
+    buttonTheme: ButtonThemeData(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+        ),
+    ),
     floatingActionButtonTheme:
     const FloatingActionButtonThemeData(backgroundColor: mainGreen),
     filledButtonTheme: FilledButtonThemeData(

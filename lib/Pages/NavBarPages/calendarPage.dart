@@ -12,6 +12,8 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final double screenHeight = MediaQuery.of(context).size.height;
     print(eventList);
     final Map<DateTime, List<Attraction>> eventsMap = {};
 
@@ -25,152 +27,90 @@ class CalendarPage extends StatelessWidget {
       }
     });
 
-    // final Map<DateTime, List<Attraction>> eventsMap = eventList.fold({}, (Map<DateTime, List<Attraction>> map, Event event) {
-    //   DateTime startDate = event.startDate;
-    //   DateTime endDate = event.endDate;
-    //   List<Attraction> attractions = [event.attractionWithinEvent];
-    //
-    //   for (var date = startDate; date.isBefore(endDate); date = date.add(Duration(days: 1))) { //If takes longer than a day add on multiple days
-    //     if (map.containsKey(date)) {
-    //       map[date]!.addAll(attractions);
-    //     } else {
-    //       map[date] = attractions;
-    //     }
-    //   }
-    //
-    //   return map;
-    // });
-    print(eventsMap);
-    // {
-    //   DateTime(2023, 1, 1): [
-    //     MockAttraction(
-    //       name: 'Pigs in Paris',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'building',
-    //     ),
-    //     MockAttraction(
-    //       name: 'Działeczka',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'deep in the forrest',
-    //     ),
-    //   ],
-    //   DateTime(2023, 1, 2): [
-    //     MockAttraction(
-    //       name: 'Tank U',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'building',
-    //     ),
-    //     MockAttraction(
-    //       name: 'Paprykarz',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'building',
-    //     ),
-    //   ],
-    // };
-
     return Stack(
-      children:[
-        Background(),
-        Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Calendar Page',
-                      style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
+        children:[
+          Background(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(),
+            body: SafeArea(
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: Column(
+                      children: <Widget> [
+                        Text(
+                          'Calendar Page',
+                          style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height:20),
+                        ListView.builder(
+                          shrinkWrap: true, // Add this line
+                          itemCount: eventsMap.length,
+                          itemBuilder: (context, index) {
+                            DateTime date = eventsMap.keys.elementAt(index);
+                            List<Attraction> attractions = eventsMap[date]!;
+                            return DayOfEventsEntry(date: date, attractions: attractions);
+                          },
+                        ),
+                      ],
                     ),
-                    SizedBox(height:20),
-                    Container(
-                      height: 500,
-                      child: ListView.builder(
-                        itemCount: eventsMap.length,
-                        itemBuilder: (context, index) {
-                          DateTime date = eventsMap.keys.elementAt(index);
-                          List<Attraction> attractions = eventsMap[date]!;
-
-                          return DayOfEventsEntry(date: date, attractions: attractions);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),]
+        ]
     );
   }
+
 }
 
 class DayOfEventsEntry extends StatelessWidget {
-  const DayOfEventsEntry({Key? key, required this.date, required this.attractions});
+  const DayOfEventsEntry({Key? key, required this.date, required this.attractions}) : super(key: key);
   final DateTime date;
   final List<Attraction> attractions;
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Text(
-              DateFormat('dd MMMM yyyy').format(date),
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: mainGreen[200], fontFamily: 'Anton-Regular'),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                DateFormat('dd MMMM yyyy').format(date),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: mainGreen[200], fontFamily: 'Anton-Regular'),
+              ),
             ),
-          ),
-          SizedBox(height: 8),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            color: Colors.white,
-            child: Column(
-              children: attractions.map((attraction) {
-                return Container(
-                  padding: const EdgeInsets.all(8.0),
-                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 16),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          width: 70,
-                          height: 70,
-                          child: Image.network(
-                            attraction.photoURL,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              color: Colors.white,
+              child: Column(
+                children: attractions.map((attraction) {
+                  return ListTile(
+                    contentPadding: const EdgeInsets.all(8.0),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        attraction.photoURL,
+                        width: 70,
+                        height: 70,
+                        fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(attraction.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Anton-Regular')),
-                            SizedBox(height: 4),
-                            Text(attraction.description, style: TextStyle(fontSize: 15,  fontFamily: 'Anton-Regular')),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                    ),
+                    title: Text(attraction.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Anton-Regular')),
+                    subtitle: Text(attraction.description, style: TextStyle(fontSize: 15, fontFamily: 'Anton-Regular')),
+                  );
+                }).toList(),
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
   }
 }
-
-
