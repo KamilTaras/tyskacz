@@ -3,6 +3,8 @@ import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
 
+import '../../DatabaseManagement/attractionInformation.dart';
+import '../../DatabaseManagement/database.dart';
 import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
@@ -13,6 +15,8 @@ class PlanListPage extends StatefulWidget {
 }
 
 class _PlanListPageState extends State<PlanListPage> {
+  final DatabaseService databaseService = DatabaseService();
+
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
       height: height,
@@ -42,36 +46,33 @@ class _PlanListPageState extends State<PlanListPage> {
                 height: 50,
                 width: 200,
                 child: Text(
-                  'Your Plan',
+                  'Your Plans',
                   style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
                 )
-            )
-            ,
-            Expanded(
-              child: ListView.builder(
-                itemCount: plansList.length,
-                itemBuilder:(context, index){
-                  return PlanEntry(
-                      plan: plansList[index],
+            ),
+            FutureBuilder<List<Plan>>(
+            future: databaseService.getPlans(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Text('No attractions found');
+              }
+              return Expanded(
+                  child: ListView.builder(
+                    itemCount: plansList.length,
+                    itemBuilder:(context, index){
+                     PlanEntry(
+                      plan: snapshot.data![index],
                       onSwipe: () {
                         setState(() {plansList.removeAt(index);});
                       }
                   );
                 },
-              ),
-            ),
-            SizedBox(height: 50), // Optional spacing
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              // child: SizedBox(
-              //   height: 69,
-              //   width: double
-              //       .infinity, // Makes the button stretch to the width of the screen
-              //   child: FilledButton(
-              //     onPressed: () {}, //TODO: Fill for export
-              //     child: const Text("Export Data To Calendar"),
-              //   ),
-              // ),
+              )
+            );
+            }
             ),
           ] ,
         ),

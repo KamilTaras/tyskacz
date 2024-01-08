@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
@@ -13,7 +14,7 @@ class AttractionFinderPage extends StatefulWidget {
   State<AttractionFinderPage> createState() => _AttractionFinderPage();
 }
 class _AttractionFinderPage extends State<AttractionFinderPage> {
-
+  final DatabaseService databaseService = DatabaseService();
 
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
@@ -83,16 +84,9 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     ),
                   ),
                   onPressed: () {
-                    // mockUserPlanList.add(
-                    //     Plan(
-                    //         name: 'Plan',
-                    //         listOfEvents: widget.chosenAttractions.map((e) => Event(attractionWithinEvent: e, startDate: DateTime.now(), endDate: DateTime.now())),
-                    //         listOfAttractions: widget.chosenAttractions,
-                    //         tripType: TripType.Sightseeing,
-                    //     )
-                    // )
+                    databaseService.addPlan(widget.plan);
                   },
-                  child: Text('Pack Your Bags'),
+                  child: Text('Save'),
                 ),
               ),
             ),

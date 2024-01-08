@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:latlong2/latlong.dart';
 
 class Attraction {
+  int? id;
   String name;
   String description;
   LatLng coordinates;
@@ -12,6 +13,7 @@ class Attraction {
   String? link; // Optional property
   String? address; // Optional property
   Attraction({
+    this.id,
     required this.name,
     required this.description,
     required this.coordinates,
@@ -31,10 +33,24 @@ class Attraction {
     }
     return address;
   }
+
+  Map<String, Object?> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'coordinates': coordinates,
+      'photoURL': photoURL,
+      'review': review,
+      'link': link,
+      'address': address,
+    };
+
+  }
 // Other methods and functionality can be added here
 }
 
 class Event {
+  int? id;
   final Attraction attractionWithinEvent;
   final DateTime startDate;
   final DateTime endDate;
