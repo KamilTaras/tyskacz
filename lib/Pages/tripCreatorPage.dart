@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tyskacz/Pages/attractionFinderPage.dart';
 
-import '../Utils/constantValues.dart';
 
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});

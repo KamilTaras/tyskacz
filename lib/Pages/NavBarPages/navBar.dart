@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tyskacz/Utils/Theme/themeConstant.dart';
-
+import '../Utils/Theme/themeConstant.dart';
 import 'calendarPage.dart';
 import 'homePage.dart';
 import 'mapsPage.dart';

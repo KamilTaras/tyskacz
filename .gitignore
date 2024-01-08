@@ -44,7 +44,7 @@ app.*.map.json
 /android/agit pp/release
 
 # Flutter auto-generated files
-lib/Utils/configForDebugWindows.dart
+lib/Pages/Utils/configForDebugWindows.dart
 lib/playground.dart
 
 # Ignore generated plugin registrants and cmake files for Linux and Windows builds

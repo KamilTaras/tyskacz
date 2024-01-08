@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../Utils/constantValues.dart';
+import 'Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 
 class AttractionDescriptionPage extends StatelessWidget {

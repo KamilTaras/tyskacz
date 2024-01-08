@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tyskacz/Utils/Theme/colors.dart';
-import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 
 class AttractionCreationPage extends StatefulWidget {
