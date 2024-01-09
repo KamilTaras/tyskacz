@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
     final double logoSize = screenHeight * 0.3;
 
     return Stack(
@@ -52,8 +53,8 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    height: screenHeight * 0.25, // Adjust height based on screen height
-                    width: screenHeight * 0.25, // Adjust width based on screen height
+                    height: screenHeight * 0.20, // Adjust height based on screen height
+                    width: screenWidth * 0.45,// Adjust width based on screen height
                     child: FilledButton(
                       onPressed: () {
                         Navigator.push(
@@ -67,8 +68,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.25,
-                    width: screenHeight * 0.25,
+                    height: screenHeight * 0.20,
+                    width: screenWidth * 0.45,
                     child: FilledButton(
                       onPressed: () {
                         Navigator.push(
