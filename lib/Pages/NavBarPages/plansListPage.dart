@@ -3,16 +3,17 @@ import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
 
+import '../../DatabaseManagement/database.dart';
 import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
-  PlanListPage({super.key});
-  final plansList = mockUserPlanList;
+  const PlanListPage({super.key});
   @override
   State<PlanListPage> createState() => _PlanListPageState();
 }
 
 class _PlanListPageState extends State<PlanListPage> {
+  final DatabaseService databaseService = DatabaseService();
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
       height: height,
@@ -29,7 +30,6 @@ class _PlanListPageState extends State<PlanListPage> {
 
   @override
   Widget build(BuildContext context) {
-    var plansList = widget.plansList;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,19 +47,34 @@ class _PlanListPageState extends State<PlanListPage> {
                 )
             )
             ,
-            Expanded(
-              child: ListView.builder(
-                itemCount: plansList.length,
-                itemBuilder:(context, index){
-                  return PlanEntry(
-                      plan: plansList[index],
-                      onSwipe: () {
-                        setState(() {plansList.removeAt(index);});
-                      }
+            FutureBuilder<List<Plan>>(
+              future: databaseService.getPlans(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Text('No plans found');
+                }
+                return
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return PlanEntry(
+                            plan: snapshot.data![index],
+                            onSwipe: () {
+                              setState(() {
+                                databaseService.deletePlan(snapshot.data![index].id!);
+                                snapshot.data!.removeAt(index);
+                              });
+                            }
+                        );
+                      },
+                    ),
                   );
-                },
-              ),
-            ),
+              },
+    ),
             SizedBox(height: 50), // Optional spacing
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -124,8 +139,3 @@ class _PlanEntryState extends State<PlanEntry> {
     );
   }
 }
-
-
-
-
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/colors.dart';
 import '../DatabaseManagement/attractionInformation.dart';
@@ -18,7 +19,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _localizationController = TextEditingController();
-
+  DatabaseService databaseService = DatabaseService();
   final double componentsMargin = 5.0;
   final double ratingFontSize = 20.0;
   final double titleFontSize = 25.0;
@@ -69,7 +70,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                     onPressed: () async {
                       try{
                         var coords=LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1]));
-                        mockAttractionList.add(
+                        databaseService.addAttraction(
                             Attraction(
                               photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
                               name: _nameController.text,
@@ -87,7 +88,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                       try {
                         Coordinates coordinates = await geoCode.forwardGeocoding(
                             address: _localizationController.text);
-                        mockAttractionList.add(
+                        databaseService.addAttraction(
                             Attraction(
                               photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
                               name: _nameController.text,

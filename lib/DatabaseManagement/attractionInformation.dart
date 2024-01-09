@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:latlong2/latlong.dart';
 
 class Attraction {
+  int? id;
   String name;
   String description;
   LatLng coordinates;
@@ -12,11 +13,11 @@ class Attraction {
   String? link; // Optional property
   String? address; // Optional property
   Attraction({
+    this.id,
     required this.name,
     required this.description,
     required this.coordinates,
     required this.photoURL,
-    this.review,
     this.link,
     this.address,
   });
@@ -31,10 +32,38 @@ class Attraction {
     }
     return address;
   }
+
+  Map<String, Object?> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'latitude': coordinates.latitude,
+      'longitude': coordinates.longitude,
+      'photoURL': photoURL,
+      'link': link,
+      'address': address,
+    };
+
+  }
+  //from Json
+  static Attraction fromJson(Map<String, dynamic> attractionMap) {
+    print('getting attraction from attractionMap: $attractionMap');
+    return Attraction(
+      id: attractionMap['id'],
+      name: attractionMap['name'],
+      description: attractionMap['description'],
+      coordinates: LatLng(attractionMap['latitude'], attractionMap['longitude']),
+      photoURL: attractionMap['photoURL'],
+      link: attractionMap['link'],
+      address: attractionMap['address'],
+    );
+
+  }
 // Other methods and functionality can be added here
 }
 
 class Event {
+  int? id;
   final Attraction attractionWithinEvent;
   final DateTime startDate;
   final DateTime endDate;
@@ -43,7 +72,26 @@ class Event {
     return 'Event: ${attractionWithinEvent.name}, ${startDate.toString()}, ${endDate.toString()}';
   }
   Event(
-      {required this.attractionWithinEvent,
+      {this.id,
+        required this.attractionWithinEvent,
       required this.startDate,
       required this.endDate,});
+
+  Map<String, Object?> toJson() {
+    return {
+      'attractionID': attractionWithinEvent.id,
+      'startDate': startDate.toString(),
+      'endDate': endDate.toString(),
+    };
+  }
+
+  static Event fromJson(Map<String, dynamic> eventMap, Attraction attraction) {
+    print('getting event from eventMap: $eventMap');
+    return Event(
+      id: eventMap['eventID'],
+      attractionWithinEvent: attraction,
+      startDate: DateTime.parse(eventMap['startDate']),
+      endDate: DateTime.parse(eventMap['endDate']),
+    );
+  }
 }

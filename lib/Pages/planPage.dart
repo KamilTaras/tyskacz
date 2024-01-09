@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import 'package:tyskacz/DatabaseManagement/exportCalendar.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
@@ -16,6 +17,7 @@ class PlanPage extends StatefulWidget {
 }
 
 class _PlanPageState extends State<PlanPage> {
+  DatabaseService databaseService = DatabaseService();
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
       height: height,
@@ -64,7 +66,12 @@ class _PlanPageState extends State<PlanPage> {
                     );
                     },
 
-                      onSwipe: () {setState(() {plan.listOfEvents.removeAt(index);});}
+                      onSwipe: () {
+                    setState(() {
+                      print(plan.listOfEvents[index].toJson());
+                      databaseService.deletePlanEvent(plan.listOfEvents[index].id!);
+                      plan.listOfEvents.removeAt(index);
+                      });}
                   );
                 },
               ),
