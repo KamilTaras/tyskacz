@@ -7,7 +7,9 @@ import 'Utils/Theme/themeConstant.dart';
 import 'Utils/Theme/themeManager.dart';
 import 'Utils/configForDebugWindows.dart';
 
+
 void main() async {
+
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     WidgetsFlutterBinding.ensureInitialized();
   // Must add this line.

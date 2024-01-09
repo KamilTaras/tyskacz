@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/colors.dart';
 import '../DatabaseManagement/attractionInformation.dart';
@@ -6,6 +7,7 @@ import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
 import 'background.dart';
+import 'package:geocode/geocode.dart';
 
 class AttractionCreationPage extends StatefulWidget {
   const AttractionCreationPage({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _localizationController = TextEditingController();
-
+  DatabaseService databaseService = DatabaseService();
   final double componentsMargin = 5.0;
   final double ratingFontSize = 20.0;
   final double titleFontSize = 25.0;
@@ -75,14 +77,43 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                     width: double.infinity,
                     child:FilledButton(
                       //TODO: create attraction after pressing the button
-                      onPressed: (){
-                        mockAttractionList.add(
+                      onPressed: ()async{
+                        try{
+                        var coords=LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1]));
+                        databaseService.addAttraction(
                             Attraction(
                               photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
                               name: _nameController.text,
                               description: _descriptionController.text,
-                              coordinates: LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1])),
-                            ));
+                              coordinates: coords,
+                              //,
+                            )
+                        );
+                      }catch(e){
+                        print(e);
+                      }
+
+                      GeoCode geoCode = GeoCode(apiKey: "412336480991130498790x31447");
+
+                      try {
+                        Coordinates coordinates = await geoCode.forwardGeocoding(
+                            address: _localizationController.text);
+                        databaseService.addAttraction(
+                            Attraction(
+                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+
+                              coordinates: LatLng(coordinates.latitude!.toDouble(), coordinates.longitude!.toDouble()),
+                              //,
+                            )
+                        );
+                        //print("Latitude: ${coordinates.latitude}");
+                        //print("Longitude: ${coordinates.longitude}");
+                      } catch (e) {
+                        print(e);
+                      }
+
                       },
                       child: Text('Save'),
                     ),

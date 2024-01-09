@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
@@ -12,11 +13,15 @@ import 'SwipableListEntry.dart';
 
 class AttractionFinderPage extends StatefulWidget {
   AttractionFinderPage({super.key, required this.plan});
+
   Plan plan;
+
   @override
   State<AttractionFinderPage> createState() => _AttractionFinderPage();
 }
+
 class _AttractionFinderPage extends State<AttractionFinderPage> {
+  final DatabaseService databaseService = DatabaseService();
 
   TextEditingController _textController = TextEditingController();
 
@@ -43,7 +48,6 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     final double buttonHeight = screenHeight * 0.1;
     final double spaceUnderTitle = screenHeight * 0.05;
 
-    var attractionList = mockAttractionList;
     return Stack(
       children:[
         Background(),
@@ -58,28 +62,46 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
             children: <Widget> [
               Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
               SizedBox(height:spaceUnderTitle),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: attractionList.length,
-                  itemBuilder:(context, index){
-                    return AttractionEntry(
-                        attraction: attractionList[index],
-                        onSwipe: () {
-                          widget.plan.listOfEvents.add(Event(attractionWithinEvent:attractionList[index],startDate: DateTime.now(), endDate: DateTime.now()));//TODO: add date choice
-                          //setState(() {attractionList.removeAt(index);});
-                        },
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AttractionDescriptionPage(attraction:attractionList[index])
-                              )
-                          );
-                        }
-                    );
-                  },
-                ),
-              ), // Optional spacing
+              FutureBuilder<List<Attraction>>(
+                future: databaseService.getAttractions(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Text('No attractions found');
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return AttractionEntry(
+                            attraction: snapshot.data![index],
+                            onSwipe: () {
+                              widget.plan.listOfEvents.add(Event(
+                                  attractionWithinEvent: snapshot.data![index],
+                                  startDate: DateTime.now(),
+                                  endDate: DateTime
+                                      .now())); //TODO: add date choice
+                              //setState(() {attractionList.removeAt(index);});
+                            },
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AttractionDescriptionPage(
+                                              attraction: snapshot.data![index])
+                                  )
+                              );
+                            }
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+ // Optional spacing
               Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Container(
@@ -96,21 +118,19 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                       //     )
                       // )
                     },
-                    child: Text('Pack Your Bags'),
+                    child: Text('Save'),
                   ),
                 ),
               ),
             ] ,
           ),
         ),
-      ),]
+      ),
+    ]
     );
+
   }
 }
-
-
-
-
 
 
 class AttractionEntry extends StatefulWidget {
@@ -147,8 +167,8 @@ class _AttractionEntryState extends State<AttractionEntry> {
               Padding(
                 padding: EdgeInsets.all(5),
                 child: Container(
-                  height:100,
-                  width:120,
+                  height: 100,
+                  width: 120,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
@@ -171,8 +191,9 @@ class _AttractionEntryState extends State<AttractionEntry> {
                         color: mainRed[400], // Choose the color you prefer
                       ),
                     ),
-                    Container(height:70,
-                        child: Text(attraction.description,style:TextStyle(fontSize: 10))
+                    Container(height: 70,
+                        child: Text(attraction.description,
+                            style: TextStyle(fontSize: 10))
                     )
                     // Other widgets if needed
                   ],

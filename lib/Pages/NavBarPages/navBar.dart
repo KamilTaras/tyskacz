@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
@@ -17,11 +18,11 @@ class NavBarClass extends StatefulWidget {
 class _NavBarClassState extends State<NavBarClass> {
   int selectedItem = 0;
   late List allPages;
-
+  DatabaseService databaseService = DatabaseService();
   HomePage homePage = const HomePage();
-  PlanListPage planPage = PlanListPage();
-  CalendarPage calendarPage = CalendarPage(eventList: mockUserPlanList.map((e) => e.listOfEvents).expand((e) => e).toList());
-  MapPage mapPage = MapPage(attractions: mockAttractionList);
+  PlanListPage planPage = const PlanListPage();
+  late UserCalendarPage calendarPage = const UserCalendarPage();
+  GlobalMapPage mapPage = const GlobalMapPage();
 
   @override
   void initState() {
