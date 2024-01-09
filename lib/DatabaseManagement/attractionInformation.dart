@@ -18,7 +18,6 @@ class Attraction {
     required this.description,
     required this.coordinates,
     required this.photoURL,
-    this.review,
     this.link,
     this.address,
   });
@@ -41,7 +40,6 @@ class Attraction {
       'latitude': coordinates.latitude,
       'longitude': coordinates.longitude,
       'photoURL': photoURL,
-      'review': review,
       'link': link,
       'address': address,
     };
@@ -60,7 +58,33 @@ class Event {
     return 'Event: ${attractionWithinEvent.name}, ${startDate.toString()}, ${endDate.toString()}';
   }
   Event(
-      {required this.attractionWithinEvent,
+      {this.id,
+        required this.attractionWithinEvent,
       required this.startDate,
       required this.endDate,});
+
+  Map<String, Object?> toJson() {
+    return {
+      'attractionID': attractionWithinEvent.id,
+      'startDate': startDate.toString(),
+      'endDate': endDate.toString(),
+    };
+  }
+
+  static Event fromJson(Map<String, dynamic> eventMap) {
+    return Event(
+      id: eventMap['id'],
+      attractionWithinEvent: Attraction(
+        id: eventMap['attractionWithinEvent'],
+        name: eventMap['name']??'',
+        description: eventMap['description'],
+        coordinates: LatLng(eventMap['latitude'], eventMap['longitude']),
+        photoURL: eventMap['photoURL'],
+        link: eventMap['link'],
+        address: eventMap['address'],
+      ),
+      startDate: DateTime.parse(eventMap['startDate']),
+      endDate: DateTime.parse(eventMap['endDate']),
+    );
+  }
 }

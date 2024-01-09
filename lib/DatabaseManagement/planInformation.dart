@@ -33,7 +33,7 @@ class Plan {
     return Plan(
       id: json['id'],
       name: json['name'],
-      tripType: json['tripType'],
+      tripType: TripType.values[json['tripType']],
       listOfEvents: [], // Populate this based on your JSON structure
     );
   }

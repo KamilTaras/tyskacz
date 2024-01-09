@@ -9,10 +9,13 @@ import 'SwipableListEntry.dart';
 
 class AttractionFinderPage extends StatefulWidget {
   AttractionFinderPage({super.key, required this.plan});
+
   Plan plan;
+
   @override
   State<AttractionFinderPage> createState() => _AttractionFinderPage();
 }
+
 class _AttractionFinderPage extends State<AttractionFinderPage> {
   final DatabaseService databaseService = DatabaseService();
 
@@ -39,38 +42,56 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
       ),
       body: SafeArea(
         child: Column(
-          children: <Widget> [
+          children: <Widget>[
             Container(
-              height: 50,
+                height: 50,
                 width: 200,
                 child: Text(
                   'Select attractions you would like to visit',
-                  style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
                 )
-            )
-            ,
-             Expanded(
-               child: ListView.builder(
-                 itemCount: attractionList.length,
-                 itemBuilder:(context, index){
-                   return AttractionEntry(
-                       attraction: attractionList[index],
-                   onSwipe: () {
-                         widget.plan.listOfEvents.add(Event(attractionWithinEvent:attractionList[index],startDate: DateTime.now(), endDate: DateTime.now()));//TODO: add date choice
-                     //setState(() {attractionList.removeAt(index);});
-                   },
-                   onTap: () {
-                     Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                           builder: (context) => AttractionDescriptionPage(attraction:attractionList[index])
-                       )
-                     );
-                   }
-                   );
-                 },
-               ),
-             ),
+            ),
+
+            FutureBuilder<List<Attraction>>(
+              future: databaseService.getAttractions(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Text('No attractions found');
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return AttractionEntry(
+                          attraction: snapshot.data![index],
+                          onSwipe: () {
+                            widget.plan.listOfEvents.add(Event(
+                                attractionWithinEvent: snapshot.data![index],
+                                startDate: DateTime.now(),
+                                endDate: DateTime
+                                    .now())); //TODO: add date choice
+                            //setState(() {attractionList.removeAt(index);});
+                          },
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AttractionDescriptionPage(
+                                            attraction: attractionList[index])
+                                )
+                            );
+                          }
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
             SizedBox(height: 50), // Optional spacing
             Padding(
               padding: EdgeInsets.all(16.0),
@@ -80,27 +101,30 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                 child: FilledButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
+                      borderRadius: BorderRadius.circular(
+                          20.0), // Adjust the value as needed
                     ),
                   ),
                   onPressed: () {
-                    databaseService.addPlan(widget.plan);
+                    //if plan exists update it, if not create new one
+                    //if (widget.plan.id != null)
+                    //  databaseService.updatePlan(widget.plan);
+                    //else
+                      databaseService.addPlan(widget.plan);
+
+
                   },
                   child: Text('Save'),
                 ),
               ),
             ),
             SizedBox(height: 20),
-          ] ,
+          ],
         ),
       ),
     );
   }
 }
-
-
-
-
 
 
 class AttractionEntry extends StatefulWidget {
@@ -137,20 +161,21 @@ class _AttractionEntryState extends State<AttractionEntry> {
               Padding(
                 padding: EdgeInsets.all(5),
                 child: Container(
-                  height:100,
-                  width:120,
+                  height: 100,
+                  width: 120,
                   child: Image.network(
-                      attraction.photoURL,
-                      fit: BoxFit.fill,
-                    ),
+                    attraction.photoURL,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               Expanded(
                 child: Column(
                   children: <Widget>[
                     Text(attraction.name),
-                    Container(height:70,
-                        child: Text(attraction.description,style:TextStyle(fontSize: 10))
+                    Container(height: 70,
+                        child: Text(attraction.description,
+                            style: TextStyle(fontSize: 10))
                     )
                     // Other widgets if needed
                   ],

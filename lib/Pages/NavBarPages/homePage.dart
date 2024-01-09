@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
 import '../../main.dart';
 import '../attractionCreatorPage.dart';
 import '../EventPage.dart';
@@ -43,16 +44,20 @@ class _HomePageState extends State<HomePage> {
               width: 150,
               child: FilledButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SignIn()));
+                  DatabaseService.deleteDB();
                 },
-                child: Text('sign in'),
+                child: Text('delete DB'),
               )),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              FilledButton(
+                onPressed: () {
+                  DatabaseService databaseService = DatabaseService();
+                  databaseService.getTableNames();
+                },
+                child: Text('show tables'),
+              ),
               SizedBox(
                   height: 150,
                   width: 150,

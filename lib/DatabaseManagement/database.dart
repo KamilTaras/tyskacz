@@ -26,8 +26,12 @@ class DatabaseService {
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
+
+
+
   Future _onCreate(Database db, int version) async {
-    await db.execute('''
+    try{
+      await db.execute('''
       CREATE TABLE Attraction (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
@@ -35,20 +39,42 @@ class DatabaseService {
         description TEXT,
         latitude REAL,
         longitude REAL,
-        address TEXT
+        address TEXT,
+        link TEXT
+      );'''
       );
+    } catch (e) {
+      print(e);
+      print('attraction');
+    }
+    try{
+      await db.execute('''
       CREATE TABLE Event (
         eventID INTEGER PRIMARY KEY AUTOINCREMENT,
-        dateStart TEXT NOT NULL,
-        dateEnd TEXT NOT NULL,
+        startDate TEXT NOT NULL,
+        endDate TEXT NOT NULL,
         attractionID INTEGER,
         FOREIGN KEY (attractionID) REFERENCES Attraction(id)
+      );'''
       );
+    } catch (e) {
+      print(e);
+      print('event');
+    }
+    try{
+      await db.execute('''
       CREATE TABLE Plan (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         tripType INTEGER
+      );'''
       );
+    } catch (e) {
+      print(e);
+      print('plan');
+    }
+    try{
+      await db.execute('''
       CREATE TABLE EventList (
         planID INTEGER,
         eventID INTEGER,
@@ -57,9 +83,27 @@ class DatabaseService {
         FOREIGN KEY (eventID) REFERENCES Event(eventID)
       );
     ''');
-    print(getAttractions());
+    } catch (e) {
+      print(e);
+      print('eventList');
+    }
+
   }
 
+  void getTableNames() async {
+    final db = await database;
+    List<Map<String, dynamic>> tables = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table';",
+    );
+
+    List<String> tableNames = tables.map((table) => table['name'] as String).toList();
+    print(tableNames);
+  }
+
+  static deleteDB() async {
+    String path = join(await getDatabasesPath(), 'travel_app.db');
+    await deleteDatabase(path);
+  }
 
   // CRUD operations for Attraction
   Future<void> addAttraction(Attraction attraction) async {
@@ -79,7 +123,6 @@ class DatabaseService {
         description: maps[i]['description'],
         coordinates: LatLng(maps[i]['latitude'], maps[i]['longitude']),
         photoURL: maps[i]['photoURL'],
-        review: maps[i]['review'],
         link: maps[i]['link'],
         address: maps[i]['address'],
       );
@@ -110,17 +153,74 @@ class DatabaseService {
 
   Future<void> addPlan(Plan plan) async {
     final db = await database;
-    await db.insert('Plan', plan.toJson());
+    var planId = await db.insert('Plan', plan.toJson());
+    var events = plan.listOfEvents;
+    for (Event event in events) {
+      var eventId = await db.insert('Event', event.toJson());
+      await db.insert('EventList', {'planID': planId, 'eventID': eventId});
+    }
+  print(getPlans());
+  }
+
+  Future<void> updatePlan(Plan plan) async {
+    final db = await database;
+    await db.update(
+      'Plan',
+      plan.toJson(),
+      where: 'id = ?',
+      whereArgs: [plan.id],
+    );
+  }
+
+  Future<void> deletePlan(int planId) async {
+    final db = await database;
+    await db.delete(
+      'Plan',
+      where: 'id = ?',
+      whereArgs: [planId],
+    );
+  }
+
+  Future<Plan> addEventToPlan() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('Plan');
+    Plan plan = Plan.fromJson(maps[0]);
+    final List<Map<String, dynamic>> events = await db.query('EventList');
+    for (Map<String, dynamic> event in events) {
+      final List<Map<String, dynamic>> eventMap = await db.query('Event', where: 'eventID = ?', whereArgs: [event['eventID']]);
+      plan.listOfEvents.add(Event.fromJson(eventMap[0]));
+    }
+    return plan;
   }
 
 
   Future<List<Plan>> getPlans() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('Plan');
+    List<Plan> plans = [];
+    for (Map<String, dynamic> map in maps) {
+      Plan plan = Plan.fromJson(map);
+      final List<Map<String, dynamic>> events = await db.query('EventList');
+      for (Map<String, dynamic> event in events) {
+        final List<Map<String, dynamic>> eventMap = await db.query('Event', where: 'eventID = ?', whereArgs: [event['eventID']]);
+        //handle null
+        if(eventMap.isEmpty){
+          continue;
+        }
 
-    return List.generate(maps.length, (i) {
-      return Plan.fromJson(maps[i]);
-    });
+        plan.listOfEvents.add(Event.fromJson(eventMap[0]));
+      }
+      plans.add(plan);
+    }
+    return plans;
+  }
+
+  Future<void> addEvent(Event event) async {
+    final db = await database;
+    // if(event.attractionWithinEvent.id == null){
+    //   await addAttraction(event.attractionWithinEvent);
+    // }
+    await db.insert('Event', event.toJson());
   }
 
   Future<void> deleteEvent(int eventId) async {
