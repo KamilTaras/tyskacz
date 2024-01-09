@@ -26,7 +26,7 @@ class _SignInState extends State<SignIn> {
                 child: Container(
                   width: 200,
                   height: 150,
-                  child: Image.asset('assets/photos/logo_TySkacz_light.png'),
+                  child: Image.asset('assets/photos/logo_Tyskacz_light.png'),
                 ),
               ),
             ),
