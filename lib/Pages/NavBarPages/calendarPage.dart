@@ -5,9 +5,38 @@ import '../background.dart';
 
 import '../../Utils/constantValues.dart';
 import '../../Utils/Theme/colors.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
+
+class UserCalendarPage extends StatefulWidget {
+  const UserCalendarPage({super.key});
+
+  @override
+  State<UserCalendarPage> createState() => _UserCalendarPageState();
+}
+
+class _UserCalendarPageState extends State<UserCalendarPage> {
+  @override
+  DatabaseService databaseService = DatabaseService();
+
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Event>>(
+        future: databaseService.getEvents(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Text('No events found');
+          }
+          List<Event> eventList = snapshot.data!;
+          return CalendarPage(eventList: eventList);
+        });
+  }
+}
 
 class CalendarPage extends StatelessWidget {
   CalendarPage({Key? key, required this.eventList});
+
   List<Event> eventList;
 
   @override
@@ -23,7 +52,9 @@ class CalendarPage extends StatelessWidget {
       DateTime startDate = event.startDate;
       DateTime endDate = event.endDate;
 
-      for (var date = startDate; date.isBefore(endDate); date = date.add(Duration(days: 1))) {
+      for (var date = startDate;
+          date.isBefore(endDate);
+          date = date.add(Duration(days: 1))) {
         eventsMap.putIfAbsent(date, () => []);
         eventsMap[date]!.add(event.attractionWithinEvent);
       }
@@ -58,7 +89,8 @@ class CalendarPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           DateTime date = eventsMap.keys.elementAt(index);
                           List<Attraction> attractions = eventsMap[date]!;
-                          return DayOfEventsEntry(date: date, attractions: attractions);
+                          return DayOfEventsEntry(
+                            date: date, attractions: attractions);
                         },
                       ),
                     ),
@@ -74,7 +106,8 @@ class CalendarPage extends StatelessWidget {
 }
 
 class DayOfEventsEntry extends StatelessWidget {
-  const DayOfEventsEntry({Key? key, required this.date, required this.attractions}) : super(key: key);
+  const DayOfEventsEntry(
+      {Key? key, required this.date, required this.attractions}) : super(key: key);
   final DateTime date;
   final List<Attraction> attractions;
 

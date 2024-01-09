@@ -3,8 +3,37 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../DatabaseManagement/attractionInformation.dart';
+import '../../DatabaseManagement/database.dart';
 import '../AttractionPage.dart';
 import '../EventPage.dart';
+
+class GlobalMapPage extends StatefulWidget {
+  const GlobalMapPage({super.key});
+
+  @override
+  State<GlobalMapPage> createState() => _GlobalMapPageState();
+}
+
+class _GlobalMapPageState extends State<GlobalMapPage> {
+  DatabaseService databaseService = DatabaseService();
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Attraction>>(
+        future: databaseService.getAttractions(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Text('No attractions found');
+          }
+          List<Attraction> attractions = snapshot.data!;
+          return MapPage(attractions: attractions);
+        });
+    return const Placeholder();
+  }
+}
+
 
 
 class MapPage extends StatefulWidget {
