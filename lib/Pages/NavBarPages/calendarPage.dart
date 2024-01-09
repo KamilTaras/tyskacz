@@ -32,31 +32,35 @@ class CalendarPage extends StatelessWidget {
           Background(),
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(),
+            appBar: AppBar(
+
+            ),
             body: SafeArea(
-              child: Column(
-                children: <Widget>[
-                  Center(
-                    child: Column(
-                      children: <Widget> [
-                        Text(
-                          'Calendar Page',
-                          style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height:20),
-                        ListView.builder(
-                          shrinkWrap: true, // Add this line
-                          itemCount: eventsMap.length,
-                          itemBuilder: (context, index) {
-                            DateTime date = eventsMap.keys.elementAt(index);
-                            List<Attraction> attractions = eventsMap[date]!;
-                            return DayOfEventsEntry(date: date, attractions: attractions);
-                          },
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      'Calendar Page',
+                      style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 20),
+                    Container(
+                      height: MediaQuery.of(context).size.height - // Adjust the height as needed
+                          kToolbarHeight -
+                          MediaQuery.of(context).padding.top -
+                          20, // Additional padding
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: eventsMap.length,
+                        itemBuilder: (context, index) {
+                          DateTime date = eventsMap.keys.elementAt(index);
+                          List<Attraction> attractions = eventsMap[date]!;
+                          return DayOfEventsEntry(date: date, attractions: attractions);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
