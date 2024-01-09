@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/attraction.dart';
-import '../models/plan.dart';
 
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
@@ -38,29 +35,11 @@ class DatabaseService {
         longitude REAL,
         location TEXT
       );
-      CREATE TABLE Event (
-        eventID INTEGER PRIMARY KEY AUTOINCREMENT,
-        dateStart TEXT NOT NULL,
-        dateEnd TEXT NOT NULL,
-        attractionID INTEGER,
-        FOREIGN KEY (attractionID) REFERENCES Attraction(id)
-      );
-      CREATE TABLE Plan (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        tripType INTEGER
-      );
-      CREATE TABLE EventList (
-        planID INTEGER,
-        eventID INTEGER,
-        PRIMARY KEY (planID, eventID),
-        FOREIGN KEY (planID) REFERENCES Plan(id),
-        FOREIGN KEY (eventID) REFERENCES Event(eventID)
-      );
     ''');
   }
   // CRUD operations for Attraction
   Future<void> addAttraction(Attraction attraction) async {
+    print(attraction.toJson());
     final db = await database;
     await db.insert('attraction', attraction.toJson());
   }
@@ -104,38 +83,4 @@ class DatabaseService {
     );
   }
 
-
-  Future<void> addPlan(Plan plan) async {
-    final db = await database;
-    await db.insert('Plan', plan.toJson());
-  }
-
-  Future<void> deleteItem(int itemId) async {
-    final db = await database;
-    await db.delete(
-      'Item',
-      where: 'itemID = ?',
-      whereArgs: [itemId],
-    );
-
-  }
-
-  Future<List<Plan>> getPlans() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('Plan');
-
-    return List.generate(maps.length, (i) {
-      return Plan.fromJson(maps[i]);
-    });
-  }
-
-  Future<void> deleteEvent(int eventId) async {
-    final db = await database;
-    await db.delete(
-      'Event',
-      where: 'eventID = ?',
-      whereArgs: [eventId],
-    );
-  }
-  // Other CRUD operations...
 }

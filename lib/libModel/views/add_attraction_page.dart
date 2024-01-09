@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../models/attraction.dart';
-import '../view_models/attraction_provider.dart';
+import '../services/database_service.dart';
 
 class AddAttractionPage extends StatefulWidget {
   @override
@@ -12,6 +11,7 @@ class _AddAttractionPageState extends State<AddAttractionPage> {
 // Default value or validation
   final _formKey = GlobalKey<FormState>();
 
+  final DatabaseService databaseService = DatabaseService();
 
   String title = 'Default Title';
   String description = 'Default Description';
@@ -109,12 +109,9 @@ class _AddAttractionPageState extends State<AddAttractionPage> {
         longitude: longitude,
         location: location,
       );
-      Provider.of<AttractionProvider>(context, listen: false)
-          .addNewAttraction(newAttraction)
-      //     .then((_) {
-      //   Navigator.of(context).pop(); // Go back to the previous screen
-      // })
-      ;
+      databaseService.addAttraction(newAttraction);
+
+
     }
   }
 }

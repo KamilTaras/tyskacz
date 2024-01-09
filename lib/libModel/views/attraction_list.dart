@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/attraction.dart';
 import '../services/database_service.dart';
-import 'attraction_details_page.dart';
 
-class HomePage extends StatelessWidget {
+class attraction_list extends StatelessWidget {
   final DatabaseService databaseService = DatabaseService();
 
-  HomePage({Key? key}) : super(key: key);
+  attraction_list({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +23,16 @@ class HomePage extends StatelessWidget {
             return Text('No attractions found');
           }
           return ListView.builder(
-            itemCount: snapshot.data!.length,
+            //itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
+
               Attraction attraction = snapshot.data![index];
-              return ListTile(
-                title: Text(attraction.title),
-                onTap: () {
-                  print(attraction);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AttractionDetailsPage(attraction: attraction),
-                    ),
-                  );
-                },
+              return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              Text(attraction.location),
+              Text(attraction.longitude.toString())
+              ],
               );
             },
           );

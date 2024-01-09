@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'views/add_attraction_page.dart';
-import 'views/home_page.dart';
-import 'view_models/attraction_provider.dart';
-// import 'view_models/user_view_model.dart';
-// Import other providers
+import 'views/attraction_list.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AttractionProvider()),
-      ],
-      child: MyApp(),
-    ),
+    //MultiProvider(
+      //providers: [
+      //  ChangeNotifierProvider(create: (context) => AttractionProvider()),
+      //],
+      //child:
+      MyApp(),
+    //),
   );
 }
 
@@ -64,7 +61,7 @@ class _NavBarClassState extends State<NavBarClass> {
           ],
         ),
         body: <Widget>[
-          HomePage(),
+          attraction_list(),
           AddAttractionPage(),
         ][currentPageIndex]);
   }
