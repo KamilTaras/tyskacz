@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:latlong2/latlong.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -32,12 +30,12 @@ class DatabaseService {
     await db.execute('''
       CREATE TABLE Attraction (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        photos TEXT,
+        name TEXT NOT NULL,
+        photoURL TEXT,
         description TEXT,
         latitude REAL,
         longitude REAL,
-        location TEXT
+        address TEXT
       );
       CREATE TABLE Event (
         eventID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,10 +57,6 @@ class DatabaseService {
         FOREIGN KEY (eventID) REFERENCES Event(eventID)
       );
     ''');
-    print("Database created");
-    await db.execute(
-        'INSERT INTO Attraction (title, photos, description, latitude, longitude, location) VALUES ("Wawel Castle", "https://www.w3schools.com/w3css/img_lights.jpg", "Wawel Castle is a castle residency located in central Kraków, Poland. Built at the behest of King Casimir III the Great, it consists of a number of structures situated around the Italian-styled main courtyard.", 50.0547, 19.9355, "Wawel 5, 31-001 Kraków, Poland")'
-    );
     print(getAttractions());
   }
 
@@ -119,15 +113,6 @@ class DatabaseService {
     await db.insert('Plan', plan.toJson());
   }
 
-  Future<void> deleteItem(int itemId) async {
-    final db = await database;
-    await db.delete(
-      'Item',
-      where: 'itemID = ?',
-      whereArgs: [itemId],
-    );
-
-  }
 
   Future<List<Plan>> getPlans() async {
     final db = await database;

@@ -38,7 +38,8 @@ class Attraction {
     return {
       'name': name,
       'description': description,
-      'coordinates': coordinates,
+      'latitude': coordinates.latitude,
+      'longitude': coordinates.longitude,
       'photoURL': photoURL,
       'review': review,
       'link': link,
