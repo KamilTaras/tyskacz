@@ -36,105 +36,104 @@ class _PlanPageState extends State<PlanPage> {
   @override
   Widget build(BuildContext context) {
     var plan = widget.plan;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
 
     return Stack(
-      children: [
-        Background(),
-        Scaffold(backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          // preferredSize: Size.fromHeight(30.0),s
-        ),
-        body: SafeArea(
-          child: Column(
-            children: <Widget> [
-              Container(
-                  height: 50,
-                  width: 200,
-                  child: Text(
+        children: [
+          Background(),
+          Scaffold(backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              // preferredSize: Size.fromHeight(30.0),s
+            ),
+            body: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget> [
+                  Text(
                     'Your Plan',
                     style: Theme.of(context).textTheme.displayMedium,
-                  )
-              ),
-              SizedBox(height:10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: plan.listOfEvents.length,
-                  itemBuilder:(context, index){
-                    return EventEntry(event: plan.listOfEvents[index],
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EventDescriptionPage(event:plan.listOfEvents[index])
-                              )
-                          );
-                        },
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: plan.listOfEvents.length,
+                      itemBuilder:(context, index){
+                        return EventEntry(event: plan.listOfEvents[index],
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EventDescriptionPage(event:plan.listOfEvents[index])
+                                  )
+                              );
+                            },
 
-                        onSwipe: () {setState(() {plan.listOfEvents.removeAt(index);});}
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: 50), // Optional spacing
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child:Column(
-                      children:[
-                        Row(
-                          children: <Widget>[
+                            onSwipe: () {setState(() {plan.listOfEvents.removeAt(index);});}
+                        );
+                      },
+                    ),
+                  ), // Optional spacing
+                  Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child:Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: screenHeight*0.08,//not nice
+                                  width: (screenWidth/ 2) - 20, // Makes the button stretch to the width of the screen
+                                  child: FilledButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => MapPage(attractions: plan.getAttractions(),)
+                                          )
+                                      );
+                                    }, //TODO: Fill for export
+                                    child: const Text("Show on map"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: screenHeight*0.08,//not nice
+                                  width: (screenWidth/ 2) - 20, // Makes the button stretch to the width of the screen
+                                  child: FilledButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => AttractionFinderPage(plan:plan)
+                                          )
+                                      );
+                                    }, //TODO: Fill for export
+                                    child: const Text("Add Event"),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: spaceBetweenButtons),
                             SizedBox(
-                              height: 50,//not nice
-                              width: 165, // Makes the button stretch to the width of the screen
+                              height: screenHeight*0.08,//not nice
+                              width: double
+                                  .infinity, // Makes the button stretch to the width of the screen
                               child: FilledButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MapPage(attractions: plan.getAttractions(),)
-                                      )
-                                  );
+                                  export(plan);
                                 }, //TODO: Fill for export
-                                child: const Text("Show on map"),
+                                child: const Text("Export Data To Calendar"),
                               ),
                             ),
-                            SizedBox(width: 10),
-                            SizedBox(
-                              height: 50,//not nice
-                              width:165, // Makes the button stretch to the width of the screen
-                              child: FilledButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AttractionFinderPage(plan:plan)
-                                      )
-                                  );
-                                }, //TODO: Fill for export
-                                child: const Text("Add Event"),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: spaceBetweenButtons),
-                        SizedBox(
-                          height: 50,//not nice
-                          width: double
-                              .infinity, // Makes the button stretch to the width of the screen
-                          child: FilledButton(
-                            onPressed: () {
-                              export(plan);
-                            }, //TODO: Fill for export
-                            child: const Text("Export Data To Calendar"),
-                          ),
-                        ),
-                      ]
-                  )
+                          ]
+                      )
+                  ),
+                ] ,
               ),
-            ] ,
-          ),
-        ),
-      ),]
+            ),
+          ),]
     );
   }
 }

@@ -79,6 +79,10 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Stack(
       children: [
         Background(),
@@ -89,30 +93,34 @@ class _CreatePlanPage extends State<CreatePlanPage> {
         ),
         body: SafeArea(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
               Text('Create new trip', style: Theme.of(context).textTheme.displayMedium),
-              SizedBox(height: 10),
               //TODO: Search bar
 
               // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
               // SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                createButtonWithImage(
-                    'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
-                createButtonWithImage('assets/photos/createSightSeeingTrip.png',
-                    'Sight  Seeing Trip', 1),
-              ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                createButtonWithImage(
-                    'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
-                createButtonWithImage(
-                    'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
-              ]),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget> [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          createButtonWithImage(
+                              'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
+                          createButtonWithImage('assets/photos/createSightSeeingTrip.png',
+                              'Sight  Seeing Trip', 1),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          createButtonWithImage(
+                              'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
+                          createButtonWithImage(
+                              'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
+                        ]),
+                  ]
+                ),
           ]),
         ),
       ),]

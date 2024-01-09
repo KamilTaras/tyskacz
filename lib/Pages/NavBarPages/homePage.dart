@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double logoSize = screenHeight * 0.3;
 
     return Stack(
       children: [
@@ -41,8 +42,8 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: screenHeight * 0.30, // Adjust height based on screen height
-                width: screenHeight * 0.30,
+                height: logoSize, // Adjust height based on screen height
+                width: logoSize,
                 child: Image(
                   image: AssetImage('assets/photos/logo_TySkacz_light.png'),
                 ),

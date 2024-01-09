@@ -176,6 +176,12 @@ class EventDescriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double picHeight = screenHeight * 0.25;
+    final double picWidth = screenWidth * 0.9;
+    final double nameHeight = screenHeight*0.08;
+    final double listHeight = screenHeight* 0.4;
     return Stack(
       children: [
         Background(),
@@ -188,67 +194,59 @@ class EventDescriptionPage extends StatelessWidget {
           ),
         ),
         body: SafeArea(
-          child: ListView(
-            children: <Widget>[
+            child:
               Container(
-                color: Colors.transparent,
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(
-                    vertical: mainContainerMargin,
-                    horizontal: mainContainerMargin),
-                width:
-                MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-                height: MediaQuery.of(context).size.height -
-                    30 -
-                    2 * mainContainerMargin,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all( mainContainerMargin),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       //TODO: insert pic
-                      Container(
-                        width: 300,
-                        height:200,
-                        child: Image.network(
-                          event.attractionWithinEvent.photoURL,
-                          fit: BoxFit.fill,
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          height:picHeight,
+                          width:picWidth,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              event.attractionWithinEvent.photoURL,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(height: sizedBoxHeight),
                       buildElevatedTextContainer(
-                        40,
+                        nameHeight,
                         Constant.mainGreenColor,
                         event.attractionWithinEvent.name,
                         titleFontSize,
                         Colors.black,
                       ),
-                      SizedBox(height: sizedBoxHeight),
-                      buildRatingContainer(),
-                      SizedBox(height: sizedBoxHeight),
                       //TODO: container size dependant length of description
-                      Container(
-                        height: 220,
-                        child: ListView(
-                          children: [
-                            buildElevatedTextContainer(
-                              500,
-                              Constant.mainBackgroundColor,
-                              event.attractionWithinEvent.description,
-                              15,
-                              Colors.black,
+                      Material(
+                          elevation: 8.0, // Set the desired elevation
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Colors.white,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            height: listHeight,
+                            width: double.infinity,
+                            child:SingleChildScrollView(
+                                child:Text(event.attractionWithinEvent.description)
                             ),
-                          ],
-                        ),
+                          )
                       ),
+
                       SizedBox(height: sizedBoxHeight),
                       buildInfoContainer(context),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
         ),
       ),]
     );

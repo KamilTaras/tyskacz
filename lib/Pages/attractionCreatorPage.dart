@@ -32,6 +32,13 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double smallInputHeight = screenHeight*0.1;
+    final double descriptionHeight = screenHeight * 0.25;
+    final double buttonHeight = screenHeight * 0.1;
+
     return Stack(
       children:[
         Background(),
@@ -46,28 +53,26 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
         body: SafeArea(
           child: Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(vertical: mainContainerMargin, horizontal: mainContainerMargin),
-            width: MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-            height: MediaQuery.of(context).size.height - 30 - 2 * mainContainerMargin,
+            margin: EdgeInsets.all(mainContainerMargin),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   //TODO: insert pic
                   Placeholder(
-                    fallbackWidth: 300,
-                    fallbackHeight: 200,
+                    fallbackHeight: screenHeight * 0.25,
                   ),
                   SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(controller: _nameController, hintText:'Attraction Name', height: 70, fontSize: 25, maxLines:2),
+                  AttractionTextField(controller: _nameController, hintText:'Attraction Name',height: smallInputHeight, fontSize: 25, maxLines:2),
                   SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(controller: _descriptionController, hintText:'Description', height: 250, fontSize: 16, maxLines: 12),
+                  AttractionTextField(controller: _descriptionController, hintText:'Description', height: descriptionHeight, fontSize: 16, maxLines: 12),
                   SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(controller: _localizationController, hintText:'Localization', height: 70, fontSize: 16),
+                  AttractionTextField(controller: _localizationController, hintText:'Localization', height: smallInputHeight, fontSize: 16),
                   SizedBox(height: sizedBoxHeight),
                   Container(
-                    height: 100,
+                    height: buttonHeight,
+                    width: double.infinity,
                     child:FilledButton(
                       //TODO: create attraction after pressing the button
                       onPressed: (){

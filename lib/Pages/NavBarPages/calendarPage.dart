@@ -12,8 +12,10 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double spaceUnderTitle = screenHeight * 0.05;
+
     print(eventList);
     final Map<DateTime, List<Attraction>> eventsMap = {};
 
@@ -27,6 +29,8 @@ class CalendarPage extends StatelessWidget {
       }
     });
 
+
+
     return Stack(
         children:[
           Background(),
@@ -38,17 +42,16 @@ class CalendarPage extends StatelessWidget {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       'Calendar Page',
                       style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: spaceUnderTitle),
                     Container(
                       height: MediaQuery.of(context).size.height - // Adjust the height as needed
-                          kToolbarHeight -
-                          MediaQuery.of(context).padding.top -
-                          20, // Additional padding
+                          kToolbarHeight - MediaQuery.of(context).padding.top - 20, // Additional padding
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: eventsMap.length,

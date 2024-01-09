@@ -36,6 +36,13 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
   final double pageNameFontSize = 15;
 
   Widget build(BuildContext context) {
+
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonHeight = screenHeight * 0.1;
+    final double spaceUnderTitle = screenHeight * 0.05;
+
     var attractionList = mockAttractionList;
     return Stack(
       children:[
@@ -47,9 +54,10 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
         ),
         body: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
               Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
-              SizedBox(height: 10),
+              SizedBox(height:spaceUnderTitle),
               Expanded(
                 child: ListView.builder(
                   itemCount: attractionList.length,
@@ -71,19 +79,13 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     );
                   },
                 ),
-              ),
-              SizedBox(height: 10), // Optional spacing
+              ), // Optional spacing
               Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Container(
                   width: double.infinity,
-                  height: 100,
+                  height: buttonHeight,
                   child: FilledButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0), // Adjust the value as needed
-                      ),
-                    ),
                     onPressed: () {
                       // mockUserPlanList.add(
                       //     Plan(
@@ -98,7 +100,6 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
             ] ,
           ),
         ),

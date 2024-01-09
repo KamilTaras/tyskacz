@@ -83,24 +83,6 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buildRowWithChildrenList(List<Widget> children, double sizedBoxWidth) {
-    List<Widget> rowChildren = [SizedBox(width: sizedBoxWidth)];
-
-    for (int i = 0; i < children.length; i++) {
-      // Add the child widget
-      rowChildren.add(children[i]);
-
-      // Add a SizedBox after each child except the last one
-      if (i < children.length - 1) {
-        rowChildren.add(SizedBox(width: sizedBoxWidth));
-      }
-    }
-
-    return Row(
-      children: rowChildren,
-    );
-  }
-
   Widget buildIconButton(
       {required IconData icon, required VoidCallback onPressed}) {
     return IconButton(
@@ -109,143 +91,105 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buildRatingContainer() {
-    List<Widget> firstRow = [
-      buildTextContainer(35, Colors.transparent, 'Average Rating:',
-          ratingFontSize, Colors.black),
-      Placeholder(
-        fallbackWidth: 150,
-        fallbackHeight: 30,
-      )
-    ];
-    List<Widget> secondRow = [
-      buildTextContainer(
-          35, Colors.transparent, 'Your Rating:', ratingFontSize, Colors.black),
-      SizedBox(width: 25),
-      Placeholder(
-        fallbackWidth: 150,
-        fallbackHeight: 30,
-      )
-    ];
-
-    Widget elevatedContainer = buildElevatedContainer(
-      child: Column(
-        children: <Widget>[
-          buildRowWithChildrenList(firstRow, 8),
-          buildRowWithChildrenList(secondRow, 8),
-        ],
-      ),
-      backgroundColor: Constant.mainRedColor,
-    );
-    return elevatedContainer;
-  }
-
-  Widget buildInfoContainer(BuildContext context) {
-    Widget mapButton = buildIconButton(
-        icon: Icons.map,
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MapPage(attractions:[attraction])));
-        });
-    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
-
-
-    List<Widget> secondRow = [
-      Icon(Icons.accessibility_sharp),
-      //buildTextContainer(
-      //    55, Colors.transparent, event.attractionWithinEvent.coordinates.toString(), 15, Colors.black),
-      mapButton,
-      editButton
-    ];
-
-    Widget elevatedContainer = buildElevatedContainer(
-      child: Column(
-        children: <Widget>[
-          //buildRowWithChildrenList(firstRow, 20),
-          buildRowWithChildrenList(secondRow, 20),
-        ],
-      ),
-      backgroundColor: Constant.mainRedColor,
-    );
-
-    return elevatedContainer;
-  }
 
   @override
   Widget build(BuildContext context) {
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double picHeight = screenHeight * 0.25;
+    final double picWidth = screenWidth * 0.9;
+    final double nameHeight = screenHeight*0.08;
+    final double listHeight = screenHeight* 0.4;
     return Stack(
       children: [
         Background(),
         Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(30.0),
-          child: AppBar(
+        appBar:  AppBar(
             backgroundColor: Colors.transparent,
           ),
-        ),
         body: SafeArea(
-          child: ListView(
-            children: <Widget>[
-              Container(
+          child: Container(
                 color: Colors.transparent,
                 alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(
-                    vertical: mainContainerMargin,
-                    horizontal: mainContainerMargin),
-                width:
-                MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-                height: MediaQuery.of(context).size.height -
-                    30 -
-                    2 * mainContainerMargin,
+                margin: EdgeInsets.all( mainContainerMargin),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       //TODO: insert pic
-                      Container(
-                        width: 300,
-                        height:200,
-                        child: Image.network(
-                          attraction.photoURL,
-                          fit: BoxFit.fill,
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          height:picHeight,
+                          width:picWidth,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              attraction.photoURL,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(height: sizedBoxHeight),
                       buildElevatedTextContainer(
-                        40,
+                        nameHeight,
                         Constant.mainGreenColor,
                         attraction.name,
                         titleFontSize,
                         Colors.black,
                       ),
-                      SizedBox(height: sizedBoxHeight),
                       //TODO: container size dependant length of description
-                      Container(
-                        height: 220,
-                        child: ListView(
-                          children: [
-                            buildElevatedTextContainer(
-                              500,
-                              Constant.mainBackgroundColor,
-                              attraction.description,
-                              15,
-                              Colors.black,
-                            ),
-                          ],
-                        ),
+                      Material(
+                        elevation: 8.0, // Set the desired elevation
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.white,
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          height: listHeight,
+                          width: double.infinity,
+                          child:SingleChildScrollView(
+                              child:Text(attraction.description)
+                          ),
+                        )
                       ),
-                      SizedBox(height: sizedBoxHeight),
-                      buildInfoContainer(context),
+
+
+                      Material(
+                        elevation: 8.0, // Set the desired elevation
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Constant.mainRedColor,
+                        child: Container(
+                          height: nameHeight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Icon(Icons.accessibility_sharp),
+                              buildIconButton(
+                                icon: Icons.map,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => MapPage(attractions: [attraction])),
+                                  );
+                                },
+                              ),
+                              buildIconButton(icon: Icons.edit, onPressed: (){}),
+                              Container(width: screenWidth / 3)
+                            ],
+                          ),
+                        ),
+                      )
+
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
         ),
-      ),]
+      ),
+    ],
     );
   }
 }
