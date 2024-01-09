@@ -61,7 +61,7 @@ class _PlanListPageState extends State<PlanListPage> {
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return Text('No plans found');
                 }
-                returnExpanded(
+                return Expanded(
                 child: ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder:(context, index){

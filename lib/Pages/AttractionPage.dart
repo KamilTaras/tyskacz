@@ -91,79 +91,7 @@ class AttractionDescriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buildRatingContainer() {
-    List<Widget> firstRow = [
-      buildTextContainer(35, Colors.transparent, 'Average Rating:',
-          ratingFontSize, Colors.black),
-      Placeholder(
-        fallbackWidth: 150,
-        fallbackHeight: 30,
-      )
-    ];
-    List<Widget> secondRow = [
-      buildTextContainer(
-          35, Colors.transparent, 'Your Rating:', ratingFontSize, Colors.black),
-      SizedBox(width: 25),
-      Placeholder(
-        fallbackWidth: 150,
-        fallbackHeight: 30,
-      )
-    ];
 
-    Widget elevatedContainer = buildElevatedContainer(
-      child: Column(
-        children: <Widget>[
-          buildRowWithChildrenList(firstRow, 8),
-          buildRowWithChildrenList(secondRow, 8),
-        ],
-      ),
-      backgroundColor: Constant.mainRedColor,
-    );
-    return elevatedContainer;
-  }
-
-  Widget buildInfoContainer(BuildContext context) {
-    Widget mapButton = buildIconButton(
-        icon: Icons.map,
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MapPage(attractions:[attraction])));
-        });
-    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
-
-
-    List<Widget> secondRow = [
-      Icon(Icons.accessibility_sharp),
-
-      FutureBuilder<String?>(
-        future: attraction.getAddress,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text("Error loading address");
-          } else {
-            String address = snapshot.data ?? "No address available";
-            return buildTextContainer(55, Colors.transparent, address, 15, Colors.black);
-          }
-        },
-      ),
-      mapButton,
-      editButton
-    ];
-
-    Widget elevatedContainer = buildElevatedContainer(
-      child: Column(
-        children: <Widget>[
-          //buildRowWithChildrenList(firstRow, 20),
-          buildRowWithChildrenList(secondRow, 20),
-        ],
-      ),
-      backgroundColor: Constant.mainRedColor,
-    );
-
-    return elevatedContainer;
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -62,28 +62,46 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
             children: <Widget> [
               Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
               SizedBox(height:spaceUnderTitle),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: attractionList.length,
-                  itemBuilder:(context, index){
-                    return AttractionEntry(
-                        attraction: attractionList[index],
-                        onSwipe: () {
-                          widget.plan.listOfEvents.add(Event(attractionWithinEvent:attractionList[index],startDate: DateTime.now(), endDate: DateTime.now()));//TODO: add date choice
-                          //setState(() {attractionList.removeAt(index);});
-                        },
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AttractionDescriptionPage(attraction:attractionList[index])
-                              )
-                          );
-                        }
-                    );
-                  },
-                ),
-              ), // Optional spacing
+              FutureBuilder<List<Attraction>>(
+                future: databaseService.getAttractions(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Text('No attractions found');
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return AttractionEntry(
+                            attraction: snapshot.data![index],
+                            onSwipe: () {
+                              widget.plan.listOfEvents.add(Event(
+                                  attractionWithinEvent: snapshot.data![index],
+                                  startDate: DateTime.now(),
+                                  endDate: DateTime
+                                      .now())); //TODO: add date choice
+                              //setState(() {attractionList.removeAt(index);});
+                            },
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AttractionDescriptionPage(
+                                              attraction: snapshot.data![index])
+                                  )
+                              );
+                            }
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+ // Optional spacing
               Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Container(
@@ -100,100 +118,17 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                       //     )
                       // )
                     },
-                    child: Text('Pack Your Bags'),
+                    child: Text('Save'),
                   ),
                 ),
               ),
             ] ,
           ),
         ),
-      ),]
-    return Scaffold(
-      appBar: AppBar(
-        // preferredSize: Size.fromHeight(30.0),s
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-                height: 50,
-                width: 200,
-                child: Text(
-                  'Select attractions you would like to visit',
-                  style: TextStyle(
-                      fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
-                )
-            ),
-
-            FutureBuilder<List<Attraction>>(
-              future: databaseService.getAttractions(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No attractions found');
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return AttractionEntry(
-                          attraction: snapshot.data![index],
-                          onSwipe: () {
-                            widget.plan.listOfEvents.add(Event(
-                                attractionWithinEvent: snapshot.data![index],
-                                startDate: DateTime.now(),
-                                endDate: DateTime
-                                    .now())); //TODO: add date choice
-                            //setState(() {attractionList.removeAt(index);});
-                          },
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AttractionDescriptionPage(
-                                            attraction: snapshot.data![index])
-                                )
-                            );
-                          }
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: 50), // Optional spacing
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Container(
-                width: double.infinity,
-                height: 100,
-                child: FilledButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          20.0), // Adjust the value as needed
-                    ),
-                  ),
-                  onPressed: () {
-                    // if plan exists update it, if not create new one
-                    if (widget.plan.id != null) {
-                      databaseService.updatePlan(widget.plan);
-                    } else {
-                      databaseService.addPlan(widget.plan);
-                    }
-                  },
-                  child: Text('Save'),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-          ],
-        ),
-      ),
+    ]
     );
+
   }
 }
 
