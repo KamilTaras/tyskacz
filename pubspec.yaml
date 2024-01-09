@@ -41,7 +41,9 @@ dependencies:
   ical: ^0.2.2
   path_provider: ^2.1.1
   geocode: ^1.0.3
+
   sqflite: ^2.3.0
+
 
 
 dev_dependencies:
