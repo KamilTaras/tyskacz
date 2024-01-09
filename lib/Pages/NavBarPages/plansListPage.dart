@@ -7,8 +7,7 @@ import '../../DatabaseManagement/database.dart';
 import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
-  PlanListPage({super.key});
-  final plansList = mockUserPlanList;
+  const PlanListPage({super.key});
   @override
   State<PlanListPage> createState() => _PlanListPageState();
 }
@@ -31,7 +30,6 @@ class _PlanListPageState extends State<PlanListPage> {
 
   @override
   Widget build(BuildContext context) {
-    var plansList = widget.plansList;
 
     return Scaffold(
       appBar: AppBar(

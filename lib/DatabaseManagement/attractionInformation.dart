@@ -45,6 +45,20 @@ class Attraction {
     };
 
   }
+  //from Json
+  static Attraction fromJson(Map<String, dynamic> attractionMap) {
+    print('getting attraction from attractionMap: $attractionMap');
+    return Attraction(
+      id: attractionMap['id'],
+      name: attractionMap['name'],
+      description: attractionMap['description'],
+      coordinates: LatLng(attractionMap['latitude'], attractionMap['longitude']),
+      photoURL: attractionMap['photoURL'],
+      link: attractionMap['link'],
+      address: attractionMap['address'],
+    );
+
+  }
 // Other methods and functionality can be added here
 }
 
@@ -71,18 +85,11 @@ class Event {
     };
   }
 
-  static Event fromJson(Map<String, dynamic> eventMap) {
+  static Event fromJson(Map<String, dynamic> eventMap, Attraction attraction) {
+    print('getting event from eventMap: $eventMap');
     return Event(
-      id: eventMap['id'],
-      attractionWithinEvent: Attraction(
-        id: eventMap['attractionWithinEvent'],
-        name: eventMap['name']??'',
-        description: eventMap['description'],
-        coordinates: LatLng(eventMap['latitude'], eventMap['longitude']),
-        photoURL: eventMap['photoURL'],
-        link: eventMap['link'],
-        address: eventMap['address'],
-      ),
+      id: eventMap['eventID'],
+      attractionWithinEvent: attraction,
       startDate: DateTime.parse(eventMap['startDate']),
       endDate: DateTime.parse(eventMap['endDate']),
     );

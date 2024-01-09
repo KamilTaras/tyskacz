@@ -35,7 +35,6 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
   final double pageNameFontSize = 15;
 
   Widget build(BuildContext context) {
-    var attractionList = mockAttractionList;
     return Scaffold(
       appBar: AppBar(
         // preferredSize: Size.fromHeight(30.0),s
@@ -82,7 +81,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         AttractionDescriptionPage(
-                                            attraction: attractionList[index])
+                                            attraction: snapshot.data![index])
                                 )
                             );
                           }
@@ -106,13 +105,12 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     ),
                   ),
                   onPressed: () {
-                    //if plan exists update it, if not create new one
-                    //if (widget.plan.id != null)
-                    //  databaseService.updatePlan(widget.plan);
-                    //else
+                    // if plan exists update it, if not create new one
+                    if (widget.plan.id != null) {
+                      databaseService.updatePlan(widget.plan);
+                    } else {
                       databaseService.addPlan(widget.plan);
-
-
+                    }
                   },
                   child: Text('Save'),
                 ),

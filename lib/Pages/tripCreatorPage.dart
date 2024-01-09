@@ -52,7 +52,6 @@ class _CreatePlanPage extends State<CreatePlanPage> {
           iconSize: 60,
           onPressed: () {
             var plan = Plan(name: 'newPlan', listOfEvents: [], tripType: TripType.values[type]);
-            mockUserPlanList.add(plan);
             Navigator.push(
                 context,
                 MaterialPageRoute(
