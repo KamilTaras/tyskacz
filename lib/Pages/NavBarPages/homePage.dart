@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double logoHeight = screenHeight * 0.5;
+    final double logoHeight = screenHeight * 0.3;
     final double logoWidth = screenWidth * 0.4;
 
     return Stack(
@@ -41,20 +41,21 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              CreateTitle(title:'Home', screenWidth: screenWidth),
               Container(
                 height: logoHeight, // Adjust height based on screen height
                 width: logoWidth,
                 child: Image(
-                  image: AssetImage('assets/photos/logo_TySkacz_Light.png'),
+                  image: AssetImage('assets/photos/logo_TySkacz_light.png'),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    height: screenHeight * 0.20, // Adjust height based on screen height
+                    height: screenHeight * 0.25, // Adjust height based on screen height
                     width: screenWidth * 0.45,// Adjust width based on screen height
                     child: FilledButton(
                       onPressed: () {
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.20,
+                    height: screenHeight * 0.25,
                     width: screenWidth * 0.45,
                     child: FilledButton(
                       onPressed: () {

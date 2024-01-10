@@ -60,7 +60,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
-              Text('Find attractions', style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
+              CreateTitle(title:'Find Atractions', screenWidth:screenWidth),
               SizedBox(height:spaceUnderTitle),
               FutureBuilder<List<Attraction>>(
                 future: databaseService.getAttractions(),

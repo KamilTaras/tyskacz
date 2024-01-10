@@ -6,6 +6,7 @@ import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
 import 'background.dart';
+import '../../Utils/constantValues.dart';
 
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});
@@ -70,7 +71,15 @@ class _CreatePlanPage extends State<CreatePlanPage> {
         ), // Adjust the spacing between the button and label
         Text(
           label,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, fontFamily: 'MainFont'),
+        ),
+        Container(
+          width: 150,
+          child: Divider(
+            height: 20,
+            thickness: 2,
+            color: Constant.mainGreenColor, // Choose the color you prefer
+          ),
         ),
       ],
     );
@@ -84,7 +93,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
     return Stack(
       children: [
-        BackgroundAutko(),
+        Background(),
         Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -94,7 +103,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-              Text('Create new trip', style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
+                CreateTitle(title:'Create new trip', screenWidth:screenWidth),
               //TODO: Search bar
 
               // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),

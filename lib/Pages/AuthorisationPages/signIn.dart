@@ -29,31 +29,17 @@ class _SignInState extends State<SignIn> {
         Scaffold(
         appBar: AppBar(
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                  child: Container(
+             Container(
                     width: logoSize,
                     height: logoSize,
                     child: Image.asset('assets/photos/logo_TySkacz_light.png'),
                   ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    'Sign In',
-                    style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900]),
-                  ),
-                ),
-              ),
+              SizedBox(height:spaceUnderTitle),
+              CreateTitle(title: 'Sign In', screenWidth:screenWidth),
               SizedBox(height:spaceUnderTitle),
               InputField(name: 'Login'),
               InputField(name: 'Password'),
@@ -63,7 +49,7 @@ class _SignInState extends State<SignIn> {
                 width: buttonWidth,
                 child: Container(
                     child: FilledButton(
-                      child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20),
+                      child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
                       ),
                       onPressed: (){
                         print('Successfully log in ');
@@ -77,7 +63,6 @@ class _SignInState extends State<SignIn> {
               TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
             ],
           ),
-        ),
       ),]
     );
   }
@@ -99,15 +84,15 @@ class TextButton extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 62, top: 20, bottom: 20, right: 10),
-              child: Text(text),
+              padding: const EdgeInsets.only(left: 62, top: 10, bottom: 10, right: 10),
+              child: Text(text, style:TextStyle(fontSize:16, fontFamily: 'MainFont')),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 1.0, top: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 1.0, top: 10, bottom: 10),
               child: InkWell(
                 onTap: () => _handleNavigation(context),
                 child: Text(navigationText,
-                    style: TextStyle(fontSize: 14, color: Colors.blue)),
+                    style: TextStyle(fontSize: 14, color: Colors.blue, fontFamily: 'MainFont')),
               ),
             )
           ],

@@ -31,6 +31,8 @@ class _PlanListPageState extends State<PlanListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Stack(
       children:[
@@ -38,20 +40,12 @@ class _PlanListPageState extends State<PlanListPage> {
         Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          // preferredSize: Size.fromHeight(30.0),s
         ),
         body: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget> [
-              Container(
-                  height: 50,
-                  width: 200,
-                  child: Text(
-                    'Your Plan',
-                    style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900]),
-                  )
-              )
-              ,
+                CreateTitle(title: 'Your Plans', screenWidth:screenWidth),
               FutureBuilder<List<Plan>>(
               future: databaseService.getPlans(),
               builder: (context, snapshot) {

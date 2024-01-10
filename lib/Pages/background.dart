@@ -97,7 +97,21 @@ class BackgroundSignUp extends StatelessWidget {
           Circle(top: -100, left: -25, diameter:200, color:mainGreen, opacity: 0.5),
           Circle(top: -25, left: -100, diameter:200, color:mainGreen, opacity: 0.5),
           Circle(top: 600, left: -60, diameter:140, color:Constant.mainRedColor, opacity: 0.6),
-          Pic(top:10, right:-20, path:'assets/photos/domek.png')
+          Positioned(
+                top: 150,
+                right: -20,
+                  child: Container(
+                    height:250,
+                    width: 250,
+                    child: Image.asset(
+                      'assets/photos/domek.png', // Replace with your image asset path
+                      fit: BoxFit.cover, // Adjust the fit as needed
+                    ),
+                  ),
+              ),
+
+
+
         ]
 
     );
@@ -150,4 +164,39 @@ class BackgroundAutko extends StatelessWidget {
     );
   }
 
+}
+
+class CreateTitle extends StatelessWidget {
+  const  CreateTitle({super.key, required this.screenWidth, required this.title});
+  final double screenWidth;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child:Column(
+            children:[
+              Container(
+                width: screenWidth*0.7,
+                child: Divider(
+                  height: 10,
+                  thickness: 2,
+                  color: Constant.mainRedColor, // Choose the color you prefer
+                ),
+              ),
+              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
+
+              Container(
+                width: screenWidth*0.9,
+                child: Divider(
+                  height: 20,
+                  thickness: 2,
+                  color: Constant.mainGreenColor, // Choose the color you prefer
+                ),
+              ),
+            ]
+        )
+
+    );
+  }
 }

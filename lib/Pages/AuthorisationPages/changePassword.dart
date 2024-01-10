@@ -41,7 +41,7 @@ class _ChangePassword extends State<ChangePassword> {
                         children: <Widget>[
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Change password', style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
+                            child: CreateTitle(title: 'Change password', screenWidth:screenWidth),
                           ),
                           SizedBox(height:spaceUnderTitle),
                           Text('Check your email'),
