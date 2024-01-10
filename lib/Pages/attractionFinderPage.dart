@@ -109,14 +109,12 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                   height: buttonHeight,
                   child: FilledButton(
                     onPressed: () {
-                      // mockUserPlanList.add(
-                      //     Plan(
-                      //         name: 'Plan',
-                      //         listOfEvents: widget.chosenAttractions.map((e) => Event(attractionWithinEvent: e, startDate: DateTime.now(), endDate: DateTime.now())),
-                      //         listOfAttractions: widget.chosenAttractions,
-                      //         tripType: TripType.Sightseeing,
-                      //     )
-                      // )
+// if plan exists update it, if not create new one
+                      if (widget.plan.id != null) {
+                        databaseService.updatePlan(widget.plan);
+                      } else {
+                        databaseService.addPlan(widget.plan);
+                      }
                     },
                     child: Text('Save'),
                   ),
