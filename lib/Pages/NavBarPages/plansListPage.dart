@@ -48,7 +48,7 @@ class _PlanListPageState extends State<PlanListPage> {
                   width: 200,
                   child: Text(
                     'Your Plan',
-                    style: TextStyle(fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
+                    style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900]),
                   )
               )
               ,

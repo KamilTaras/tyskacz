@@ -84,7 +84,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
     return Stack(
       children: [
-        Background(),
+        BackgroundAutko(),
         Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -94,7 +94,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-              Text('Create new trip', style: Theme.of(context).textTheme.displayMedium),
+              Text('Create new trip', style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
               //TODO: Search bar
 
               // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
@@ -114,9 +114,9 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           createButtonWithImage(
-                              'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
+                              'assets/photos/educationalTrip.png', 'Educational Trip', 2),
                           createButtonWithImage(
-                              'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
+                              'assets/photos/leisureTrip.png', 'Leisure Trip', 3),
                         ]),
                   ]
                 ),

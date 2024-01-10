@@ -20,9 +20,11 @@ class _SignUpState extends State<SignUp> {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     final double logSize = screenHeight * 0.2;
+    final double spaceUnderTitle = screenHeight * 0.3;
+
         return Stack(
       children: [
-        Background(),
+        BackgroundSignUp(),
         Scaffold(
           appBar: AppBar(
           ),
@@ -35,16 +37,17 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Center(
-                          child: Container(
-                            width: logSize,
-                            height: logSize,
-                            child: Image.asset('assets/photos/logo_TySkacz_light.png'),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Text(
+                            'Sign In',
+                            style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900]),
                           ),
                         ),
                       ),
+                      SizedBox(height:spaceUnderTitle),
                       InputField(name: 'Login'),
                       InputField(name: 'Password'),
                       InputField(name: 'Repeat Password'),

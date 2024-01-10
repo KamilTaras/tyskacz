@@ -23,6 +23,7 @@ class _ChangePassword extends State<ChangePassword> {
 
     final double buttonWidth = screenWidth * 0.9;
     final double buttonHeight = screenHeight * 0.08;
+    final double spaceUnderTitle = screenHeight * 0.05;
 
     return Stack(
         children: [
@@ -36,12 +37,14 @@ class _ChangePassword extends State<ChangePassword> {
                   child: Form(
                       key: _formkey,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text('Check your email', style: Theme.of(context).textTheme.displayLarge),
+                            child: Text('Change password', style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
                           ),
+                          SizedBox(height:spaceUnderTitle),
+                          Text('Check your email'),
                           Text(info),
                           InputField(name: 'Login'),
                           InputField(name: 'Password'),

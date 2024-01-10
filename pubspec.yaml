@@ -68,6 +68,12 @@ flutter:
     - assets/photos/createBusinessTrip.png
     - assets/photos/createSightSeeingTrip.png
     - assets/photos/background.png
+    - assets/photos/suitcase.png
+    - assets/photos/noweLogoPetycja.png
+    - assets/photos/educationalTrip.png
+    - assets/photos/leisureTrip.png
+    - assets/photos/autko.png
+    - assets/photos/domek.png
   fonts:
     - family: Inter
       fonts:
@@ -77,7 +83,8 @@ flutter:
             - asset: assets/fonts//Anton-Regular.ttf
     - family: MainFont
       fonts:
-        - asset: assets\fonts\DMSans.ttf
+        - asset: assets/fonts/SuezOne-Regular.ttf
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

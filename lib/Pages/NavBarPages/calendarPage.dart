@@ -77,7 +77,7 @@ class CalendarPage extends StatelessWidget {
                   children: [
                     Text(
                       'Calendar Page',
-                      style: TextStyle(fontSize: 30, fontFamily: 'Anton-Regular', fontWeight: FontWeight.bold),
+                        style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900]),
                     ),
                     SizedBox(height: spaceUnderTitle),
                     Container(

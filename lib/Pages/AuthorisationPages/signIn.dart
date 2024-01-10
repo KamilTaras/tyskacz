@@ -21,6 +21,7 @@ class _SignInState extends State<SignIn> {
     final double logoSize = screenHeight * 0.2;
     final double buttonHeight = screenHeight * 0.08;
     final double buttonWidth = screenWidth * 0.9;
+    final double spaceUnderTitle = screenHeight * 0.02;
 
     return Stack(
       children:[
@@ -49,10 +50,11 @@ class _SignInState extends State<SignIn> {
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     'Sign In',
-                    style: Theme.of(context).textTheme.displayLarge,
+                    style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900]),
                   ),
                 ),
               ),
+              SizedBox(height:spaceUnderTitle),
               InputField(name: 'Login'),
               InputField(name: 'Password'),
               TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),

@@ -45,12 +45,12 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
 
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double buttonHeight = screenHeight * 0.1;
+    final double buttonHeight = screenHeight * 0.08;
     final double spaceUnderTitle = screenHeight * 0.05;
 
     return Stack(
       children:[
-        Background(),
+        BackgroundSuitcase(),
         Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -60,7 +60,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
-              Text('Find attractions', style: Theme.of(context).textTheme.displayMedium),
+              Text('Find attractions', style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
               SizedBox(height:spaceUnderTitle),
               FutureBuilder<List<Attraction>>(
                 future: databaseService.getAttractions(),
