@@ -73,7 +73,6 @@ class _PlanPageState extends State<PlanPage> {
 
                             onSwipe: () {
                     setState(() {
-                      print(plan.listOfEvents[index].toJson());
                       databaseService.deletePlanEvent(plan.listOfEvents[index].id!);
                       plan.listOfEvents.removeAt(index);
                       });}

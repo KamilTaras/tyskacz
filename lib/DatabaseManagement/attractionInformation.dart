@@ -47,7 +47,7 @@ class Attraction {
   }
   //from Json
   static Attraction fromJson(Map<String, dynamic> attractionMap) {
-    print('getting attraction from attractionMap: $attractionMap');
+
     return Attraction(
       id: attractionMap['id'],
       name: attractionMap['name'],
@@ -86,7 +86,6 @@ class Event {
   }
 
   static Event fromJson(Map<String, dynamic> eventMap, Attraction attraction) {
-    print('getting event from eventMap: $eventMap');
     return Event(
       id: eventMap['eventID'],
       attractionWithinEvent: attraction,

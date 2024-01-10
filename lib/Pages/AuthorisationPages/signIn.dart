@@ -52,7 +52,6 @@ class _SignInState extends State<SignIn> {
                       child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
                       ),
                       onPressed: (){
-                        print('Successfully log in ');
                         //go to home page with navbar
                         Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
                       },

@@ -42,7 +42,7 @@ class _NavBarClassState extends State<NavBarClass> {
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     Color navBarColor =
         isDarkMode ? darkTheme.canvasColor : lightTheme.canvasColor;
-    // print(navBarColor.toString());// mainGreen is your light theme color
+
 
     return Theme(
         data: ThemeData(canvasColor: navBarColor),
