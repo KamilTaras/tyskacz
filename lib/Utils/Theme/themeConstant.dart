@@ -4,15 +4,22 @@ import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
+        scrolledUnderElevation: 0,
+        shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
     ),
-    scaffoldBackgroundColor: mainBackgroundColor, // Set the background color for Scaffold widgets
+    scaffoldBackgroundColor: Colors.transparent, // Set the background color for Scaffold widgets
     canvasColor: mainGreen,
     switchTheme: SwitchThemeData(
         trackColor: MaterialStateProperty.all<Color>(mainGreen),
         trackOutlineColor: MaterialStateProperty.all<Color>(mainBackgroundColor)),
     brightness: Brightness.light,
     primaryColor: mainGreen,
+    buttonTheme: ButtonThemeData(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+        ),
+    ),
     floatingActionButtonTheme:
     const FloatingActionButtonThemeData(backgroundColor: mainGreen),
     filledButtonTheme: FilledButtonThemeData(
@@ -25,7 +32,7 @@ ThemeData lightTheme = ThemeData(
             backgroundColor: MaterialStateProperty.all<Color>(mainGreen))),
     textTheme: TextTheme(
         displayLarge:
-        TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily:'MainFont', fontSize: 20.0,)),
 );
 
 ThemeData darkTheme = ThemeData(brightness: Brightness.dark);

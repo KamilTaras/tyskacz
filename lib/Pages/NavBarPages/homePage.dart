@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tyskacz/DatabaseManagement/database.dart';
 import '../../main.dart';
 import '../attractionCreatorPage.dart';
 import '../EventPage.dart';
 import '../tripCreatorPage.dart';
 import '../AuthorisationPages/signIn.dart';
-
+import '../../Utils/Theme/colors.dart';
+import '../background.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,85 +17,79 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Test'),
-        actions: [
-          Switch(
-              value: themeManager.themeMode == ThemeMode.dark,
-              onChanged: (newValue) {
-                setState(() {
-                  themeManager.toggleTheme(newValue);
-                });
-              })
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(70.0),
-            child: Image(
-              image: AssetImage('assets/photos/logo_TySkacz_light.png'),
-            ),
-          ),
-          //TODO: DELETE BUTTON
-          SizedBox(
-              height: 30,
-              width: 150,
-              child: FilledButton(
-                onPressed: () {
-                  DatabaseService.deleteDB();
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double logoHeight = screenHeight * 0.3;
+    final double logoWidth = screenWidth * 0.4;
+
+    return Stack(
+      children: [
+        Background(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            elevation: 0,
+            actions: [
+              Switch(
+                value: themeManager.themeMode == ThemeMode.dark,
+                onChanged: (newValue) {
+                  setState(() {
+                    themeManager.toggleTheme(newValue);
+                  });
                 },
-                child: Text('delete DB'),
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FilledButton(
-                onPressed: () {
-                  DatabaseService databaseService = DatabaseService();
-                  databaseService.getTableNames();
-                },
-                child: Text('show tables'),
               ),
-              SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: FilledButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CreatePlanPage()));
-                    },
-                    child: Text('Create a Plan'),
-                  )),
-              SizedBox(
-                width: 10,
-              ),
-              SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: FilledButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AttractionCreationPage()));
-                    },
-                    child: Text('Create an\nAtraction'),
-                  ))
             ],
           ),
-          SizedBox(
-            height: 30,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CreateTitle(title:'Home', screenWidth: screenWidth),
+              Container(
+                height: logoHeight, // Adjust height based on screen height
+                width: logoWidth,
+                child: Image(
+                  image: AssetImage('assets/photos/logo_TySkacz_light.png'),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: screenHeight * 0.25, // Adjust height based on screen height
+                    width: screenWidth * 0.45,// Adjust width based on screen height
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreatePlanPage(),
+                          ),
+                        );
+                      },
+                      child: Text('Create a Plan'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.25,
+                    width: screenWidth * 0.45,
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AttractionCreationPage(),
+                          ),
+                        );
+                      },
+                      child: Text('Create an\nAttraction'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          Text(
-            'Home Page',
-            style: TextStyle(fontSize: 25),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

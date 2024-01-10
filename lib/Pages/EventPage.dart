@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
-
+import 'background.dart';
 
 class EventDescriptionPage extends StatelessWidget {
   EventDescriptionPage({super.key, required this.event});
@@ -176,76 +176,79 @@ class EventDescriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double picHeight = screenHeight * 0.25;
+    final double picWidth = screenWidth * 0.9;
+    final double nameHeight = screenHeight*0.08;
+    final double listHeight = screenHeight* 0.4;
+    return Stack(
+      children: [
+        Background(),
+        Scaffold(
+         backgroundColor: Colors.transparent,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(30.0),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            Container(
-              color: Constant.mainBackgroundColor,
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(
-                  vertical: mainContainerMargin,
-                  horizontal: mainContainerMargin),
-              width:
-                  MediaQuery.of(context).size.width - 2 * mainContainerMargin,
-              height: MediaQuery.of(context).size.height -
-                  30 -
-                  2 * mainContainerMargin,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    //TODO: insert pic
-                    Container(
-                      width: 300,
-                      height:200,
-                      child: Image.network(
-                        event.attractionWithinEvent.photoURL,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildElevatedTextContainer(
-                      40,
-                      Constant.mainGreenColor,
-                      event.attractionWithinEvent.name,
-                      titleFontSize,
-                      Colors.black,
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildRatingContainer(),
-                    SizedBox(height: sizedBoxHeight),
-                    //TODO: container size dependant length of description
-                    Container(
-                      height: 220,
-                      child: ListView(
-                        children: [
-                          buildElevatedTextContainer(
-                            500,
-                            Constant.mainBackgroundColor,
-                            event.attractionWithinEvent.description,
-                            15,
-                            Colors.black,
+        body: SafeArea(
+            child:
+              Container(
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all( mainContainerMargin),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      //TODO: insert pic
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          height:picHeight,
+                          width:picWidth,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              event.attractionWithinEvent.photoURL,
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: sizedBoxHeight),
-                    buildInfoContainer(context),
-                  ],
+                      buildElevatedTextContainer(
+                        nameHeight,
+                        Constant.mainGreenColor,
+                        event.attractionWithinEvent.name,
+                        titleFontSize,
+                        Colors.black,
+                      ),
+                      //TODO: container size dependant length of description
+                      Material(
+                          elevation: 8.0, // Set the desired elevation
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: Colors.white,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            height: listHeight,
+                            width: double.infinity,
+                            child:SingleChildScrollView(
+                                child:Text(event.attractionWithinEvent.description)
+                            ),
+                          )
+                      ),
+
+                      SizedBox(height: sizedBoxHeight),
+                      buildInfoContainer(context),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
         ),
-      ),
+      ),]
     );
   }
 }

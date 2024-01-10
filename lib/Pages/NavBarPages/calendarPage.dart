@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
+import 'package:intl/intl.dart';
+import '../background.dart';
+
+import '../../Utils/constantValues.dart';
+import '../../Utils/Theme/colors.dart';
 import 'package:tyskacz/DatabaseManagement/database.dart';
 
 class UserCalendarPage extends StatefulWidget {
@@ -14,162 +19,174 @@ class _UserCalendarPageState extends State<UserCalendarPage> {
   DatabaseService databaseService = DatabaseService();
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Event>>(
-        future: databaseService.getEvents(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Text('No events found');
-          }
-          List<Event> eventList = snapshot.data!;
-          return CalendarPage(eventList: eventList);
-        });
+    return CalendarPage(
+        child:
+        FutureBuilder<List<Event>>(
+            future: databaseService.getEvents(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Calendar(eventList: []);
+              }
+              List<Event> eventList = snapshot.data!;
+              return Calendar(eventList: eventList);
+            })
+    );
   }
 }
 
 class CalendarPage extends StatelessWidget {
-  CalendarPage({Key? key, required this.eventList});
+  CalendarPage({Key? key, required this.child});
 
-  List<Event> eventList;
+  Widget child;
 
   @override
   Widget build(BuildContext context) {
-    print(eventList);
-    final Map<DateTime, List<Attraction>> eventsMap = {};
+    final double screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    final double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    final double spaceUnderTitle = screenHeight * 0.05;
 
-    eventList.forEach((event) {
-      DateTime startDate = event.startDate;
-      DateTime endDate = event.endDate;
+    return Stack(
+        children: [
+          Background(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
 
-      for (var date = startDate;
-          date.isBefore(endDate);
-          date = date.add(Duration(days: 1))) {
-        eventsMap.putIfAbsent(date, () => []);
-        eventsMap[date]!.add(event.attractionWithinEvent);
-      }
-    });
-
-    // final Map<DateTime, List<Attraction>> eventsMap = eventList.fold({}, (Map<DateTime, List<Attraction>> map, Event event) {
-    //   DateTime startDate = event.startDate;
-    //   DateTime endDate = event.endDate;
-    //   List<Attraction> attractions = [event.attractionWithinEvent];
-    //
-    //   for (var date = startDate; date.isBefore(endDate); date = date.add(Duration(days: 1))) { //If takes longer than a day add on multiple days
-    //     if (map.containsKey(date)) {
-    //       map[date]!.addAll(attractions);
-    //     } else {
-    //       map[date] = attractions;
-    //     }
-    //   }
-    //
-    //   return map;
-    // });
-    print(eventsMap);
-    // {
-    //   DateTime(2023, 1, 1): [
-    //     MockAttraction(
-    //       name: 'Pigs in Paris',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'building',
-    //     ),
-    //     MockAttraction(
-    //       name: 'Działeczka',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'deep in the forrest',
-    //     ),
-    //   ],
-    //   DateTime(2023, 1, 2): [
-    //     MockAttraction(
-    //       name: 'Tank U',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'building',
-    //     ),
-    //     MockAttraction(
-    //       name: 'Paprykarz',
-    //       picPath: 'assets/photos/logo_TySkacz_light.png',
-    //       description: 'building',
-    //     ),
-    //   ],
-    // };
-
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Text(
-                    'Calendar Page',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  Container(
-                    height: 500,
-                    child: ListView.builder(
-                      itemCount: eventsMap.length,
-                      itemBuilder: (context, index) {
-                        DateTime date = eventsMap.keys.elementAt(index);
-                        List<Attraction> attractions = eventsMap[date]!;
-
-                        return DayOfEventsEntry(
-                            date: date, attractions: attractions);
-                      },
+            ),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      'Calendar Page',
+                      style: TextStyle(fontFamily: 'MainFont',
+                          fontSize: 40,
+                          color: Colors.grey[900]),
                     ),
-                  ),
-                ],
+                    SizedBox(height: spaceUnderTitle),
+                    Container(
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height - // Adjust the height as needed
+                          kToolbarHeight - MediaQuery
+                          .of(context)
+                          .padding
+                          .top - 20, // Additional padding
+                      child: child,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        ]
+    );
+  }
+
+}
+
+Map<DateTime, List<Attraction>> mapToDays(List<Event> eventList) {
+  final Map<DateTime, List<Attraction>> eventsMap = {};
+
+  eventList.forEach((event) {
+    DateTime startDate = event.startDate;
+    DateTime endDate = event.endDate;
+
+    for (var date = DateTime(startDate.year, startDate.month, startDate.day);
+    date.isBefore(endDate);
+    date = date.add(Duration(days: 1))) {
+      eventsMap.putIfAbsent(date, () => []);
+      eventsMap[date]!.add(event.attractionWithinEvent);
+    }
+  });
+  return eventsMap;
+}
+
+
+class Calendar extends StatelessWidget {
+  Calendar({
+    super.key,
+    required this.eventList,
+  });
+
+  final List<Event> eventList;
+  late final eventsMap = mapToDays(eventList);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: eventsMap.length,
+      itemBuilder: (context, index) {
+        DateTime date = eventsMap.keys.elementAt(index);
+        List<Attraction> attractions = eventsMap[date]!;
+        return DayOfEventsEntry(
+            date: date, attractions: attractions);
+      },
     );
   }
 }
 
 class DayOfEventsEntry extends StatelessWidget {
   const DayOfEventsEntry(
-      {Key? key, required this.date, required this.attractions});
-
+      {Key? key, required this.date, required this.attractions})
+      : super(key: key);
   final DateTime date;
   final List<Attraction> attractions;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Date: ${date}',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Center(
+            child: Text(
+              DateFormat('dd MMMM yyyy').format(date),
+              style: TextStyle(fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: mainGreen[200],
+                  fontFamily: 'Anton-Regular'),
+            ),
           ),
-          Column(
-            children: attractions.map((attraction) {
-              return ListTile(
-                leading: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minWidth: 50,
-                      minHeight: 50,
-                      maxWidth: 70,
-                      maxHeight: 70,
-                    ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            color: Colors.white,
+            child: Column(
+              children: attractions.map((attraction) {
+                return ListTile(
+                  contentPadding: const EdgeInsets.all(8.0),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
                     child: Image.network(
                       attraction.photoURL,
+                      width: 70,
+                      height: 70,
                       fit: BoxFit.cover,
-                    )),
-                title: Text(attraction.name),
-                subtitle: Text(attraction.description),
-              );
-            }).toList(),
+                    ),
+                  ),
+                  title: Text(attraction.name, style: TextStyle(fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Anton-Regular')),
+                  subtitle: Text(attraction.description, style: TextStyle(
+                      fontSize: 15, fontFamily: 'Anton-Regular')),
+                );
+              }).toList(),
+            ),
           ),
         ],
       ),

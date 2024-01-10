@@ -5,6 +5,7 @@ import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 import 'signUp.dart';
 import 'changePassword.dart';
+import '../background.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -14,64 +15,54 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 150,
-                  child: Image.asset('assets/photos/logo_Tyskacz_light.png'),
-                ),
-              ),
-            ),
-            SizedBox(height:20),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  'Sign In',
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-              ),
-            ),
-            SizedBox(height:20),
-            InputField(name: 'Login'),
-            InputField(name: 'Password'),
-            TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
-            SizedBox(
-              height: 65,
-              width: 360,
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: FilledButton(
-                    child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: (){
-                      print('Successfully log in ');
-                      //go to home page with navbar
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
-                    },
 
-                  ),
-                ),
-              ),
-            ),
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double logoSize = screenHeight * 0.2;
+    final double buttonHeight = screenHeight * 0.08;
+    final double buttonWidth = screenWidth * 0.9;
+    final double spaceUnderTitle = screenHeight * 0.02;
 
-            SizedBox(
-              height: 50,
-            ),
-            TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
-          ],
+    return Stack(
+      children:[
+        Background(),
+        Scaffold(
+        appBar: AppBar(
         ),
-      ),
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+             Container(
+                    width: logoSize,
+                    height: logoSize,
+                    child: Image.asset('assets/photos/logo_TySkacz_light.png'),
+                  ),
+              SizedBox(height:spaceUnderTitle),
+              CreateTitle(title: 'Sign In', screenWidth:screenWidth),
+              SizedBox(height:spaceUnderTitle),
+              InputField(name: 'Login'),
+              InputField(name: 'Password'),
+              TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
+              SizedBox(
+                height: buttonHeight,
+                width: buttonWidth,
+                child: Container(
+                    child: FilledButton(
+                      child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
+                      ),
+                      onPressed: (){
+                        //go to home page with navbar
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
+                      },
+
+                    ),
+                ),
+              ),
+              TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
+            ],
+          ),
+      ),]
     );
   }
 }
@@ -92,15 +83,15 @@ class TextButton extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 62),
-              child: Text(text),
+              padding: const EdgeInsets.only(left: 62, top: 10, bottom: 10, right: 10),
+              child: Text(text, style:TextStyle(fontSize:16, fontFamily: 'MainFont')),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 1.0),
+              padding: const EdgeInsets.only(left: 1.0, top: 10, bottom: 10),
               child: InkWell(
                 onTap: () => _handleNavigation(context),
                 child: Text(navigationText,
-                    style: TextStyle(fontSize: 14, color: Colors.blue)),
+                    style: TextStyle(fontSize: 14, color: Colors.blue, fontFamily: 'MainFont')),
               ),
             )
           ],

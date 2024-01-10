@@ -3,6 +3,10 @@ import 'package:tyskacz/DatabaseManagement/database.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
+import '../../Utils/Theme/colors.dart';
+import 'background.dart';
+
+import 'package:tyskacz/Pages/SearchField.dart';
 import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
 
@@ -18,6 +22,8 @@ class AttractionFinderPage extends StatefulWidget {
 
 class _AttractionFinderPage extends State<AttractionFinderPage> {
   final DatabaseService databaseService = DatabaseService();
+
+  TextEditingController _textController = TextEditingController();
 
   Widget buildTextContainer(double height, String name, double fontSize) {
     return Container(
@@ -35,92 +41,92 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
   final double pageNameFontSize = 15;
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // preferredSize: Size.fromHeight(30.0),s
-      ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-                height: 50,
-                width: 200,
-                child: Text(
-                  'Select attractions you would like to visit',
-                  style: TextStyle(
-                      fontSize: pageNameFontSize, fontWeight: FontWeight.bold),
-                )
-            ),
 
-            FutureBuilder<List<Attraction>>(
-              future: databaseService.getAttractions(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No attractions found');
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return AttractionEntry(
-                          attraction: snapshot.data![index],
-                          onSwipe: () {
-                            widget.plan.listOfEvents.add(Event(
-                                attractionWithinEvent: snapshot.data![index],
-                                startDate: DateTime.now(),
-                                endDate: DateTime
-                                    .now())); //TODO: add date choice
-                            //setState(() {attractionList.removeAt(index);});
-                          },
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AttractionDescriptionPage(
-                                            attraction: snapshot.data![index])
-                                )
-                            );
-                          }
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: 50), // Optional spacing
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Container(
-                width: double.infinity,
-                height: 100,
-                child: FilledButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          20.0), // Adjust the value as needed
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonHeight = screenHeight * 0.08;
+    final double spaceUnderTitle = screenHeight * 0.05;
+
+    return Stack(
+      children:[
+        BackgroundSuitcase(),
+        Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          // preferredSize: Size.fromHeight(30.0),s
+        ),
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget> [
+              CreateTitle(title:'Find Atractions', screenWidth:screenWidth),
+              SizedBox(height:spaceUnderTitle),
+              FutureBuilder<List<Attraction>>(
+                future: databaseService.getAttractions(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Text('No attractions found');
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return AttractionEntry(
+                            attraction: snapshot.data![index],
+                            onSwipe: () {
+                              widget.plan.listOfEvents.add(Event(
+                                  attractionWithinEvent: snapshot.data![index],
+                                  startDate: DateTime.now(),
+                                  endDate: DateTime
+                                      .now())); //TODO: add date choice
+                              //setState(() {attractionList.removeAt(index);});
+                            },
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AttractionDescriptionPage(
+                                              attraction: snapshot.data![index])
+                                  )
+                              );
+                            }
+                        );
+                      },
                     ),
+                  );
+                },
+              ),
+ // Optional spacing
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Container(
+                  width: double.infinity,
+                  height: buttonHeight,
+                  child: FilledButton(
+                    onPressed: () {
+// if plan exists update it, if not create new one
+                      if (widget.plan.id != null) {
+                        databaseService.updatePlan(widget.plan);
+                      } else {
+                        databaseService.addPlan(widget.plan);
+                      }
+                    },
+                    child: Text('Save'),
                   ),
-                  onPressed: () {
-                    // if plan exists update it, if not create new one
-                    if (widget.plan.id != null) {
-                      databaseService.updatePlan(widget.plan);
-                    } else {
-                      databaseService.addPlan(widget.plan);
-                    }
-                  },
-                  child: Text('Save'),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-          ],
+            ] ,
+          ),
         ),
       ),
+    ]
     );
+
   }
 }
 
@@ -161,16 +167,28 @@ class _AttractionEntryState extends State<AttractionEntry> {
                 child: Container(
                   height: 100,
                   width: 120,
-                  child: Image.network(
-                    attraction.photoURL,
-                    fit: BoxFit.fill,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                        attraction.photoURL,
+                        fit: BoxFit.fill,
+                      ),
                   ),
                 ),
               ),
+
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(attraction.name),
+                    Text(attraction.name, style: TextStyle(fontWeight: FontWeight.bold)),
+                    Container(
+                      width: 200,  // Set the desired width
+                      child: Divider(
+                        height: 20,
+                        thickness: 2,
+                        color: mainRed[400], // Choose the color you prefer
+                      ),
+                    ),
                     Container(height: 70,
                         child: Text(attraction.description,
                             style: TextStyle(fontSize: 10))

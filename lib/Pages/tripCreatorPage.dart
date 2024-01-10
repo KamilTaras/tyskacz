@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Pages/attractionFinderPage.dart';
+import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
-import '../Utils/constantValues.dart';
+import 'background.dart';
+import '../../Utils/constantValues.dart';
 
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});
@@ -14,6 +16,8 @@ class CreatePlanPage extends StatefulWidget {
 }
 
 class _CreatePlanPage extends State<CreatePlanPage> {
+
+  TextEditingController _textController = TextEditingController();
   final String pageName = 'Create New Trip';
   final String searchLabel = 'Search for destinations';
   final double pageNameHeight = 100;
@@ -39,7 +43,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       child: Center(
         child: Text(
           name,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -49,6 +53,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
     return Column(
       children: [
         IconButton(
+          splashRadius: 10,
           iconSize: 60,
           onPressed: () {
             var plan = Plan(name: 'newPlan', listOfEvents: [], tripType: TripType.values[type]);
@@ -66,7 +71,15 @@ class _CreatePlanPage extends State<CreatePlanPage> {
         ), // Adjust the spacing between the button and label
         Text(
           label,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, fontFamily: 'MainFont'),
+        ),
+        Container(
+          width: 150,
+          child: Divider(
+            height: 20,
+            thickness: 2,
+            color: Constant.mainGreenColor, // Choose the color you prefer
+          ),
         ),
       ],
     );
@@ -74,41 +87,51 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    return Stack(
+      children: [
+        Background(),
+        Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          // preferredSize: Size.fromHeight(30.0),s
         ),
-      ),
-      body: SafeArea(
-        child: Column(children: <Widget>[
-          Column(children: <Widget>[
-            buildTextContainer(
-                pageNameHeight, Colors.transparent, pageName, pageNameFontSize),
-            SizedBox(height: 30),
-            buildTextContainer(40, Colors.transparent, searchLabel, 15),
-            //TODO: Search bar
-            Placeholder(
-              fallbackHeight: 60,
-              fallbackWidth: 100,
-            ),
-            SizedBox(height: 30),
-            Row(children: <Widget>[
-              createButtonWithImage(
-                  'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
-              createButtonWithImage('assets/photos/createSightSeeingTrip.png',
-                  'Sight  Seeing Trip', 1),
-            ]),
-            Row(children: <Widget>[
-              createButtonWithImage(
-                  'assets/photos/createBusinessTrip.png', 'Educational Trip', 2),
-              createButtonWithImage(
-                  'assets/photos/createSightSeeingTrip.png', 'Leisure Trip', 3),
-            ]),
+        body: SafeArea(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                CreateTitle(title:'Create new trip', screenWidth:screenWidth),
+              //TODO: Search bar
+
+              // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
+              // SizedBox(height: 30),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget> [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          createButtonWithImage(
+                              'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
+                          createButtonWithImage('assets/photos/createSightSeeingTrip.png',
+                              'Sight  Seeing Trip', 1),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          createButtonWithImage(
+                              'assets/photos/educationalTrip.png', 'Educational Trip', 2),
+                          createButtonWithImage(
+                              'assets/photos/leisureTrip.png', 'Leisure Trip', 3),
+                        ]),
+                  ]
+                ),
           ]),
-        ]),
-      ),
+        ),
+      ),]
     );
   }
 }
