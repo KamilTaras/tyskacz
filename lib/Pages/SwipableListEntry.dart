@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +34,8 @@ class _SwipableListEntryState extends State<SwipableListEntry> {
         if (_offsetX > 50) {
           // Swiped from left to right (right direction)
           widget.onSwipe();
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Action performed!')));
         }
         // Reset the offset after the drag ends
         setState(() {

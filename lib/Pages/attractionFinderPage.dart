@@ -4,12 +4,12 @@ import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/mocks.dart';
 import '../DatabaseManagement/planInformation.dart';
 import '../../Utils/Theme/colors.dart';
+import 'NavBarPages/navBar.dart';
 import 'background.dart';
 
 import 'package:tyskacz/Pages/SearchField.dart';
 import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
-
 
 class AttractionFinderPage extends StatefulWidget {
   AttractionFinderPage({super.key, required this.plan});
@@ -37,31 +37,27 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     );
   }
 
-
   final double pageNameFontSize = 15;
 
   Widget build(BuildContext context) {
-
-
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     final double buttonHeight = screenHeight * 0.08;
     final double spaceUnderTitle = screenHeight * 0.05;
 
-    return Stack(
-      children:[
-        BackgroundSuitcase(),
-        Scaffold(
+    return Stack(children: [
+      BackgroundSuitcase(),
+      Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          // preferredSize: Size.fromHeight(30.0),s
-        ),
+            // preferredSize: Size.fromHeight(30.0),s
+            ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget> [
-              CreateTitle(title:'Find Atractions', screenWidth:screenWidth),
-              SizedBox(height:spaceUnderTitle),
+            children: <Widget>[
+              CreateTitle(title: 'Find Attractions', screenWidth: screenWidth),
+              SizedBox(height: spaceUnderTitle),
               FutureBuilder<List<Attraction>>(
                 future: databaseService.getAttractions(),
                 builder: (context, snapshot) {
@@ -80,8 +76,10 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                             onSwipe: () async {
                               widget.plan.listOfEvents.add(Event(
                                   attractionWithinEvent: snapshot.data![index],
-                                  startDate: await selectDate(context, "Select start date"),
-                                  endDate: await selectDate(context, "Select end date"))); //TODO: end no earlier than start
+                                  startDate: await selectDate(
+                                      context, "Select start date"),
+                                  endDate: await selectDate(context,
+                                      "Select end date"))); //TODO: end no earlier than start
                               //setState(() {attractionList.removeAt(index);});
                             },
                             onTap: () {
@@ -90,17 +88,15 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           AttractionDescriptionPage(
-                                              attraction: snapshot.data![index])
-                                  )
-                              );
-                            }
-                        );
+                                              attraction:
+                                                  snapshot.data![index])));
+                            });
                       },
                     ),
                   );
                 },
               ),
- // Optional spacing
+              // Optional spacing
               Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Container(
@@ -108,35 +104,40 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                   height: buttonHeight,
                   child: FilledButton(
                     onPressed: () {
+
 // if plan exists update it, if not create new one
                       if (widget.plan.id != null) {
                         databaseService.updatePlan(widget.plan);
                       } else {
                         databaseService.addPlan(widget.plan);
                       }
+
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+
                     },
                     child: Text('Save'),
                   ),
                 ),
               ),
-            ] ,
+            ],
           ),
         ),
       ),
-    ]
-    );
-
+    ]);
   }
-  Future<DateTime> selectDate(BuildContext context, String message, {DateTime? start=null}) async {
+
+  Future<DateTime> selectDate(BuildContext context, String message,
+      {DateTime? start = null}) async {
     final DateTime? picked = await showDatePicker(
       helpText: message,
       context: context,
       initialDate: DateTime.now(),
-      firstDate: start??DateTime.now(),
+      firstDate: start ?? DateTime.now(),
       lastDate: DateTime(2100),
     );
     if (picked == null) {
-      picked==DateTime.now();
+      picked == DateTime.now();
     }
     return picked!;
   }
@@ -160,7 +161,6 @@ class AttractionEntry extends StatefulWidget {
 }
 
 class _AttractionEntryState extends State<AttractionEntry> {
-
   @override
   Widget build(BuildContext context) {
     var attraction = widget.attraction;
@@ -182,29 +182,29 @@ class _AttractionEntryState extends State<AttractionEntry> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
-                        attraction.photoURL,
-                        fit: BoxFit.fill,
-                      ),
+                      attraction.photoURL,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
-
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(attraction.name, style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(attraction.name,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                     Container(
-                      width: 200,  // Set the desired width
+                      width: 200, // Set the desired width
                       child: Divider(
                         height: 20,
                         thickness: 2,
                         color: mainRed[400], // Choose the color you prefer
                       ),
                     ),
-                    Container(height: 70,
+                    Container(
+                        height: 70,
                         child: Text(attraction.description,
-                            style: TextStyle(fontSize: 10))
-                    )
+                            style: TextStyle(fontSize: 10)))
                     // Other widgets if needed
                   ],
                 ),
@@ -213,7 +213,6 @@ class _AttractionEntryState extends State<AttractionEntry> {
           ),
         ),
         onTap: widget.onTap,
-        onSwipe: widget.onSwipe
-    );
+        onSwipe: widget.onSwipe);
   }
 }
