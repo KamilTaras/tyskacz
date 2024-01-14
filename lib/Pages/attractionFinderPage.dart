@@ -116,7 +116,8 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                         databaseService.addPlan(widget.plan);
                       }
                     },
-                    child: Text('Save'),
+                    child: Text('Save',       style: TextStyle(
+                      fontSize: 30,) ),
                   ),
                 ),
               ),
@@ -180,17 +181,19 @@ class _AttractionEntryState extends State<AttractionEntry> {
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(attraction.name, style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(attraction.name,       style: TextStyle(
+                        fontSize: 25,fontWeight: FontWeight.bold)),
                     Container(
                       width: 200,  // Set the desired width
                       child: Divider(
-                        height: 20,
+                        height: 2,
                         thickness: 2,
                         color: mainRed[400], // Choose the color you prefer
                       ),
                     ),
                     Container(height: 70,
                         child: Text(attraction.description,
+                            textAlign: TextAlign.left,
                             style: TextStyle(fontSize: 10))
                     )
                     // Other widgets if needed

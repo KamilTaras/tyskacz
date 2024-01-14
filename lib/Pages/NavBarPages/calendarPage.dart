@@ -20,8 +20,7 @@ class _UserCalendarPageState extends State<UserCalendarPage> {
 
   Widget build(BuildContext context) {
     return CalendarPage(
-        child:
-        FutureBuilder<List<Event>>(
+        child: FutureBuilder<List<Event>>(
             future: databaseService.getEvents(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -32,8 +31,7 @@ class _UserCalendarPageState extends State<UserCalendarPage> {
               }
               List<Event> eventList = snapshot.data!;
               return Calendar(eventList: eventList);
-            })
-    );
+            }));
   }
 }
 
@@ -44,56 +42,36 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    final double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final double spaceUnderTitle = screenHeight * 0.05;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
-    return Stack(
-        children: [
-          Background(),
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-
-            ),
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      'Calendar Page',
-                      style: TextStyle(fontFamily: 'MainFont',
-                          fontSize: 40,
-                          color: Colors.grey[900]),
-                    ),
-                    SizedBox(height: spaceUnderTitle),
-                    Container(
-                      height: MediaQuery
-                          .of(context)
+    return Stack(children: [
+      Background(),
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CreateTitle(title: 'Calendar Page', screenWidth: screenWidth),
+                Container(
+                  height: MediaQuery.of(context)
                           .size
                           .height - // Adjust the height as needed
-                          kToolbarHeight - MediaQuery
-                          .of(context)
-                          .padding
-                          .top - 20, // Additional padding
-                      child: child,
-                    ),
-                  ],
+                      kToolbarHeight -
+                      MediaQuery.of(context).padding.top -
+                      20, // Additional padding
+                  child: child,
                 ),
-              ),
+              ],
             ),
           ),
-        ]
-    );
+        ),
+      ),
+    ]);
   }
-
 }
 
 Map<DateTime, List<Attraction>> mapToDays(List<Event> eventList) {
@@ -104,15 +82,14 @@ Map<DateTime, List<Attraction>> mapToDays(List<Event> eventList) {
     DateTime endDate = event.endDate;
 
     for (var date = DateTime(startDate.year, startDate.month, startDate.day);
-    date.isBefore(endDate);
-    date = date.add(Duration(days: 1))) {
+        date.isBefore(endDate);
+        date = date.add(Duration(days: 1))) {
       eventsMap.putIfAbsent(date, () => []);
       eventsMap[date]!.add(event.attractionWithinEvent);
     }
   });
   return eventsMap;
 }
-
 
 class Calendar extends StatelessWidget {
   Calendar({
@@ -125,16 +102,39 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: eventsMap.length,
-      itemBuilder: (context, index) {
-        DateTime date = eventsMap.keys.elementAt(index);
-        List<Attraction> attractions = eventsMap[date]!;
-        return DayOfEventsEntry(
-            date: date, attractions: attractions);
-      },
-    );
+    return buildListView(context);
+  }
+
+  Widget buildListView(BuildContext context) {
+    if (eventsMap.isEmpty) {
+      return Column(
+        children: [
+          Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 70,
+              color: Colors.white.withOpacity(0.5),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "There is no events yet! Go to home page to add some :)",
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+              )),
+          SizedBox(height: 10,)
+        ],
+      );
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: eventsMap.length,
+        itemBuilder: (context, index) {
+          DateTime date = eventsMap.keys.elementAt(index);
+          List<Attraction> attractions = eventsMap[date]!;
+          return DayOfEventsEntry(date: date, attractions: attractions);
+        },
+      );
+    }
   }
 }
 
@@ -147,49 +147,57 @@ class DayOfEventsEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Text(
-              DateFormat('dd MMMM yyyy').format(date),
-              style: TextStyle(fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: mainGreen[200],
-                  fontFamily: 'Anton-Regular'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Container(
+            color: Colors.white.withOpacity(0.8),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+              child: Text(
+                DateFormat('dd MMMM yyyy').format(date),
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: mainGreen[900],
+                    fontFamily: 'Anton-Regular'),
+              ),
             ),
           ),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            color: Colors.white,
-            child: Column(
-              children: attractions.map((attraction) {
-                return ListTile(
-                  contentPadding: const EdgeInsets.all(8.0),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      attraction.photoURL,
-                      width: 70,
-                      height: 70,
-                      fit: BoxFit.cover,
-                    ),
+        ),
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          color: Colors.white,
+          child: Column(
+            children: attractions.map((attraction) {
+              return ListTile(
+                contentPadding: const EdgeInsets.all(8.0),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    attraction.photoURL,
+                    width: 70,
+                    height: 70,
+                    fit: BoxFit.cover,
                   ),
-                  title: Text(attraction.name, style: TextStyle(fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Anton-Regular')),
-                  subtitle: Text(attraction.description, style: TextStyle(
-                      fontSize: 15, fontFamily: 'Anton-Regular')),
-                );
-              }).toList(),
-            ),
+                ),
+                title: Text(attraction.name,
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Anton-Regular')),
+                subtitle: Text(attraction.description,
+                    style:
+                        TextStyle(fontSize: 20, fontFamily: 'Anton-Regular')),
+              );
+            }).toList(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

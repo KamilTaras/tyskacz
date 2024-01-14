@@ -174,17 +174,18 @@ class CreateTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
         child:Column(
+          mainAxisAlignment: MainAxisAlignment.center,
             children:[
-              Container(
-                width: screenWidth*0.7,
-                child: Divider(
+              Divider(
+                indent: 70,
+                endIndent:70,
                   height: 10,
                   thickness: 2,
                   color: Constant.mainRedColor, // Choose the color you prefer
                 ),
-              ),
-              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 40, color: Colors.grey[900])),
+              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 50, color: Colors.grey[900])),
 
               Container(
                 width: screenWidth*0.9,

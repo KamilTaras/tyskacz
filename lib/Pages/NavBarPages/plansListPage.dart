@@ -34,39 +34,49 @@ class _PlanListPageState extends State<PlanListPage> {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    return Stack(
-      children:[
-        Background(),
-        Scaffold(
+    return Stack(children: [
+      Background(),
+      Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-        ),
+        appBar: AppBar(),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget> [
-                CreateTitle(title: 'Your Plans', screenWidth:screenWidth),
+            children: <Widget>[
+              CreateTitle(title: 'Your Plans', screenWidth: screenWidth),
               FutureBuilder<List<Plan>>(
-              future: databaseService.getPlans(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No plans found');
-                }
-                return Expanded(
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder:(context, index){
-                    return PlanEntry(
-                        plan: snapshot.data![index],
-                        onSwipe: () {
-                          setState(() {databaseService.deletePlan(snapshot.data![index].id!);
+                future: databaseService.getPlans(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        color: Colors.white.withOpacity(0.6),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'There is no plans yet! Go to home page to add some :)',
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.center,
+                          ),
+                        ));
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return PlanEntry(
+                            plan: snapshot.data![index],
+                            onSwipe: () {
+                              setState(() {
+                                databaseService
+                                    .deletePlan(snapshot.data![index].id!);
                                 snapshot.data!.removeAt(index);
                               });
                             });
-                        },
+                      },
                     ),
                   );
                 },
@@ -84,15 +94,13 @@ class _PlanListPageState extends State<PlanListPage> {
                 //   ),
                 // ),
               ),
-            ] ,
+            ],
           ),
         ),
-      ),]
-    );
+      ),
+    ]);
   }
 }
-
-
 
 class PlanEntry extends StatefulWidget {
   PlanEntry({super.key, required this.plan, required this.onSwipe});
@@ -120,19 +128,19 @@ class _PlanEntryState extends State<PlanEntry> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Text(widget.plan.name),
-                Text(widget.plan.tripType.name),
+                Text(widget.plan.name, style: TextStyle(fontSize: 22),),
+                Text(widget.plan.tripType.name, style: TextStyle(fontSize: 22)),
               ],
             ),
           ),
         ),
-        onTap: (){
+        onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PlanPage(plan: widget.plan)),
+            MaterialPageRoute(
+                builder: (context) => PlanPage(plan: widget.plan)),
           );
         },
-        onSwipe: widget.onSwipe
-    );
+        onSwipe: widget.onSwipe);
   }
 }
