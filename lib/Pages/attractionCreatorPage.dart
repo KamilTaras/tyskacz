@@ -31,26 +31,23 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
   final String date = '24.10.2023 - 11.11.2023';
   final String localization = 'Szczecin, Dabie 33';
 
-
   @override
   Widget build(BuildContext context) {
-
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double smallInputHeight = screenHeight*0.1;
+    final double smallInputHeight = screenHeight * 0.1;
     final double descriptionHeight = screenHeight * 0.25;
     final double buttonHeight = screenHeight * 0.1;
 
-    return Stack(
-      children:[
-        Background(),
-        Scaffold(
+    return Stack(children: [
+      Background(),
+      Scaffold(
         backgroundColor: Colors.transparent,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(30.0),
           child: AppBar(
-            // backgroundColor: Colors.transparent,
-          ),
+              // backgroundColor: Colors.transparent,
+              ),
         ),
         body: SafeArea(
           child: Container(
@@ -65,55 +62,80 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                   Placeholder(
                     fallbackHeight: screenHeight * 0.25,
                   ),
-                  SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(controller: _nameController, hintText:'Attraction Name',height: smallInputHeight, fontSize: 25, maxLines:2),
-                  SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(controller: _descriptionController, hintText:'Description', height: descriptionHeight, fontSize: 16, maxLines: 12),
-                  SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(controller: _localizationController, hintText:'Localization', height: smallInputHeight, fontSize: 16),
-                  SizedBox(height: sizedBoxHeight),
+                  // SizedBox(height: sizedBoxHeight),
+                  AttractionTextField(
+                      controller: _nameController,
+                      hintText: 'Attraction Name',
+                      height: smallInputHeight,
+                      fontSize: 25,
+                      maxLines: 2),
+                  // SizedBox(height: sizedBoxHeight),
+                  AttractionTextField(
+                      controller: _descriptionController,
+                      hintText: 'Description',
+                      height: descriptionHeight,
+                      fontSize: 16,
+                      maxLines: 12),
+                  // SizedBox(height: sizedBoxHeight),
+                  AttractionTextField(
+                      controller: _localizationController,
+                      hintText: 'Localization',
+                      height: smallInputHeight,
+                      fontSize: 16),
+                  // SizedBox(height: sizedBoxHeight),
                   Container(
                     height: buttonHeight,
                     width: double.infinity,
-                    child:FilledButton(
+                    child: FilledButton(
                       //TODO: create attraction after pressing the button
-                      onPressed: ()async{
-                        try{
-                        var coords=LatLng(double.parse(_localizationController.text.split(',')[0]), double.parse(_localizationController.text.split(',')[1]));
-                        databaseService.addAttraction(
-                            Attraction(
-                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
-                              name: _nameController.text,
-                              description: _descriptionController.text,
-                              coordinates: coords,
-                              //,
-                            )
-                        );
-                      }catch(e){
-                        print(e);
-                      }
+                      // jak można wrzucać takie rzeczy do onPressed? to jest niemożliwe
+                      onPressed: () async {
+                        try {
+                          var coords = LatLng(
+                              double.parse(
+                                  _localizationController.text.split(',')[0]),
+                              double.parse(
+                                  _localizationController.text.split(',')[1]));
+                          databaseService.addAttraction(Attraction(
+                            photoURL:
+                                'https://www.w3schools.com/w3css/img_lights.jpg',
+                            name: _nameController.text,
+                            description: _descriptionController.text,
+                            coordinates: coords,
+                            //,
+                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('attraction added!')));
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('adding failed')));
+                          print(e);
+                        }
 
-                      GeoCode geoCode = GeoCode(apiKey: "412336480991130498790x31447");
+                        GeoCode geoCode =
+                            GeoCode(apiKey: "412336480991130498790x31447");
 
-                      try {
-                        Coordinates coordinates = await geoCode.forwardGeocoding(
-                            address: _localizationController.text);
-                        databaseService.addAttraction(
-                            Attraction(
-                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
-                              name: _nameController.text,
-                              description: _descriptionController.text,
+                        try {
+                          Coordinates coordinates =
+                              await geoCode.forwardGeocoding(
+                                  address: _localizationController.text);
 
-                              coordinates: LatLng(coordinates.latitude!.toDouble(), coordinates.longitude!.toDouble()),
-                              //,
-                            )
-                        );
-                        //print("Latitude: ${coordinates.latitude}");
-                        //print("Longitude: ${coordinates.longitude}");
-                      } catch (e) {
-                        print(e);
-                      }
+                          databaseService.addAttraction(Attraction(
+                            photoURL:
+                                'https://www.w3schools.com/w3css/img_lights.jpg',
+                            name: _nameController.text,
+                            description: _descriptionController.text,
 
+                            coordinates: LatLng(
+                                coordinates.latitude!.toDouble(),
+                                coordinates.longitude!.toDouble()),
+                            //,
+                          ));
+                          //print("Latitude: ${coordinates.latitude}");
+                          //print("Longitude: ${coordinates.longitude}");
+                        } catch (e) {
+                          print(e);
+                        }
                       },
                       child: Text('Save'),
                     ),
@@ -123,8 +145,8 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
             ),
           ),
         ),
-      ),]
-    );
+      ),
+    ]);
   }
 }
 
@@ -153,7 +175,8 @@ class _AttractionTextFieldState extends State<AttractionTextField> {
     return Card(
       elevation: 8.0, // Adjust the elevation as needed
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0), // Adjust the border radius as needed
+        borderRadius:
+            BorderRadius.circular(10.0), // Adjust the border radius as needed
       ),
       child: Container(
         height: widget.height,
@@ -170,7 +193,5 @@ class _AttractionTextFieldState extends State<AttractionTextField> {
         ),
       ),
     );
-
   }
 }
-

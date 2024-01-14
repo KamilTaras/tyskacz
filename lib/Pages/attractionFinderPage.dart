@@ -116,7 +116,8 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                       Navigator.of(context).pop();
 
                     },
-                    child: Text('Save'),
+                    child: Text('Save',       style: TextStyle(
+                      fontSize: 30,) ),
                   ),
                 ),
               ),
@@ -161,6 +162,7 @@ class AttractionEntry extends StatefulWidget {
 }
 
 class _AttractionEntryState extends State<AttractionEntry> {
+
   @override
   Widget build(BuildContext context) {
     var attraction = widget.attraction;
@@ -188,15 +190,16 @@ class _AttractionEntryState extends State<AttractionEntry> {
                   ),
                 ),
               ),
+
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    Text(attraction.name,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(attraction.name,       style: TextStyle(
+                        fontSize: 25,fontWeight: FontWeight.bold)),
                     Container(
-                      width: 200, // Set the desired width
+                      width: 200,  // Set the desired width
                       child: Divider(
-                        height: 20,
+                        height: 2,
                         thickness: 2,
                         color: mainRed[400], // Choose the color you prefer
                       ),
@@ -204,7 +207,9 @@ class _AttractionEntryState extends State<AttractionEntry> {
                     Container(
                         height: 70,
                         child: Text(attraction.description,
-                            style: TextStyle(fontSize: 10)))
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 10))
+                    )
                     // Other widgets if needed
                   ],
                 ),

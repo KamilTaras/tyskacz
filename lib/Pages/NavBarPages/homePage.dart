@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: Text('Create a Plan'),
+                      child: const Text('Create a Plan',  style:TextStyle(fontSize: 25,),textAlign: TextAlign.center,),
                     ),
                   ),
                   SizedBox(
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: Text('Create an\nAttraction'),
+                      child: Text('Create an Attraction', style:TextStyle(fontSize: 25,),textAlign: TextAlign.center,),
                     ),
                   ),
                 ],

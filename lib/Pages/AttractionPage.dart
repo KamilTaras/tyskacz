@@ -101,7 +101,7 @@ class AttractionDescriptionPage extends StatelessWidget {
     final double picHeight = screenHeight * 0.25;
     final double picWidth = screenWidth * 0.9;
     final double nameHeight = screenHeight*0.08;
-    final double listHeight = screenHeight* 0.4;
+    final double listHeight = screenHeight* 0.3;
     return Stack(
       children: [
         Background(),
@@ -121,17 +121,14 @@ class AttractionDescriptionPage extends StatelessWidget {
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       //TODO: insert pic
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          height:picHeight,
-                          width:picWidth,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              attraction.photoURL,
-                              fit: BoxFit.fill,
-                            ),
+                      Container(
+                        height:picHeight,
+                        width:picWidth,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            attraction.photoURL,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
