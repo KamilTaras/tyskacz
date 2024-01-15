@@ -1,3 +1,4 @@
+import 'package:latlong2/latlong.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../DatabaseManagement/attractionInformation.dart';
@@ -108,6 +109,14 @@ class DatabaseService {
   Future<Attraction> getAttraction(int id) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('attraction', where: 'id = ?', whereArgs: [id]);
+    if(maps.isEmpty){
+      return Attraction(
+        name: 'error',
+        description: 'error',
+        coordinates: LatLng(0,0),
+        photoURL: 'error',
+      );
+    }
     return Attraction.fromJson(maps[0]);
   }
 
@@ -130,6 +139,11 @@ class DatabaseService {
       where: 'id = ?',
       whereArgs: [id],
     );
+    //check for events containing the attraction
+    final List<Map<String, dynamic>> events = await db.query('Event', where: 'attractionID = ?', whereArgs: [id]);
+    for (Map<String, dynamic> event in events) {
+      deletePlanEvent(event['eventID']);
+    }
   }
 
   Future<void> addPlan(Plan plan) async {

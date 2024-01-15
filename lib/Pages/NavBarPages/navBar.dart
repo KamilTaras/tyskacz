@@ -7,6 +7,7 @@ import 'calendarPage.dart';
 import 'homePage.dart';
 import 'mapsPage.dart';
 import 'plansListPage.dart';
+import 'allAttractionspage.dart';
 
 class NavBarClass extends StatefulWidget {
   const NavBarClass({super.key});
@@ -21,13 +22,14 @@ class _NavBarClassState extends State<NavBarClass> {
   DatabaseService databaseService = DatabaseService();
   HomePage homePage = const HomePage();
   PlanListPage planPage = const PlanListPage();
+  AllAttractionsPage allAttractionsPage = const AllAttractionsPage();
   late UserCalendarPage calendarPage = const UserCalendarPage();
   GlobalMapPage mapPage = const GlobalMapPage();
 
   @override
   void initState() {
     super.initState();
-    allPages = [homePage, planPage, calendarPage, mapPage];
+    allPages = [homePage, planPage, allAttractionsPage, calendarPage, mapPage];
   }
 
   @override
@@ -55,6 +57,10 @@ class _NavBarClassState extends State<NavBarClass> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.star),
                 label: "Plans",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.access_time_sharp),
+                label: "Attractions",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month),

@@ -1,43 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:tyskacz/DatabaseManagement/database.dart';
-import '../DatabaseManagement/attractionInformation.dart';
-import '../DatabaseManagement/planInformation.dart';
+
+import '../SwipableListEntry.dart';
+import '../../DatabaseManagement/database.dart';
+import '../../DatabaseManagement/attractionInformation.dart';
+import '../../DatabaseManagement/planInformation.dart';
+
+import '../background.dart';
 import '../../Utils/Theme/colors.dart';
-import 'background.dart';
+import '../attractionPage.dart';
 
 
-import 'AttractionPage.dart';
-import 'SwipableListEntry.dart';
 
-class AttractionFinderPage extends StatefulWidget {
-  AttractionFinderPage({super.key, required this.plan});
 
-  Plan plan;
+class AllAttractionsPage extends StatefulWidget {
+  const AllAttractionsPage({super.key});
 
   @override
-  State<AttractionFinderPage> createState() => _AttractionFinderPage();
+  State<AllAttractionsPage> createState() => _AllAttractionsPageState();
 }
 
-class _AttractionFinderPage extends State<AttractionFinderPage> {
+class _AllAttractionsPageState extends State<AllAttractionsPage> {
+
   final DatabaseService databaseService = DatabaseService();
 
-  TextEditingController _textController = TextEditingController();
-
-  Widget buildTextContainer(double height, String name, double fontSize) {
-    return Container(
-      height: height,
-      child: Center(
-        child: Text(
-          name,
-          style: TextStyle(fontSize: fontSize),
-        ),
-      ),
-    );
-  }
-
-  final double pageNameFontSize = 15;
-
+  @override
   Widget build(BuildContext context) {
+
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     final double buttonHeight = screenHeight * 0.08;
@@ -48,13 +36,13 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
       Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-            // preferredSize: Size.fromHeight(30.0),s
-            ),
+          // preferredSize: Size.fromHeight(30.0),s
+        ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              CreateTitle(title: 'Find Attractions', screenWidth: screenWidth),
+              CreateTitle(title: 'Attractions', screenWidth: screenWidth),
               SizedBox(height: spaceUnderTitle),
               FutureBuilder<List<Attraction>>(
                 future: databaseService.getAttractions(),
@@ -72,13 +60,10 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                         return AttractionEntry(
                             attraction: snapshot.data![index],
                             onSwipe: () async {
-                              widget.plan.listOfEvents.add(Event(
-                                  attractionWithinEvent: snapshot.data![index],
-                                  startDate: await selectDate(
-                                      context, "Select start date"),
-                                  endDate: await selectDate(context,
-                                      "Select end date"))); //TODO: end no earlier than start
-                              //setState(() {attractionList.removeAt(index);});
+                              setState(() {
+                                databaseService
+                                    .deleteAttraction(snapshot.data![index].id!);
+                              });
                             },
                             onTap: () {
                               Navigator.push(
@@ -87,7 +72,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                                       builder: (context) =>
                                           AttractionDescriptionPage(
                                               attraction:
-                                                  snapshot.data![index])));
+                                              snapshot.data![index])));
                             });
                       },
                     ),
@@ -95,53 +80,37 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                 },
               ),
               // Optional spacing
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Container(
-                  width: double.infinity,
-                  height: buttonHeight,
-                  child: FilledButton(
-                    onPressed: () {
-
-// if plan exists update it, if not create new one
-                      if (widget.plan.id != null) {
-                        databaseService.updatePlan(widget.plan);
-                      } else {
-                        databaseService.addPlan(widget.plan);
-                      }
-
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-
-                    },
-                    child: Text('Save',       style: TextStyle(
-                      fontSize: 30,) ),
-                  ),
-                ),
-              ),
+//               Padding(
+//                 padding: EdgeInsets.all(16.0),
+//                 child: Container(
+//                   width: double.infinity,
+//                   height: buttonHeight,
+//                   child: FilledButton(
+//                     onPressed: () {
+//
+// // if plan exists update it, if not create new one
+//                       if (widget.plan.id != null) {
+//                         databaseService.updatePlan(widget.plan);
+//                       } else {
+//                         databaseService.addPlan(widget.plan);
+//                       }
+//
+//                       Navigator.of(context).pop();
+//                       Navigator.of(context).pop();
+//
+//                     },
+//                     child: Text('Save',       style: TextStyle(
+//                       fontSize: 30,) ),
+//                   ),
+//                 ),
+//               ),
             ],
           ),
         ),
       ),
     ]);
   }
-
-  Future<DateTime> selectDate(BuildContext context, String message,
-      {DateTime? start = null}) async {
-    final DateTime? picked = await showDatePicker(
-      helpText: message,
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: start ?? DateTime.now(),
-      lastDate: DateTime(2100),
-    );
-    if (picked == null) {
-      picked == DateTime.now();
-    }
-    return picked!;
-  }
 }
-
 
 class AttractionEntry extends StatefulWidget {
   AttractionEntry({
