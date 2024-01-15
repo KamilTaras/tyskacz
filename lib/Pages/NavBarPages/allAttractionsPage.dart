@@ -139,7 +139,7 @@ class _AttractionEntryState extends State<AttractionEntry> {
             borderRadius: BorderRadius.circular(8),
             //set border radius more than 50% of height and width to make circle
           ),
-          color: Colors.white,
+          color: Color.fromRGBO(255, 255, 255, 0.9),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
