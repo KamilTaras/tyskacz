@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../DatabaseManagement/userInformation.dart';
 import '../../main.dart';
 import '../attractionCreatorPage.dart';
 import '../EventPage.dart';
@@ -8,8 +9,8 @@ import '../../Utils/Theme/colors.dart';
 import '../uiElements.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+  const HomePage({super.key, required this.user});
+  final User user;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CreatePlanPage(),
+                              builder: (context) => CreatePlanPage(user: widget.user),
                             ),
                           );
                         },

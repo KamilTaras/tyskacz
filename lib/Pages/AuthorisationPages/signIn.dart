@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import '../../DatabaseManagement/database.dart';
+import '../../DatabaseManagement/userInformation.dart';
 import '../NavBarPages/homePage.dart';
 import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
@@ -8,11 +10,15 @@ import 'changePassword.dart';
 import '../uiElements.dart';
 
 class SignIn extends StatefulWidget {
+  const SignIn({super.key});
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final DatabaseService databaseService = DatabaseService();
   @override
   Widget build(BuildContext context) {
 
@@ -41,8 +47,8 @@ class _SignInState extends State<SignIn> {
                     ),
                 SizedBox(height:spaceUnderTitle),
                 CreateTitle(title: 'Sign In', screenWidth:screenWidth),
-                InputField(name: 'Login'),
-                InputField(name: 'Password'),
+                InputField(name: 'Login', controller:_userNameController),
+                InputField(name: 'Password', controller:_passwordController),
                 TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
                 SizedBox(
                   height: buttonHeight,
@@ -51,11 +57,19 @@ class _SignInState extends State<SignIn> {
                       child: FilledButton(
                         child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
                         ),
-                        onPressed: (){
-                          //go to home page with navbar
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
+                        onPressed: ()async{
+                          //go to home page with navbarUser? user = await databaseService.getUserByName(_userNameController.text);
+                        if(user!=null){
+                          if(user.checkPassword( _passwordController.text)){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavBarClass(user: user)));
+                          }else{
+                            print('wrong password');
+                          }
+                        }else{
+                          print('wrong username');
+                        }
                         },
-          
+
                       ),
                   ),
                 ),
@@ -104,11 +118,11 @@ class TextButton extends StatelessWidget {
   void _handleNavigation(BuildContext context) {
     switch (navigationType) {
       case NavigationType.changePassword:
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ChangePassword()));
         break;
       case NavigationType.signUp:
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => SignUp()));
     }
   }

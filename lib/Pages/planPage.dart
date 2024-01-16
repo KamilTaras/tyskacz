@@ -3,6 +3,7 @@ import 'package:tyskacz/DatabaseManagement/database.dart';
 import 'package:tyskacz/DatabaseManagement/exportCalendar.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
+import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
 import '../../Utils/Theme/colors.dart';
 
@@ -12,8 +13,9 @@ import 'attractionFinderPage.dart';
 import 'uiElements.dart';
 
 class PlanPage extends StatefulWidget {
-  PlanPage({super.key, required this.plan});
+  PlanPage({super.key, required this.plan, required this.user});
   Plan plan;
+  User user;
   @override
   State<PlanPage> createState() => _PlanPageState();
 }
@@ -122,7 +124,9 @@ class _PlanPageState extends State<PlanPage> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               AttractionFinderPage(
-                                                  plan: plan)));
+                                                  plan: plan,
+                                                user: widget.user,
+                                              )));
                                 }, //TODO: Fill for export
                                 child: const Text("Add Event"),
                               ),

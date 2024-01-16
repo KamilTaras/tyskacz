@@ -4,8 +4,8 @@ import '../../Utils/Theme/colors.dart';
 
 class InputField extends StatelessWidget {
   final String name;
-
-  InputField({required this.name});
+  final TextEditingController controller;
+  InputField({super.key, required this.name, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,7 @@ class InputField extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(9)),
           ),
         ),
+        controller: controller,
       ),
     );
   }

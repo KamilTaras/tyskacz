@@ -5,13 +5,15 @@ import 'package:tyskacz/Pages/attractionFinderPage.dart';
 import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
+import '../DatabaseManagement/userInformation.dart';
+import 'background.dart';
 
 import '../../Utils/constantValues.dart';
 import 'uiElements.dart';
 
 class CreatePlanPage extends StatefulWidget {
-  const CreatePlanPage({super.key});
-
+  const CreatePlanPage({super.key, required this.user});
+  final User user;
   @override
   State<CreatePlanPage> createState() => _CreatePlanPage();
 }
@@ -37,7 +39,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AttractionFinderPage(plan:plan)));
+                    builder: (context) => AttractionFinderPage(plan:plan, user:widget.user)));
           },
           icon: Image.asset(
             path,

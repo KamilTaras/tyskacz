@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/database.dart';
+import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/planInformation.dart';
 import '../../Utils/Theme/colors.dart';
@@ -12,8 +13,8 @@ import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
 
 class AttractionFinderPage extends StatefulWidget {
-  AttractionFinderPage({super.key, required this.plan});
-
+  AttractionFinderPage({super.key, required this.plan, required this.user});
+  User user;
   Plan plan;
 
   @override
@@ -73,12 +74,15 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                         return AttractionEntry(
                             attraction: snapshot.data![index],
                             onSwipe: () async {
+                              var start = await selectDate(
+                                  context, "Select start date");
+                              var end = await selectDate(
+                                  context, "Select end date", start: start);
+
                               widget.plan.listOfEvents.add(Event(
                                   attractionWithinEvent: snapshot.data![index],
-                                  startDate: await selectDate(
-                                      context, "Select start date"),
-                                  endDate: await selectDate(context,
-                                      "Select end date"))); //TODO: end no earlier than start
+                                  startDate: start,
+                                  endDate: end));
                               //setState(() {attractionList.removeAt(index);});
                             },
                             onTap: () {
@@ -108,7 +112,8 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                       if (widget.plan.id != null) {
                         databaseService.updatePlan(widget.plan);
                       } else {
-                        databaseService.addPlan(widget.plan);
+                        databaseService.addPlanToUser(widget.user.id!,widget.plan);
+
                       }
 
                       Navigator.of(context).pop();
@@ -132,7 +137,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     final DateTime? picked = await showDatePicker(
       helpText: message,
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: start ?? DateTime.now(),
       firstDate: start ?? DateTime.now(),
       lastDate: DateTime(2100),
     );

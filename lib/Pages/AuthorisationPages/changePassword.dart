@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:tyskacz/DatabaseManagement/database.dart';
+import 'package:tyskacz/Pages/AuthorisationPages/signIn.dart';
+import '../../DatabaseManagement/userInformation.dart';
 import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 import '../uiElements.dart';
@@ -12,7 +15,11 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePassword extends State<ChangePassword> {
-  Map userData = {};
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _repeatPasswordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final DatabaseService databaseService = DatabaseService();
   String info = 'Enter a code from our e-mail and your new password below';
   final _formkey = GlobalKey<FormState>();
   @override
@@ -42,10 +49,10 @@ class _ChangePassword extends State<ChangePassword> {
                           CreateTitle(title: 'Change password', screenWidth:screenWidth),
                           Text('Check your email'),
                           Text(info),
-                          InputField(name: 'Login'),
-                          InputField(name: 'Password'),
-                          InputField(name: 'Repeat Password'),
-                          InputField(name: 'Email'),
+                          InputField(name: 'Login', controller:_userNameController),
+                          InputField(name: 'Password', controller:_passwordController),
+                          InputField(name: 'Repeat Password', controller:_repeatPasswordController),
+                          InputField(name: 'Email', controller:_emailController),
                           Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(18.0),
@@ -56,11 +63,20 @@ class _ChangePassword extends State<ChangePassword> {
                                       'Change password',
                                       style: TextStyle(color: Colors.white, fontSize: 22),
                                     ),
-                                    onPressed: () {
-                                      if (_formkey.currentState!.validate()) {
-                                        print('form submiitted');
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
+                                    onPressed: () async {
+                                      User? user = await databaseService.getUserByName(_userNameController.text);
+                                      if(user!=null){
+                                        if (_formkey.currentState!.validate()&&_passwordController.text==_repeatPasswordController.text) {
+                                          databaseService.updateUser(User.newPassword(id:user.id , name: _userNameController.text, password: _passwordController.text, email: _emailController.text));
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
+                                        }
+                                        }
+                                      else{
+                                        print('wrong username');
                                       }
+
+
+
                                     },
                                   ),
                                   width: buttonWidth,
