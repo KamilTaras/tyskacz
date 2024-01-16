@@ -167,17 +167,17 @@ class _AttractionEntryState extends State<AttractionEntry> {
     var attraction = widget.attraction;
     return SwipableListEntry(
         child: Padding(
-          padding: const EdgeInsets.only(top: 5.0),
+          padding: const EdgeInsets.only(top: 10),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              border: Border(
-                top: BorderSide(
-                  color: Constant.mainGreenColor,
-                  width: 2.0, // Adjust the border thickness as needed
-                ),
-              ),
-              color: Colors.transparent,//set border radius more than 50% of height and width to make circle
+              // border: Border(
+              //   top: BorderSide(
+              //     color: Constant.mainGreenColor,
+              //     width: 2.0, // Adjust the border thickness as needed
+              //   ),
+              // ),
+              color: Colors.white.withOpacity(0.7),//set border radius more than 50% of height and width to make circle
             ),
 
             child: Row(

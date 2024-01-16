@@ -170,57 +170,60 @@ class _EventEntryState extends State<EventEntry> {
   @override
   Widget build(BuildContext context) {
     return SwipableListEntry(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          color: Colors.white,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Container(
-                  height: 100,
-                  width: 120,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        12), // Adjust the radius as needed
-                    child: Image.network(
-                      widget.event.attractionWithinEvent.photoURL,
-                      fit: BoxFit.cover,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white.withOpacity(0.7),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    height: 100,
+                    width: 120,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          12), // Adjust the radius as needed
+                      child: Image.network(
+                        widget.event.attractionWithinEvent.photoURL,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Text(widget.event.attractionWithinEvent.name,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                    ),
-                    Container(
-                      width: 200, // Set the desired width
-                      child: Divider(
-                        height: 20,
-                        thickness: 2,
-                        color: mainRed[400], // Choose the color you prefer
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Text(widget.event.attractionWithinEvent.name,
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                       ),
-                    ),
-                    Container(
-                      height: 70,
-                      child: Text(
-                        widget.event.attractionWithinEvent.description,
-                        style: TextStyle(fontSize: 15),
+                      Container(
+                        width: 200, // Set the desired width
+                        child: Divider(
+                          height: 20,
+                          thickness: 2,
+                          color: mainRed[400], // Choose the color you prefer
+                        ),
                       ),
-                    ),
-                    // Other widgets if needed
-                  ],
+                      Container(
+                        height: 70,
+                        child: Text(
+                          widget.event.attractionWithinEvent.description,
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
+                      // Other widgets if needed
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         onTap: widget.onTap,

@@ -181,6 +181,7 @@ class CreateTitle extends StatelessWidget {
         height: Constant.titleHeight,
         child:Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
             children:[
               Divider(
                 indent: 70,
@@ -189,8 +190,7 @@ class CreateTitle extends StatelessWidget {
                   thickness: 2,
                   color: Constant.mainRedColor, // Choose the color you prefer
                 ),
-              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 50, color: Colors.grey[900])),
-
+              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 45, color: Colors.grey[900])),
               Container(
                 width: screenWidth*0.9,
                 child: Divider(
