@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:intl/intl.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 import '../../Utils/constantValues.dart';
 import '../../Utils/Theme/colors.dart';
@@ -107,23 +107,7 @@ class Calendar extends StatelessWidget {
 
   Widget buildListView(BuildContext context) {
     if (eventsMap.isEmpty) {
-      return Column(
-        children: [
-          Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: 70,
-              color: Colors.white.withOpacity(0.5),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "There is no events yet! Go to home page to add some :)",
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-              )),
-          SizedBox(height: 10,)
-        ],
-      );
+      return MessageIsEmpty(text: "There is no events yet! Go to home page to add some :)");
     } else {
       return ListView.builder(
         shrinkWrap: true,

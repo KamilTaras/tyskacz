@@ -5,7 +5,7 @@ import '../EventPage.dart';
 import '../tripCreatorPage.dart';
 import '../AuthorisationPages/signIn.dart';
 import '../../Utils/Theme/colors.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

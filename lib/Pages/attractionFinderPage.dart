@@ -3,8 +3,7 @@ import 'package:tyskacz/DatabaseManagement/database.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/planInformation.dart';
 import '../../Utils/Theme/colors.dart';
-import 'background.dart';
-
+import 'uiElements.dart';
 
 import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
@@ -55,7 +54,6 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               CreateTitle(title: 'Find Attractions', screenWidth: screenWidth),
-              SizedBox(height: spaceUnderTitle),
               FutureBuilder<List<Attraction>>(
                 future: databaseService.getAttractions(),
                 builder: (context, snapshot) {
@@ -63,7 +61,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     return CircularProgressIndicator();
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Text('No attractions found');
+                    return MessageIsEmpty(text: 'No attractions found');
                   }
                   return Expanded(
                     child: ListView.builder(

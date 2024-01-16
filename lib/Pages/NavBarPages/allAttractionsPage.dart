@@ -5,7 +5,7 @@ import '../../DatabaseManagement/database.dart';
 import '../../DatabaseManagement/attractionInformation.dart';
 import '../../DatabaseManagement/planInformation.dart';
 
-import '../background.dart';
+import '../uiElements.dart';
 import '../../Utils/Theme/colors.dart';
 import '../attractionPage.dart';
 
@@ -51,7 +51,7 @@ class _AllAttractionsPageState extends State<AllAttractionsPage> {
                     return CircularProgressIndicator();
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Text('No attractions found');
+                    return MessageIsEmpty(text: 'No attractions found');
                   }
                   return Expanded(
                     child: ListView.builder(

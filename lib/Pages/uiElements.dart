@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import '../../Utils/Theme/colors.dart';
 import '../../Utils/constantValues.dart';
 
+
+// Background, CreateTitle, MessageIsEmpty
+
+
 class Circle extends StatelessWidget {
   const Circle({Key? key, required this.top, required this.left, required this.diameter, required this.color, required this.opacity});
   final double top;
@@ -174,9 +178,9 @@ class CreateTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
+        height: Constant.titleHeight,
         child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
             children:[
               Divider(
                 indent: 70,
@@ -198,6 +202,36 @@ class CreateTitle extends StatelessWidget {
             ]
         )
 
+    );
+  }
+}
+
+class MessageIsEmpty extends StatelessWidget {
+  const MessageIsEmpty({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 70,
+            decoration: BoxDecoration(
+              color: Constant.mainRedColor.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 20, fontFamily: 'MainFont', color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            )),
+        SizedBox(height: 10,)
+      ],
     );
   }
 }

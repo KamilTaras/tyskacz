@@ -5,7 +5,7 @@ import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 import 'signUp.dart';
 import 'changePassword.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -40,7 +40,6 @@ class _SignInState extends State<SignIn> {
                   ),
               SizedBox(height:spaceUnderTitle),
               CreateTitle(title: 'Sign In', screenWidth:screenWidth),
-              SizedBox(height:spaceUnderTitle),
               InputField(name: 'Login'),
               InputField(name: 'Password'),
               TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),

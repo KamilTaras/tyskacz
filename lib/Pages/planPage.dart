@@ -9,7 +9,7 @@ import '../../Utils/Theme/colors.dart';
 import 'EventPage.dart';
 import 'NavBarPages/mapsPage.dart';
 import 'attractionFinderPage.dart';
-import 'background.dart';
+import 'uiElements.dart';
 
 class PlanPage extends StatefulWidget {
   PlanPage({super.key, required this.plan});
@@ -45,37 +45,47 @@ class _PlanPageState extends State<PlanPage> {
       Background(),
       Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-            // preferredSize: Size.fromHeight(30.0),s
-            ),
+        appBar: AppBar(),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               CreateTitle(title: 'Your Plan', screenWidth: screenWidth),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: plan.listOfEvents.length,
-                  itemBuilder: (context, index) {
-                    return EventEntry(
+              if (plan.listOfEvents.isEmpty)
+                Column(
+                  children: [
+                    MessageIsEmpty(text: 'Your Plan is Empty'),
+                  ],
+                )
+              else
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: plan.listOfEvents.length,
+                    itemBuilder: (context, index) {
+                      return EventEntry(
                         event: plan.listOfEvents[index],
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EventDescriptionPage(
-                                      event: plan.listOfEvents[index])));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventDescriptionPage(
+                                event: plan.listOfEvents[index],
+                              ),
+                            ),
+                          );
                         },
                         onSwipe: () {
                           setState(() {
-                            databaseService
-                                .deletePlanEvent(plan.listOfEvents[index].id!);
+                            databaseService.deletePlanEvent(
+                              plan.listOfEvents[index].id!,
+                            );
                             plan.listOfEvents.removeAt(index);
                           });
-                        });
-                  },
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ), // Optional spacing
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

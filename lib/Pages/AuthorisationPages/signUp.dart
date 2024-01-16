@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -38,7 +38,6 @@ class _SignUpState extends State<SignUp> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       CreateTitle(title: 'Sign Up', screenWidth:screenWidth),
-                      SizedBox(height:spaceUnderTitle),
                       InputField(name: 'Login'),
                       InputField(name: 'Password'),
                       InputField(name: 'Repeat Password'),

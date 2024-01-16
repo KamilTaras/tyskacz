@@ -6,7 +6,7 @@ import '../DatabaseManagement/attractionInformation.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
-import 'background.dart';
+import 'uiElements.dart';
 import 'package:geocode/geocode.dart';
 
 class AttractionCreationPage extends StatefulWidget {

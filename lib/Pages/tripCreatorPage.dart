@@ -5,8 +5,9 @@ import 'package:tyskacz/Pages/attractionFinderPage.dart';
 import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
-import 'background.dart';
+
 import '../../Utils/constantValues.dart';
+import 'uiElements.dart';
 
 class CreatePlanPage extends StatefulWidget {
   const CreatePlanPage({super.key});
@@ -23,40 +24,16 @@ class _CreatePlanPage extends State<CreatePlanPage> {
   final double pageNameHeight = 100;
   final double pageNameFontSize = 40;
 
-  Widget buildStyledContainer(
-      {required double height, required Color color, required Widget child}) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: child,
-    );
-  }
 
-  Widget buildTextContainer(
-      double height, Color color, String name, double fontSize) {
-    return buildStyledContainer(
-      height: height,
-      color: color,
-      child: Center(
-        child: Text(
-          name,
-          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
 
-  Widget createButtonWithImage(String path, String label, int type) {
+  Widget createButtonWithImage(String path, String label, int type, double buttonHeight, double buttonWidth, controller) {
     return Column(
       children: [
         IconButton(
           splashRadius: 10,
           iconSize: 60,
           onPressed: () {
-            var plan = Plan(name: 'newPlan', listOfEvents: [], tripType: TripType.values[type]);
+            var plan = Plan(name: controller.text, listOfEvents: [], tripType: TripType.values[type]);
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -64,8 +41,8 @@ class _CreatePlanPage extends State<CreatePlanPage> {
           },
           icon: Image.asset(
             path,
-            width: 170,
-            height: 170,
+            width: buttonWidth,
+            height: buttonHeight,
             fit: BoxFit.cover, // Ensure the image covers the square container
           ),
         ), // Adjust the spacing between the button and label
@@ -90,6 +67,11 @@ class _CreatePlanPage extends State<CreatePlanPage> {
 
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
+    TextEditingController _planNameController = TextEditingController();
+    final double space = screenHeight - Constant.titleHeight;
+    final double textFieldHeight = space * 0.2;
+    final double buttonHeight = space * 0.25;
+    final double buttonWidth = screenWidth * 0.45;
 
     return Stack(
       children: [
@@ -105,7 +87,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
               children: <Widget>[
                 CreateTitle(title:'Create new trip', screenWidth:screenWidth),
               //TODO: Search bar
-
+                SearchField(controller: _planNameController, hintText:'Name Your Trip', fontSize: 30),
               // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
               // SizedBox(height: 30),
                 Column(
@@ -115,17 +97,17 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           createButtonWithImage(
-                              'assets/photos/createBusinessTrip.png', 'Business Trip', 0),
+                              'assets/photos/createBusinessTrip.png', 'Business Trip', 0, buttonHeight, buttonWidth, _planNameController),
                           createButtonWithImage('assets/photos/createSightSeeingTrip.png',
-                              'Sight  Seeing Trip', 1),
+                              'Sight  Seeing Trip', 1, buttonHeight, buttonWidth, _planNameController),
                         ]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           createButtonWithImage(
-                              'assets/photos/educationalTrip.png', 'Educational Trip', 2),
+                              'assets/photos/educationalTrip.png', 'Educational Trip', 2, buttonHeight, buttonWidth, _planNameController),
                           createButtonWithImage(
-                              'assets/photos/leisureTrip.png', 'Leisure Trip', 3),
+                              'assets/photos/leisureTrip.png', 'Leisure Trip', 3, buttonHeight, buttonWidth, _planNameController),
                         ]),
                   ]
                 ),
