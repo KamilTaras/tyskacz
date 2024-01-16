@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import '../../Utils/Theme/colors.dart';
 import '../../Utils/constantValues.dart';
 
+
+// Background, CreateTitle, MessageIsEmpty
+
+
 class Circle extends StatelessWidget {
   const Circle({Key? key, required this.top, required this.left, required this.diameter, required this.color, required this.opacity});
   final double top;
@@ -127,8 +131,8 @@ class BackgroundSuitcase extends StatelessWidget {
       children: [
         Background(),
         Positioned(
-          bottom: 40,
-          left: 20,
+          bottom: 50,
+          right: 20,
             child: Container(
               child: Image.asset(
                 'assets/photos/suitcase.png', // Replace with your image asset path
@@ -174,9 +178,10 @@ class CreateTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
+        height: Constant.titleHeight,
         child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
             children:[
               Divider(
                 indent: 70,
@@ -185,8 +190,7 @@ class CreateTitle extends StatelessWidget {
                   thickness: 2,
                   color: Constant.mainRedColor, // Choose the color you prefer
                 ),
-              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 50, color: Colors.grey[900])),
-
+              Text(title, style:  TextStyle(fontFamily: 'MainFont', fontSize: 45, color: Colors.grey[900])),
               Container(
                 width: screenWidth*0.9,
                 child: Divider(
@@ -198,6 +202,36 @@ class CreateTitle extends StatelessWidget {
             ]
         )
 
+    );
+  }
+}
+
+class MessageIsEmpty extends StatelessWidget {
+  const MessageIsEmpty({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 70,
+            decoration: BoxDecoration(
+              color: Constant.mainRedColor.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 20, fontFamily: 'MainFont', color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            )),
+        SizedBox(height: 10,)
+      ],
     );
   }
 }

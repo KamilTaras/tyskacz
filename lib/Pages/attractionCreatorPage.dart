@@ -6,7 +6,7 @@ import '../DatabaseManagement/attractionInformation.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
-import 'background.dart';
+import 'uiElements.dart';
 import 'package:geocode/geocode.dart';
 
 class AttractionCreationPage extends StatefulWidget {
@@ -35,12 +35,13 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double smallInputHeight = screenHeight * 0.1;
-    final double descriptionHeight = screenHeight * 0.25;
-    final double buttonHeight = screenHeight * 0.1;
+    final double space = screenHeight - Constant.titleHeight;
+    final double smallInputHeight = space * 0.15;
+    final double descriptionHeight = space * 0.35;
+    final double buttonHeight = space * 0.1;
 
     return Stack(children: [
-      Background(),
+      BackgroundSuitcase(),
       Scaffold(
         backgroundColor: Colors.transparent,
         appBar: PreferredSize(
@@ -49,85 +50,81 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
               // backgroundColor: Colors.transparent,
               ),
         ),
-        body: SafeArea(
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.all(mainContainerMargin),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  //TODO: insert pic
-                  Placeholder(
-                    fallbackHeight: screenHeight * 0.25,
-                  ),
-                  // SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(
-                      controller: _nameController,
-                      hintText: 'Attraction Name',
-                      height: smallInputHeight,
-                      fontSize: 25,
-                      maxLines: 2),
-                  // SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(
-                      controller: _descriptionController,
-                      hintText: 'Description',
-                      height: descriptionHeight,
-                      fontSize: 16,
-                      maxLines: 12),
-                  // SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(
-                      controller: _localizationController,
-                      hintText: 'Localization',
-                      height: smallInputHeight,
-                      fontSize: 16),
-                  // SizedBox(height: sizedBoxHeight),
-                  Container(
-                    height: buttonHeight,
-                    width: double.infinity,
-                    child: FilledButton(
-                      //TODO: create attraction after pressing the button
-                      // jak można wrzucać takie rzeczy do onPressed? to jest niemożliwe
-                      onPressed: () async {
-                        try {
-                          var coords = LatLng(
-                              double.parse(
-                                  _localizationController.text.split(',')[0]),
-                              double.parse(
-                                  _localizationController.text.split(',')[1]));
-                          databaseService.addAttraction(Attraction(
-                            photoURL:
-                                'https://www.w3schools.com/w3css/img_lights.jpg',
-                            name: _nameController.text,
-                            description: _descriptionController.text,
-                            coordinates: coords,
-                            //,
-                          ));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('attraction added!')));
-                        } catch (e) {
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(mainContainerMargin),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //TODO: insert pic
+                   CreateTitle(screenWidth: screenWidth, title: 'Add Attraction'),
+                    // SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(
+                        controller: _nameController,
+                        hintText: 'Attraction Name',
+                        height: smallInputHeight,
+                        maxLines: 2),
+                    // SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(
+                        controller: _descriptionController,
+                        hintText: 'Description',
+                        height: descriptionHeight,
+                        maxLines: 12),
+                    // SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(
+                        controller: _localizationController,
+                        hintText: 'Localization',
+                        height: smallInputHeight),
+                    // SizedBox(height: sizedBoxHeight),
+                    Container(
+                      height: buttonHeight,
+                      width: double.infinity,
+                      child: FilledButton(
+                        //TODO: create attraction after pressing the button
+                        // jak można wrzucać takie rzeczy do onPressed? to jest niemożliwe
+                        onPressed: () async {
+                          try {
+                            var coords = LatLng(
+                                double.parse(
+                                    _localizationController.text.split(',')[0]),
+                                double.parse(
+                                    _localizationController.text.split(',')[1]));
+                            databaseService.addAttraction(Attraction(
+                              photoURL:
+                                  'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              coordinates: coords,
+                              //,
+                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('attraction added!')));
+                          } catch (e) {
 
 
                           GeoCode geoCode =
-                          GeoCode(apiKey: "412336480991130498790x31447");
+                              GeoCode(apiKey: "412336480991130498790x31447");
 
                           try {
                             Coordinates coordinates =
-                            await geoCode.forwardGeocoding(
-                                address: _localizationController.text);
+                                await geoCode.forwardGeocoding(
+                                    address: _localizationController.text);
 
                             databaseService.addAttraction(Attraction(
                               photoURL:
-                              'https://www.w3schools.com/w3css/img_lights.jpg',
+                                  'https://www.w3schools.com/w3css/img_lights.jpg',
                               name: _nameController.text,
                               description: _descriptionController.text,
 
                               coordinates: LatLng(
                                   coordinates.latitude!.toDouble(),
                                   coordinates.longitude!.toDouble()),
-                              //,
-                            ));
+                              )
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('attraction added!')));
 
@@ -140,12 +137,12 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                           }
                         }
 
-
-                      },
-                      child: Text('Save'),
+                        },
+                        child: Text('Save', style: TextStyle(fontSize: 30),),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -159,14 +156,13 @@ class AttractionTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final double height;
-  final double fontSize;
+  final double fontSize = 25;
   final int? maxLines;
 
   AttractionTextField({
     required this.controller,
     required this.hintText,
     required this.height,
-    required this.fontSize,
     this.maxLines = 1,
   });
 
@@ -177,26 +173,32 @@ class AttractionTextField extends StatefulWidget {
 class _AttractionTextFieldState extends State<AttractionTextField> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 8.0, // Adjust the elevation as needed
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(10.0), // Adjust the border radius as needed
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
-        height: widget.height,
-        child: TextField(
-          controller: widget.controller,
-          style: TextStyle(fontSize: widget.fontSize),
-          decoration: InputDecoration(
-            hintText: widget.hintText,
-            // border: OutlineInputBorder(),
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+                color: mainGreen.withOpacity(0.8),
+                width: 3.0),// Adjust the opacity as needed
+        ),
+        child: Container(
+          height: widget.height,
+          child: TextField(
+            controller: widget.controller,
+            style: TextStyle(fontSize: widget.fontSize, color: Colors.black),
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              hintStyle: TextStyle(color: Colors.grey[850], fontFamily: 'MainFont'),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            ),
+            maxLines: null,
+            minLines: 1,
           ),
-          maxLines: null,
-          minLines: 1,
         ),
       ),
     );
   }
 }
+

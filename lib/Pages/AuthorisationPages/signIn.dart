@@ -7,7 +7,7 @@ import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
 import 'signUp.dart';
 import 'changePassword.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -35,48 +35,49 @@ class _SignInState extends State<SignIn> {
         Scaffold(
         appBar: AppBar(
         ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-             Container(
-                    width: logoSize,
-                    height: logoSize,
-                    child: Image.asset('assets/photos/logo_TySkacz_light.png'),
-                  ),
-              SizedBox(height:spaceUnderTitle),
-              CreateTitle(title: 'Sign In', screenWidth:screenWidth),
-              SizedBox(height:spaceUnderTitle),
-              InputField(name: 'Login', controller:_userNameController),
-              InputField(name: 'Password', controller:_passwordController),
-              TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
-              SizedBox(
-                height: buttonHeight,
-                width: buttonWidth,
-                child: Container(
-                    child: FilledButton(
-                      child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
-                      ),
-                      onPressed: () async {
-                        //go to home page with navbar
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+               Container(
+                      width: logoSize,
+                      height: logoSize,
+                      child: Image.asset('assets/photos/logo_TySkacz_light.png'),
+                    ),
+                SizedBox(height:spaceUnderTitle),
+                CreateTitle(title: 'Sign In', screenWidth:screenWidth),
+                InputField(name: 'Login', controller:_userNameController),
+                InputField(name: 'Password', controller:_passwordController),
+                TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
+                SizedBox(
+                  height: buttonHeight,
+                  width: buttonWidth,
+                  child: Container(
+                      child: FilledButton(
+                        child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
+                        ),
+                        onPressed: ()async{
+                          //go to home page with navbar
                         User? user = await databaseService.getUserByName(_userNameController.text);
                         if(user!=null){
                           if(user.checkPassword( _passwordController.text)){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavBarClass(user: user)));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavBarClass(user: user)));
                           }else{
                             print('wrong password');
                           }
                         }else{
                           print('wrong username');
                         }
-                      },
+                        },
 
-                    ),
+                      ),
+                  ),
                 ),
-              ),
-              TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
-            ],
-          ),
+                TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
+              ],
+            ),
+        ),
       ),]
     );
   }

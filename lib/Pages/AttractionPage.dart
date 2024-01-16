@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
-import 'background.dart';
+import 'uiElements.dart';
 
 class AttractionDescriptionPage extends StatelessWidget {
   AttractionDescriptionPage({super.key, required this.attraction});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../Utils/Theme/colors.dart';
 
 
 class InputField extends StatelessWidget {
@@ -15,7 +16,7 @@ class InputField extends StatelessWidget {
           hintText: name,
           labelText: name,
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
+            borderSide: BorderSide(color: mainGreen),
             borderRadius: BorderRadius.all(Radius.circular(9)),
           ),
         ),
