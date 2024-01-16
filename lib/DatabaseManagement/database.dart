@@ -28,7 +28,7 @@ class DatabaseService {
   }
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
     deleteDatabase(db.path);
-    await _initDatabase();
+    _database = await _initDatabase();
   }
   Future<bool> _isUpToDate() async {
     final db = await database;
