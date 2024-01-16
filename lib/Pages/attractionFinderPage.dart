@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/database.dart';
+import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/planInformation.dart';
 import '../../Utils/Theme/colors.dart';
@@ -10,8 +11,8 @@ import 'AttractionPage.dart';
 import 'SwipableListEntry.dart';
 
 class AttractionFinderPage extends StatefulWidget {
-  AttractionFinderPage({super.key, required this.plan});
-
+  AttractionFinderPage({super.key, required this.plan, required this.user});
+  User user;
   Plan plan;
 
   @override
@@ -110,7 +111,8 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                       if (widget.plan.id != null) {
                         databaseService.updatePlan(widget.plan);
                       } else {
-                        databaseService.addPlan(widget.plan);
+                        databaseService.addPlanToUser(widget.user.id!,widget.plan);
+
                       }
 
                       Navigator.of(context).pop();

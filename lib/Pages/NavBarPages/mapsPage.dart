@@ -47,12 +47,13 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     var attractions = widget.attractions;
-
+    var coordinates = attractions.map((e) => e.coordinates).toList();
+    coordinates = coordinates.length<2? [LatLng(0, 0), LatLng(1, 1)]:coordinates;
     return Stack(
       children:[
        FlutterMap(
         options: MapOptions(
-          initialCameraFit: CameraFit.coordinates(coordinates: attractions.isNotEmpty? attractions.map((e) => e.coordinates).toList(): [LatLng(0,0), LatLng(50,50)]),
+          initialCameraFit: CameraFit.coordinates(coordinates: coordinates),
           initialZoom: 13.0,
         ),
         children: [

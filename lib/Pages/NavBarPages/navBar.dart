@@ -22,7 +22,7 @@ class _NavBarClassState extends State<NavBarClass> {
   int selectedItem = 0;
   late List allPages;
   DatabaseService databaseService = DatabaseService();
-  HomePage homePage = const HomePage();
+  late HomePage homePage = HomePage(user: user);
   late PlanListPage planPage = PlanListPage(user: user);
   AllAttractionsPage allAttractionsPage = const AllAttractionsPage();
   late UserCalendarPage calendarPage = UserCalendarPage(user: user);

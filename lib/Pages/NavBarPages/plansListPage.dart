@@ -47,7 +47,7 @@ class _PlanListPageState extends State<PlanListPage> {
             children: <Widget>[
               CreateTitle(title: 'Your Plans', screenWidth: screenWidth),
               FutureBuilder<List<Plan>>(
-                future: databaseService.getPlans(),
+                future: databaseService.getUserPlans(widget.user.id!),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -70,11 +70,12 @@ class _PlanListPageState extends State<PlanListPage> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return PlanEntry(
+                          user: widget.user,
                             plan: snapshot.data![index],
                             onSwipe: () {
                               setState(() {
                                 databaseService
-                                    .deletePlan(snapshot.data![index].id!);
+                                    .deleteUserPlan(snapshot.data![index].id!, widget.user.id!);
                                 snapshot.data!.removeAt(index);
                               });
                             });
@@ -105,8 +106,8 @@ class _PlanListPageState extends State<PlanListPage> {
 }
 
 class PlanEntry extends StatefulWidget {
-  PlanEntry({super.key, required this.plan, required this.onSwipe});
-
+  PlanEntry({super.key, required this.plan, required this.onSwipe, required this.user});
+  final User user;
   final Plan plan;
   final VoidCallback onSwipe;
 
@@ -140,7 +141,7 @@ class _PlanEntryState extends State<PlanEntry> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PlanPage(plan: widget.plan)),
+                builder: (context) => PlanPage(plan: widget.plan, user:widget.user)),
           );
         },
         onSwipe: widget.onSwipe);

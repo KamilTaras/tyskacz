@@ -7,7 +7,7 @@ import '../DatabaseManagement/planInformation.dart';
 
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
-  static const version = 1;
+  static const version = 2;
   factory DatabaseService() {
     return _instance;
   }
@@ -175,10 +175,15 @@ class DatabaseService {
     );
   }
 
-  Future<void> addPlanToUser(int userId, int planId) async {
+  Future<void> addPlanToUser(int userId, Plan plan) async {
+    var planId = await addPlan(plan);
     final db = await database;
     await db.insert('UserPlans', {'userID': userId, 'planID': planId});
   }
+
+
+
+
 
   Future<List<Plan>> getUserPlans(int userId) async {
     final db = await database;
@@ -189,6 +194,14 @@ class DatabaseService {
     }
     return listOfPlans;
   }
+
+  Future<List<Event>> getUserEvents(int userId) async {
+    return (await getUserPlans(userId))
+        .expand((plan) => plan.listOfEvents)
+        .toList();
+  }
+
+
 
   Future<void> deleteUserPlan(int userId, int planId) async {
     final db = await database;
@@ -256,7 +269,7 @@ class DatabaseService {
     }
   }
 
-  Future<void> addPlan(Plan plan) async {
+  Future<int> addPlan(Plan plan) async {
     final db = await database;
     var planId = await db.insert('Plan', plan.toJson());
     plan.id=planId;
@@ -264,6 +277,7 @@ class DatabaseService {
     for (Event event in events) {
       addEventToPlan(planId, event);
     }
+    return planId;
   }
 
   Future<List<Event>> getPlanEvents(int planId) async {
@@ -412,6 +426,8 @@ class DatabaseService {
     }
     return events;
   }
+
+
 
 
 // Other CRUD operations...
