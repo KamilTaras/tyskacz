@@ -72,12 +72,15 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                         return AttractionEntry(
                             attraction: snapshot.data![index],
                             onSwipe: () async {
+                              var start = await selectDate(
+                                  context, "Select start date");
+                              var end = await selectDate(
+                                  context, "Select end date", start: start);
+
                               widget.plan.listOfEvents.add(Event(
                                   attractionWithinEvent: snapshot.data![index],
-                                  startDate: await selectDate(
-                                      context, "Select start date"),
-                                  endDate: await selectDate(context,
-                                      "Select end date"))); //TODO: end no earlier than start
+                                  startDate: start,
+                                  endDate: end));
                               //setState(() {attractionList.removeAt(index);});
                             },
                             onTap: () {
@@ -131,7 +134,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     final DateTime? picked = await showDatePicker(
       helpText: message,
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: start ?? DateTime.now(),
       firstDate: start ?? DateTime.now(),
       lastDate: DateTime(2100),
     );
