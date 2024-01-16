@@ -109,40 +109,38 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                         } catch (e) {
 
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('adding failed')));
-                          print(e);
+                          GeoCode geoCode =
+                          GeoCode(apiKey: "412336480991130498790x31447");
+
+                          try {
+                            Coordinates coordinates =
+                            await geoCode.forwardGeocoding(
+                                address: _localizationController.text);
+
+                            databaseService.addAttraction(Attraction(
+                              photoURL:
+                              'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+
+                              coordinates: LatLng(
+                                  coordinates.latitude!.toDouble(),
+                                  coordinates.longitude!.toDouble()),
+                              //,
+                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('attraction added!')));
+
+                            //print("Latitude: ${coordinates.latitude}");
+                            //print("Longitude: ${coordinates.longitude}");
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('adding failed')));
+                            print(e);
+                          }
                         }
 
-                        GeoCode geoCode =
-                            GeoCode(apiKey: "412336480991130498790x31447");
 
-                        try {
-                          Coordinates coordinates =
-                              await geoCode.forwardGeocoding(
-                                  address: _localizationController.text);
-
-                          databaseService.addAttraction(Attraction(
-                            photoURL:
-                                'https://www.w3schools.com/w3css/img_lights.jpg',
-                            name: _nameController.text,
-                            description: _descriptionController.text,
-
-                            coordinates: LatLng(
-                                coordinates.latitude!.toDouble(),
-                                coordinates.longitude!.toDouble()),
-                            //,
-                          ));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('attraction added!')));
-
-                          //print("Latitude: ${coordinates.latitude}");
-                          //print("Longitude: ${coordinates.longitude}");
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('adding failed')));
-                          print(e);
-                        }
                       },
                       child: Text('Save'),
                     ),

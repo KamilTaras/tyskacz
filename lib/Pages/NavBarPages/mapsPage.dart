@@ -47,11 +47,12 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     var attractions = widget.attractions;
+
     return Stack(
       children:[
        FlutterMap(
         options: MapOptions(
-          initialCameraFit: CameraFit.coordinates(coordinates: attractions.isNotEmpty? attractions.map((e) => e.coordinates).toList(): [LatLng(0,0)]),
+          initialCameraFit: CameraFit.coordinates(coordinates: attractions.isNotEmpty? attractions.map((e) => e.coordinates).toList(): [LatLng(0,0), LatLng(50,50)]),
           initialZoom: 13.0,
         ),
         children: [
