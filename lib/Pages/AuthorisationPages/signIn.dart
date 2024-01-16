@@ -29,38 +29,40 @@ class _SignInState extends State<SignIn> {
         Scaffold(
         appBar: AppBar(
         ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-             Container(
-                    width: logoSize,
-                    height: logoSize,
-                    child: Image.asset('assets/photos/logo_TySkacz_light.png'),
-                  ),
-              SizedBox(height:spaceUnderTitle),
-              CreateTitle(title: 'Sign In', screenWidth:screenWidth),
-              InputField(name: 'Login'),
-              InputField(name: 'Password'),
-              TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
-              SizedBox(
-                height: buttonHeight,
-                width: buttonWidth,
-                child: Container(
-                    child: FilledButton(
-                      child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
-                      ),
-                      onPressed: (){
-                        //go to home page with navbar
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
-                      },
-
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+               Container(
+                      width: logoSize,
+                      height: logoSize,
+                      child: Image.asset('assets/photos/logo_TySkacz_light.png'),
                     ),
+                SizedBox(height:spaceUnderTitle),
+                CreateTitle(title: 'Sign In', screenWidth:screenWidth),
+                InputField(name: 'Login'),
+                InputField(name: 'Password'),
+                TextButton(text: 'Forgot password?', navigationText: 'Change password', navigationType: NavigationType.changePassword),
+                SizedBox(
+                  height: buttonHeight,
+                  width: buttonWidth,
+                  child: Container(
+                      child: FilledButton(
+                        child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
+                        ),
+                        onPressed: (){
+                          //go to home page with navbar
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => NavBarClass()));
+                        },
+          
+                      ),
+                  ),
                 ),
-              ),
-              TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
-            ],
-          ),
+                TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
+              ],
+            ),
+        ),
       ),]
     );
   }

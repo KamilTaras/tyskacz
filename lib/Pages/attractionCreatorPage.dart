@@ -49,98 +49,100 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
               // backgroundColor: Colors.transparent,
               ),
         ),
-        body: SafeArea(
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.all(mainContainerMargin),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  //TODO: insert pic
-                  Placeholder(
-                    fallbackHeight: screenHeight * 0.25,
-                  ),
-                  // SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(
-                      controller: _nameController,
-                      hintText: 'Attraction Name',
-                      height: smallInputHeight,
-                      fontSize: 25,
-                      maxLines: 2),
-                  // SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(
-                      controller: _descriptionController,
-                      hintText: 'Description',
-                      height: descriptionHeight,
-                      fontSize: 16,
-                      maxLines: 12),
-                  // SizedBox(height: sizedBoxHeight),
-                  AttractionTextField(
-                      controller: _localizationController,
-                      hintText: 'Localization',
-                      height: smallInputHeight,
-                      fontSize: 16),
-                  // SizedBox(height: sizedBoxHeight),
-                  Container(
-                    height: buttonHeight,
-                    width: double.infinity,
-                    child: FilledButton(
-                      //TODO: create attraction after pressing the button
-                      // jak można wrzucać takie rzeczy do onPressed? to jest niemożliwe
-                      onPressed: () async {
-                        try {
-                          var coords = LatLng(
-                              double.parse(
-                                  _localizationController.text.split(',')[0]),
-                              double.parse(
-                                  _localizationController.text.split(',')[1]));
-                          databaseService.addAttraction(Attraction(
-                            photoURL:
-                                'https://www.w3schools.com/w3css/img_lights.jpg',
-                            name: _nameController.text,
-                            description: _descriptionController.text,
-                            coordinates: coords,
-                            //,
-                          ));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('attraction added!')));
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('adding failed')));
-                          print(e);
-                        }
-
-                        GeoCode geoCode =
-                            GeoCode(apiKey: "412336480991130498790x31447");
-
-                        try {
-                          Coordinates coordinates =
-                              await geoCode.forwardGeocoding(
-                                  address: _localizationController.text);
-
-                          databaseService.addAttraction(Attraction(
-                            photoURL:
-                                'https://www.w3schools.com/w3css/img_lights.jpg',
-                            name: _nameController.text,
-                            description: _descriptionController.text,
-
-                            coordinates: LatLng(
-                                coordinates.latitude!.toDouble(),
-                                coordinates.longitude!.toDouble()),
-                            //,
-                          ));
-                          //print("Latitude: ${coordinates.latitude}");
-                          //print("Longitude: ${coordinates.longitude}");
-                        } catch (e) {
-                          print(e);
-                        }
-                      },
-                      child: Text('Save'),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(mainContainerMargin),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //TODO: insert pic
+                    Placeholder(
+                      fallbackHeight: screenHeight * 0.25,
                     ),
-                  ),
-                ],
+                    // SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(
+                        controller: _nameController,
+                        hintText: 'Attraction Name',
+                        height: smallInputHeight,
+                        fontSize: 25,
+                        maxLines: 2),
+                    // SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(
+                        controller: _descriptionController,
+                        hintText: 'Description',
+                        height: descriptionHeight,
+                        fontSize: 16,
+                        maxLines: 12),
+                    // SizedBox(height: sizedBoxHeight),
+                    AttractionTextField(
+                        controller: _localizationController,
+                        hintText: 'Localization',
+                        height: smallInputHeight,
+                        fontSize: 16),
+                    // SizedBox(height: sizedBoxHeight),
+                    Container(
+                      height: buttonHeight,
+                      width: double.infinity,
+                      child: FilledButton(
+                        //TODO: create attraction after pressing the button
+                        // jak można wrzucać takie rzeczy do onPressed? to jest niemożliwe
+                        onPressed: () async {
+                          try {
+                            var coords = LatLng(
+                                double.parse(
+                                    _localizationController.text.split(',')[0]),
+                                double.parse(
+                                    _localizationController.text.split(',')[1]));
+                            databaseService.addAttraction(Attraction(
+                              photoURL:
+                                  'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              coordinates: coords,
+                              //,
+                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('attraction added!')));
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('adding failed')));
+                            print(e);
+                          }
+          
+                          GeoCode geoCode =
+                              GeoCode(apiKey: "412336480991130498790x31447");
+          
+                          try {
+                            Coordinates coordinates =
+                                await geoCode.forwardGeocoding(
+                                    address: _localizationController.text);
+          
+                            databaseService.addAttraction(Attraction(
+                              photoURL:
+                                  'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+          
+                              coordinates: LatLng(
+                                  coordinates.latitude!.toDouble(),
+                                  coordinates.longitude!.toDouble()),
+                              //,
+                            ));
+                            //print("Latitude: ${coordinates.latitude}");
+                            //print("Longitude: ${coordinates.longitude}");
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        child: Text('Save'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

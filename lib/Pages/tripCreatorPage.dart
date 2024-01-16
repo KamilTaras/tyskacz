@@ -81,37 +81,39 @@ class _CreatePlanPage extends State<CreatePlanPage> {
         appBar: AppBar(
           // preferredSize: Size.fromHeight(30.0),s
         ),
-        body: SafeArea(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                CreateTitle(title:'Create new trip', screenWidth:screenWidth),
-              //TODO: Search bar
-                SearchField(controller: _planNameController, hintText:'Name Your Trip', fontSize: 30),
-              // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
-              // SizedBox(height: 30),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget> [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          createButtonWithImage(
-                              'assets/photos/createBusinessTrip.png', 'Business Trip', 0, buttonHeight, buttonWidth, _planNameController),
-                          createButtonWithImage('assets/photos/createSightSeeingTrip.png',
-                              'Sight  Seeing Trip', 1, buttonHeight, buttonWidth, _planNameController),
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          createButtonWithImage(
-                              'assets/photos/educationalTrip.png', 'Educational Trip', 2, buttonHeight, buttonWidth, _planNameController),
-                          createButtonWithImage(
-                              'assets/photos/leisureTrip.png', 'Leisure Trip', 3, buttonHeight, buttonWidth, _planNameController),
-                        ]),
-                  ]
-                ),
-          ]),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  CreateTitle(title:'Create new trip', screenWidth:screenWidth),
+                //TODO: Search bar
+                  SearchField(controller: _planNameController, hintText:'Name Your Trip', fontSize: 30),
+                // SearchField(controller: _textController, hintText:'Search for destination', height: 50, fontSize: 20, maxLines:2),
+                // SizedBox(height: 30),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            createButtonWithImage(
+                                'assets/photos/createBusinessTrip.png', 'Business Trip', 0, buttonHeight, buttonWidth, _planNameController),
+                            createButtonWithImage('assets/photos/createSightSeeingTrip.png',
+                                'Sight  Seeing Trip', 1, buttonHeight, buttonWidth, _planNameController),
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            createButtonWithImage(
+                                'assets/photos/educationalTrip.png', 'Educational Trip', 2, buttonHeight, buttonWidth, _planNameController),
+                            createButtonWithImage(
+                                'assets/photos/leisureTrip.png', 'Leisure Trip', 3, buttonHeight, buttonWidth, _planNameController),
+                          ]),
+                    ]
+                  ),
+            ]),
+          ),
         ),
       ),]
     );
