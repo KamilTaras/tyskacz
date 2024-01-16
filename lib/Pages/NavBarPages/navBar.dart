@@ -3,6 +3,7 @@ import 'package:tyskacz/DatabaseManagement/database.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/themeConstant.dart';
 
+import '../../DatabaseManagement/userInformation.dart';
 import 'calendarPage.dart';
 import 'homePage.dart';
 import 'mapsPage.dart';
@@ -10,20 +11,21 @@ import 'plansListPage.dart';
 import 'allAttractionspage.dart';
 
 class NavBarClass extends StatefulWidget {
-  const NavBarClass({super.key});
-
+  const NavBarClass({super.key, required this.user});
+  final User user;
   @override
   State<NavBarClass> createState() => _NavBarClassState();
 }
 
 class _NavBarClassState extends State<NavBarClass> {
+  late User user = widget.user;
   int selectedItem = 0;
   late List allPages;
   DatabaseService databaseService = DatabaseService();
   HomePage homePage = const HomePage();
-  PlanListPage planPage = const PlanListPage();
+  late PlanListPage planPage = PlanListPage(user: user);
   AllAttractionsPage allAttractionsPage = const AllAttractionsPage();
-  late UserCalendarPage calendarPage = const UserCalendarPage();
+  late UserCalendarPage calendarPage = UserCalendarPage(user: user);
   GlobalMapPage mapPage = const GlobalMapPage();
 
   @override

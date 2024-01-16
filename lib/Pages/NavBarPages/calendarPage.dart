@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:intl/intl.dart';
+import '../../DatabaseManagement/userInformation.dart';
 import '../background.dart';
 
 import '../../Utils/constantValues.dart';
@@ -8,7 +9,8 @@ import '../../Utils/Theme/colors.dart';
 import 'package:tyskacz/DatabaseManagement/database.dart';
 
 class UserCalendarPage extends StatefulWidget {
-  const UserCalendarPage({super.key});
+  User user;
+  UserCalendarPage({super.key, required this.user});
 
   @override
   State<UserCalendarPage> createState() => _UserCalendarPageState();

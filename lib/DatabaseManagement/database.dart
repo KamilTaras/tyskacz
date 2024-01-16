@@ -1,12 +1,13 @@
 import 'package:latlong2/latlong.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/planInformation.dart';
 
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
-
+  static const version = 1;
   factory DatabaseService() {
     return _instance;
   }
@@ -23,10 +24,24 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'travel_app.db');
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(path, version: version, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    deleteDatabase(db.path);
+    await _initDatabase();
+  }
+  Future<bool> _isUpToDate() async {
+    final db = await database;
+    List<Map<String, dynamic>> tables = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table';",
+    );
 
-
+    List<String> tableNames = tables.map((table) => table['name'] as String).toList();
+    if(tableNames.contains('User')){
+      return true;
+    }
+    return false;
+  }
 
 
   Future _onCreate(Database db, int version) async {
@@ -73,6 +88,23 @@ class DatabaseService {
         FOREIGN KEY (eventID) REFERENCES Event(eventID)
       );
     ''');
+      await db.execute('''
+      CREATE TABLE User (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        passwordHash TEXT NOT NULL
+      );
+    ''');
+      await db.execute('''
+      CREATE TABLE UserPlans (
+        planID INTEGER,
+        userID INTEGER,
+        PRIMARY KEY (planID, userID),
+        FOREIGN KEY (planID) REFERENCES Plan(id),
+        FOREIGN KEY (userID) REFERENCES User(id)
+      );
+    ''');
   }
 
   void getTableNames() async {
@@ -87,6 +119,84 @@ class DatabaseService {
   static deleteDB() async {
     String path = join(await getDatabasesPath(), 'travel_app.db');
     await deleteDatabase(path);
+  }
+
+  Future<void> addUser(User user) async {
+    final db = await database;
+    var id = await db.insert('User', user.toJson());
+    user.id=id;
+  }
+
+  Future<User> getUser(int id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('User', where: 'id = ?', whereArgs: [id]);
+    return User.fromJson(maps[0]);
+  }
+
+  Future<User> getUserByEmail(String email) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('User', where: 'email = ?', whereArgs: [email]);
+    return User.fromJson(maps[0]);
+  }
+
+  Future<User?> getUserByName(String name) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('User', where: 'name = ?', whereArgs: [name]);
+    if(maps.isEmpty){
+      return null;
+    }
+    return User.fromJson(maps[0]);
+  }
+
+  Future<List<User>> getUsers() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('User');
+    return List.generate(maps.length, (i) {
+      return User.fromJson(maps[i]);
+    });
+  }
+
+  Future<void> updateUser(User user) async {
+    final db = await database;
+    await db.update(
+      'User',
+      user.toJson(),
+      where: 'id = ?',
+      whereArgs: [user.id],
+    );
+  }
+
+  Future<void> deleteUser(int id) async {
+    final db = await database;
+    await db.delete(
+      'User',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<void> addPlanToUser(int userId, int planId) async {
+    final db = await database;
+    await db.insert('UserPlans', {'userID': userId, 'planID': planId});
+  }
+
+  Future<List<Plan>> getUserPlans(int userId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> plans = await db.query('UserPlans', where: 'userID = ?', whereArgs: [userId]);
+    List<Plan> listOfPlans = [];
+    for (Map<String, dynamic> plan in plans) {
+      listOfPlans.add(await getPlan(plan['planID']));
+    }
+    return listOfPlans;
+  }
+
+  Future<void> deleteUserPlan(int userId, int planId) async {
+    final db = await database;
+    await db.delete(
+      'UserPlans',
+      where: 'userID = ? AND planID = ?',
+      whereArgs: [userId, planId],
+    );
   }
 
   // CRUD operations for Attraction
@@ -167,6 +277,13 @@ class DatabaseService {
     return listOfEvents;
   }
 
+  Future<Plan> getPlan(int id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('Plan', where: 'id = ?', whereArgs: [id]);
+    Plan plan = Plan.fromJson(maps[0]);
+    plan.listOfEvents = await getPlanEvents(id);
+    return plan;
+  }
 
   Future<List<Plan>> getPlans() async {
     final db = await database;

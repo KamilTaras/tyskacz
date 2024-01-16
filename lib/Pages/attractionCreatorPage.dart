@@ -107,6 +107,8 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('attraction added!')));
                         } catch (e) {
+
+
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('adding failed')));
                           print(e);
@@ -131,9 +133,14 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                                 coordinates.longitude!.toDouble()),
                             //,
                           ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('attraction added!')));
+
                           //print("Latitude: ${coordinates.latitude}");
                           //print("Longitude: ${coordinates.longitude}");
                         } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('adding failed')));
                           print(e);
                         }
                       },

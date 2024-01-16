@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
+import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
 import '../background.dart';
 
@@ -8,7 +9,8 @@ import '../../DatabaseManagement/database.dart';
 import '../planPage.dart';
 
 class PlanListPage extends StatefulWidget {
-  const PlanListPage({super.key});
+  User user;
+  PlanListPage({super.key, required this.user});
   @override
   State<PlanListPage> createState() => _PlanListPageState();
 }
