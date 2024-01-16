@@ -139,8 +139,23 @@ class _PlanPageState extends State<PlanPage> {
                           width: double
                               .infinity, // Makes the button stretch to the width of the screen
                           child: FilledButton(
-                            onPressed: () {
-                              export(plan);
+                            onPressed: () async {
+
+                              if(await export(plan)){
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Events exported to calendar'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error exporting events to calendar'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
                             }, //TODO: Fill for export
                             child: const Text("Export Data To Calendar"),
                           ),

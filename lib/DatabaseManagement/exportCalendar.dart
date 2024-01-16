@@ -6,8 +6,8 @@ import 'dart:ui';
 import 'package:ical/serializer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-
-
+import 'package:permission_handler/permission_handler.dart';
+import 'package:external_path/external_path.dart';
 
 
 //class ExportCalendar{
@@ -16,17 +16,14 @@ import 'dart:io';
   //   required this.plan,
   // });
 
-Future<String> get _localPath async {
-  final directory = await getApplicationDocumentsDirectory();
-  return directory.path;
-}
+
 Future<File> writeCalendar(String cal, String name) async {
-  final path = await _localPath;
+  final path = await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOADS);
   final file = File('$path/$name.ics');
   // Write the file
   return file.writeAsString(cal);
 }
-void export(Plan plan){
+Future<bool> export(Plan plan) async {
   ICalendar cal = ICalendar();
   for (var e in plan.listOfEvents) {
     cal.addElement(
@@ -38,8 +35,30 @@ void export(Plan plan){
             description: e.attractionWithinEvent.description,
           )
       );
+
   }
-  writeCalendar(cal.serialize(),'MyCalendar');
+  if (await Permission.manageExternalStorage.request().isGranted) {
+  // Permission is already granted
+  if(writeCalendar(cal.serialize(),plan.name)!=null) {
+    return true;
+  }else{
+    return false;
+  }
+  } else {
+  // Request permission
+  var status = await Permission.manageExternalStorage.request();
+  if (status.isGranted) {
+  if(writeCalendar(cal.serialize(),plan.name)!=null){
+    return true;
+  }
+  else{
+    return false;
+  }
+  } else {
+  return false;
+  }
+  }
+
 }
 
 //}
