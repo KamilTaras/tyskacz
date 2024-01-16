@@ -3,7 +3,7 @@ import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 import '../../DatabaseManagement/database.dart';
 import '../planPage.dart';
@@ -53,17 +53,8 @@ class _PlanListPageState extends State<PlanListPage> {
                     return CircularProgressIndicator();
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Container(
-                        width: MediaQuery.of(context).size.width * 0.65,
-                        color: Colors.white.withOpacity(0.6),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'There is no plans yet! Go to home page to add some :)',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
-                        ));
+                    return MessageIsEmpty(text: 'There is no plans yet! Go to home page and add some :)');
+
                   }
                   return Expanded(
                     child: ListView.builder(

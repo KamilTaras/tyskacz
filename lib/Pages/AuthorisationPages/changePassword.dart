@@ -5,7 +5,7 @@ import 'package:tyskacz/Pages/AuthorisationPages/signIn.dart';
 import '../../DatabaseManagement/userInformation.dart';
 import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -46,11 +46,7 @@ class _ChangePassword extends State<ChangePassword> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: CreateTitle(title: 'Change password', screenWidth:screenWidth),
-                          ),
-                          SizedBox(height:spaceUnderTitle),
+                          CreateTitle(title: 'Change password', screenWidth:screenWidth),
                           Text('Check your email'),
                           Text(info),
                           InputField(name: 'Login', controller:_userNameController),

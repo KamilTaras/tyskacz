@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
-import 'background.dart';
+import 'uiElements.dart';
 
 class EventDescriptionPage extends StatelessWidget {
   EventDescriptionPage({super.key, required this.event});

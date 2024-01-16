@@ -5,7 +5,7 @@ import '../../DatabaseManagement/database.dart';
 import '../../DatabaseManagement/userInformation.dart';
 import '../NavBarPages/navBar.dart';
 import 'widgetClasses.dart';
-import '../background.dart';
+import '../uiElements.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -47,7 +47,6 @@ class _SignUpState extends State<SignUp> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       CreateTitle(title: 'Sign Up', screenWidth:screenWidth),
-                      SizedBox(height:spaceUnderTitle),
                       InputField(name: 'Login', controller:_userNameController),
                       InputField(name: 'Password', controller:_passwordController),
                       InputField(name: 'Repeat Password', controller:_repeatPasswordController),

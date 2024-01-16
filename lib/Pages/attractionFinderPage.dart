@@ -4,7 +4,9 @@ import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../DatabaseManagement/planInformation.dart';
 import '../../Utils/Theme/colors.dart';
-import 'background.dart';
+import 'uiElements.dart';
+import '../../Utils/constantValues.dart';
+
 
 
 import 'AttractionPage.dart';
@@ -45,7 +47,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
     final double spaceUnderTitle = screenHeight * 0.05;
 
     return Stack(children: [
-      BackgroundSuitcase(),
+      Background(),
       Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -56,7 +58,6 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               CreateTitle(title: 'Find Attractions', screenWidth: screenWidth),
-              SizedBox(height: spaceUnderTitle),
               FutureBuilder<List<Attraction>>(
                 future: databaseService.getAttractions(),
                 builder: (context, snapshot) {
@@ -64,7 +65,7 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                     return CircularProgressIndicator();
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Text('No attractions found');
+                    return MessageIsEmpty(text: 'No attractions found');
                   }
                   return Expanded(
                     child: ListView.builder(
@@ -170,54 +171,63 @@ class _AttractionEntryState extends State<AttractionEntry> {
   Widget build(BuildContext context) {
     var attraction = widget.attraction;
     return SwipableListEntry(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-            //set border radius more than 50% of height and width to make circle
-          ),
-          color: Colors.white,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Container(
-                  height: 100,
-                  width: 120,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      attraction.photoURL,
-                      fit: BoxFit.fill,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              // border: Border(
+              //   top: BorderSide(
+              //     color: Constant.mainGreenColor,
+              //     width: 2.0, // Adjust the border thickness as needed
+              //   ),
+              // ),
+              color: Colors.white.withOpacity(0.7),//set border radius more than 50% of height and width to make circle
+            ),
+
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    height: 100,
+                    width: 120,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        attraction.photoURL,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Text(attraction.name,       style: TextStyle(
-                        fontSize: 25,fontWeight: FontWeight.bold)),
-                    Container(
-                      width: 200,  // Set the desired width
-                      child: Divider(
-                        height: 2,
-                        thickness: 2,
-                        color: mainRed[400], // Choose the color you prefer
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Text(attraction.name,       style: TextStyle(
+                          fontSize: 25,fontWeight: FontWeight.bold, fontFamily: 'MainFont')),
+                      Container(
+                        width: 200,  // Set the desired width
+                        child: Divider(
+                          height: 2,
+                          thickness: 2,
+                          color: Constant.mainRedColor, // Choose the color you prefer
+                        ),
                       ),
-                    ),
-                    Container(
-                        height: 70,
-                        child: Text(attraction.description,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 10))
-                    )
-                    // Other widgets if needed
-                  ],
+                      Container(
+                          height: 70,
+                          child: Text(attraction.description,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 15, fontFamily: 'MainFont'))
+                      )
+                      // Other widgets if needed
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         onTap: widget.onTap,

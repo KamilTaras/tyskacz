@@ -5,7 +5,7 @@ import '../../DatabaseManagement/database.dart';
 import '../../DatabaseManagement/attractionInformation.dart';
 import '../../DatabaseManagement/planInformation.dart';
 
-import '../background.dart';
+import '../uiElements.dart';
 import '../../Utils/Theme/colors.dart';
 import '../attractionPage.dart';
 
@@ -51,7 +51,7 @@ class _AllAttractionsPageState extends State<AllAttractionsPage> {
                     return CircularProgressIndicator();
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Text('No attractions found');
+                    return MessageIsEmpty(text: 'No attractions found');
                   }
                   return Expanded(
                     child: ListView.builder(
@@ -139,7 +139,7 @@ class _AttractionEntryState extends State<AttractionEntry> {
             borderRadius: BorderRadius.circular(8),
             //set border radius more than 50% of height and width to make circle
           ),
-          color: Colors.white,
+          color: Color.fromRGBO(255, 255, 255, 0.9),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

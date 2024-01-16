@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../Utils/constantValues.dart';
+
 
 class SwipableListEntry extends StatefulWidget {
   SwipableListEntry({
@@ -18,6 +20,7 @@ class SwipableListEntry extends StatefulWidget {
 
 class _SwipableListEntryState extends State<SwipableListEntry> {
   double _offsetX = 0.0;
+  bool _isSwiped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,27 +28,32 @@ class _SwipableListEntryState extends State<SwipableListEntry> {
       onHorizontalDragUpdate: (DragUpdateDetails details) {
         setState(() {
           _offsetX += details.primaryDelta!;
-          if(_offsetX<0) {
-            _offsetX=0;
+          if (_offsetX < 0) {
+            _offsetX = 0;
           }
+          _isSwiped = _offsetX > 50; // Check if it's swiped more than 50 pixels
         });
       },
       onHorizontalDragEnd: (DragEndDetails details) {
-        if (_offsetX > 50) {
+        if (_isSwiped) {
           // Swiped from left to right (right direction)
           widget.onSwipe();
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Action performed!')));
         }
-        // Reset the offset after the drag ends
+        // Reset the offset and swiped flag after the drag ends
         setState(() {
           _offsetX = 0.0;
+          _isSwiped = false;
         });
       },
       onTap: widget.onTap,
-      child: Transform.translate(
-        offset: Offset(_offsetX, 0.0),
-        child: widget.child,
+      child: Container(
+        color: _isSwiped ? Constant.mainGreenColor.withOpacity(0.8) : Colors.transparent,
+        child: Transform.translate(
+          offset: Offset(_offsetX, 0.0),
+          child: widget.child,
+        ),
       ),
     );
   }
