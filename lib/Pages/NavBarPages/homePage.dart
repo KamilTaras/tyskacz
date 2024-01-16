@@ -40,53 +40,55 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CreateTitle(title:'Home', screenWidth: screenWidth),
-              Container(
-                height: logoHeight, // Adjust height based on screen height
-                width: logoWidth,
-                child: Image(
-                  image: AssetImage('assets/photos/logo_TySkacz_light.png'),
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CreateTitle(title:'Home', screenWidth: screenWidth),
+                Container(
+                  height: logoHeight, // Adjust height based on screen height
+                  width: logoWidth,
+                  child: Image(
+                    image: AssetImage('assets/photos/logo_TySkacz_light.png'),
+                  ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: screenHeight * 0.25, // Adjust height based on screen height
-                    width: screenWidth * 0.45,// Adjust width based on screen height
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreatePlanPage(),
-                          ),
-                        );
-                      },
-                      child: const Text('Create a Plan',  style:TextStyle(fontSize: 25,),textAlign: TextAlign.center,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      height: screenHeight * 0.25, // Adjust height based on screen height
+                      width: screenWidth * 0.45,// Adjust width based on screen height
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreatePlanPage(),
+                            ),
+                          );
+                        },
+                        child: const Text('Create a Plan',  style:TextStyle(fontSize: 25,),textAlign: TextAlign.center,),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.25,
-                    width: screenWidth * 0.45,
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AttractionCreationPage(),
-                          ),
-                        );
-                      },
-                      child: Text('Create an Attraction', style:TextStyle(fontSize: 25,),textAlign: TextAlign.center,),
+                    SizedBox(
+                      height: screenHeight * 0.25,
+                      width: screenWidth * 0.45,
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AttractionCreationPage(),
+                            ),
+                          );
+                        },
+                        child: Text('Create an Attraction', style:TextStyle(fontSize: 25,),textAlign: TextAlign.center,),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],
