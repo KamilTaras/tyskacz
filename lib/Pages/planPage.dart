@@ -199,7 +199,7 @@ class _EventEntryState extends State<EventEntry> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Text(widget.event.attractionWithinEvent.name,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                     ),
                     Container(
                       width: 200, // Set the desired width
@@ -213,7 +213,7 @@ class _EventEntryState extends State<EventEntry> {
                       height: 70,
                       child: Text(
                         widget.event.attractionWithinEvent.description,
-                        style: TextStyle(fontSize: 10),
+                        style: TextStyle(fontSize: 15),
                       ),
                     ),
                     // Other widgets if needed

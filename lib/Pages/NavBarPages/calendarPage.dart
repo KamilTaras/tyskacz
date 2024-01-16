@@ -151,11 +151,12 @@ class DayOfEventsEntry extends StatelessWidget {
             ),
           ),
         ),
-        Card(
-          shape: RoundedRectangleBorder(
+        Container(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
+            color: Colors.transparent,
           ),
-          color: Colors.white,
+
           child: Column(
             children: attractions.map((attraction) {
               return ListTile(
