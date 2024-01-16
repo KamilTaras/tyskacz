@@ -131,8 +131,8 @@ class BackgroundSuitcase extends StatelessWidget {
       children: [
         Background(),
         Positioned(
-          bottom: 40,
-          left: 20,
+          bottom: 50,
+          right: 20,
             child: Container(
               child: Image.asset(
                 'assets/photos/suitcase.png', // Replace with your image asset path

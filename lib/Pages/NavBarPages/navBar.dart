@@ -55,11 +55,11 @@ class _NavBarClassState extends State<NavBarClass> {
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.star),
+                icon: Icon(Icons.book_outlined),
                 label: "Plans",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.access_time_sharp),
+                icon: Icon(Icons.castle_outlined),
                 label: "Attractions",
               ),
               BottomNavigationBarItem(
