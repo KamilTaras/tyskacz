@@ -58,7 +58,8 @@ class _SignInState extends State<SignIn> {
                         child: Text( 'Log in ', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'MainFont'),
                         ),
                         onPressed: ()async{
-                          //go to home page with navbarUser? user = await databaseService.getUserByName(_userNameController.text);
+                          //go to home page with navbar
+                        User? user = await databaseService.getUserByName(_userNameController.text);
                         if(user!=null){
                           if(user.checkPassword( _passwordController.text)){
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavBarClass(user: user)));

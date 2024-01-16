@@ -6,7 +6,6 @@ import 'package:tyskacz/Pages/SearchField.dart';
 
 import '../DatabaseManagement/planInformation.dart';
 import '../DatabaseManagement/userInformation.dart';
-import 'background.dart';
 
 import '../../Utils/constantValues.dart';
 import 'uiElements.dart';
