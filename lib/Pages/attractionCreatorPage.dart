@@ -123,7 +123,8 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                               coordinates: LatLng(
                                   coordinates.latitude!.toDouble(),
                                   coordinates.longitude!.toDouble()),
-                              //,));
+                              )
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('attraction added!')));
 
