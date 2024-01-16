@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:intl/intl.dart';
+import '../../DatabaseManagement/userInformation.dart';
 import '../background.dart';
 
 import '../../Utils/constantValues.dart';
@@ -8,7 +9,8 @@ import '../../Utils/Theme/colors.dart';
 import 'package:tyskacz/DatabaseManagement/database.dart';
 
 class UserCalendarPage extends StatefulWidget {
-  const UserCalendarPage({super.key});
+  User user;
+  UserCalendarPage({super.key, required this.user});
 
   @override
   State<UserCalendarPage> createState() => _UserCalendarPageState();
@@ -21,7 +23,7 @@ class _UserCalendarPageState extends State<UserCalendarPage> {
   Widget build(BuildContext context) {
     return CalendarPage(
         child: FutureBuilder<List<Event>>(
-            future: databaseService.getEvents(),
+            future: databaseService.getUserEvents(widget.user.id!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
@@ -82,7 +84,7 @@ Map<DateTime, List<Attraction>> mapToDays(List<Event> eventList) {
     DateTime endDate = event.endDate;
 
     for (var date = DateTime(startDate.year, startDate.month, startDate.day);
-        date.isBefore(endDate);
+        date.isBefore(endDate)||date.isAtSameMomentAs(endDate);
         date = date.add(Duration(days: 1))) {
       eventsMap.putIfAbsent(date, () => []);
       eventsMap[date]!.add(event.attractionWithinEvent);

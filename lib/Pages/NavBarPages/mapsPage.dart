@@ -25,7 +25,7 @@ class _GlobalMapPageState extends State<GlobalMapPage> {
             return const CircularProgressIndicator();
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text('No attractions found');
+            return MapPage(attractions: []);
           }
           List<Attraction> attractions = snapshot.data!;
           return MapPage(attractions: attractions);
@@ -47,11 +47,13 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     var attractions = widget.attractions;
+    var coordinates = attractions.map((e) => e.coordinates).toList();
+    coordinates = coordinates.length<2? [LatLng(0, 0), LatLng(1, 1)]:coordinates;
     return Stack(
       children:[
        FlutterMap(
         options: MapOptions(
-          initialCenter: attractions[0].coordinates,
+          initialCameraFit: CameraFit.coordinates(coordinates: coordinates),
           initialZoom: 13.0,
         ),
         children: [
