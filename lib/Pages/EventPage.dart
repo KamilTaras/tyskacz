@@ -17,7 +17,89 @@ class EventDescriptionPage extends StatelessWidget {
   final double topBarHeight = 20.0;
   final double sizedBoxHeight = 5;
 
+  @override
+  Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double picHeight = screenHeight * 0.25;
+    final double picWidth = screenWidth * 0.9;
+    final double nameHeight = screenHeight*0.08;
+    final double listHeight = screenHeight* 0.4;
+    return Stack(
+        children: [
+          Background(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(30.0),
+              child: AppBar(
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            body: SafeArea(
+              child:
+              Container(
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                margin: EdgeInsets.all( mainContainerMargin),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      //TODO: insert pic
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          height:picHeight,
+                          width:picWidth,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              event.attractionWithinEvent.photoURL,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                      buildElevatedTextContainer(
+                        nameHeight,
+                        Constant.mainGreenColor,
+                        event.attractionWithinEvent.name,
+                        titleFontSize,
+                        Colors.black,
+                      ),
+                      //TODO: container size dependant length of description
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Material(
+                              elevation: 8.0, // Set the desired elevation
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: Colors.white,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                               // height: listHeight,
 
+                                width: double.infinity,
+                                child:SingleChildScrollView(
+                                    child:Text(event.attractionWithinEvent.description)
+                                ),
+                              )
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: sizedBoxHeight),
+                      buildInfoContainer(context),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),]
+    );
+  }
 
   Widget buildStyledContainer(
       {required double height, required Color color, required Widget child}) {
@@ -181,81 +263,5 @@ class EventDescriptionPage extends StatelessWidget {
     return elevatedContainer;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double picHeight = screenHeight * 0.25;
-    final double picWidth = screenWidth * 0.9;
-    final double nameHeight = screenHeight*0.08;
-    final double listHeight = screenHeight* 0.4;
-    return Stack(
-      children: [
-        Background(),
-        Scaffold(
-         backgroundColor: Colors.transparent,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(30.0),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-          ),
-        ),
-        body: SafeArea(
-            child:
-              Container(
-                  color: Colors.transparent,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.all( mainContainerMargin),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      //TODO: insert pic
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          height:picHeight,
-                          width:picWidth,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              event.attractionWithinEvent.photoURL,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-                      buildElevatedTextContainer(
-                        nameHeight,
-                        Constant.mainGreenColor,
-                        event.attractionWithinEvent.name,
-                        titleFontSize,
-                        Colors.black,
-                      ),
-                      //TODO: container size dependant length of description
-                      Material(
-                          elevation: 8.0, // Set the desired elevation
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: Colors.white,
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            height: listHeight,
-                            width: double.infinity,
-                            child:SingleChildScrollView(
-                                child:Text(event.attractionWithinEvent.description)
-                            ),
-                          )
-                      ),
 
-                      SizedBox(height: sizedBoxHeight),
-                      buildInfoContainer(context),
-                    ],
-                  ),
-                ),
-              ),
-        ),
-      ),]
-    );
-  }
 }
