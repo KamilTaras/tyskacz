@@ -13,7 +13,7 @@ class EventDescriptionPage extends StatelessWidget {
   final double componentsMargin = 5.0;
   final double ratingFontSize = 20.0;
   final double titleFontSize = 25.0;
-  final double mainContainerMargin = 10.0;
+  final double mainContainerMargin = 0.0;
   final double topBarHeight = 20.0;
   final double sizedBoxHeight = 5;
 
@@ -22,7 +22,7 @@ class EventDescriptionPage extends StatelessWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     final double picHeight = screenHeight * 0.25;
-    final double picWidth = screenWidth * 0.9;
+    final double picWidth = screenWidth;
     final double nameHeight = screenHeight*0.08;
     final double listHeight = screenHeight* 0.4;
     return Stack(
@@ -42,58 +42,55 @@ class EventDescriptionPage extends StatelessWidget {
                 color: Colors.transparent,
                 alignment: Alignment.center,
                 margin: EdgeInsets.all( mainContainerMargin),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      //TODO: insert pic
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          height:picHeight,
-                          width:picWidth,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              event.attractionWithinEvent.photoURL,
-                              fit: BoxFit.fill,
-                            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    //TODO: insert pic
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Container(
+                        height:picHeight,
+                        width:picWidth,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            event.attractionWithinEvent.photoURL,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                      buildElevatedTextContainer(
-                        nameHeight,
-                        Constant.mainGreenColor,
-                        event.attractionWithinEvent.name,
-                        titleFontSize,
-                        Colors.black,
-                      ),
-                      //TODO: container size dependant length of description
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Material(
-                              elevation: 8.0, // Set the desired elevation
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: Colors.white,
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                               // height: listHeight,
+                    ),
+                    buildElevatedTextContainer(
+                      nameHeight,
+                      Constant.mainGreenColor,
+                      event.attractionWithinEvent.name,
+                      titleFontSize,
+                      Colors.black,
+                    ),
+                    //TODO: container size dependant length of description
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Material(
+                            elevation: 8.0, // Set the desired elevation
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                             // height: listHeight,
 
-                                width: double.infinity,
-                                child:SingleChildScrollView(
-                                    child:Text(event.attractionWithinEvent.description)
-                                ),
-                              )
-                          ),
+                              width: double.infinity,
+                              child:SingleChildScrollView(
+                                  child:Text(event.attractionWithinEvent.description)
+                              ),
+                            )
                         ),
                       ),
+                    ),
 
-                      SizedBox(height: sizedBoxHeight),
-                      buildInfoContainer(context),
-                    ],
-                  ),
+                    SizedBox(height: sizedBoxHeight),
+                    buildInfoContainer(context),
+                  ],
                 ),
               ),
             ),
