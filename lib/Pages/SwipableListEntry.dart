@@ -49,7 +49,7 @@ class _SwipableListEntryState extends State<SwipableListEntry> {
       },
       onTap: widget.onTap,
       child: Container(
-        color: _isSwiped ? Constant.mainGreenColor.withOpacity(0.8) : Colors.transparent,
+        color: _isSwiped ? Colors.orange.withOpacity(0.2) : Colors.transparent,
         child: Transform.translate(
           offset: Offset(_offsetX, 0.0),
           child: widget.child,

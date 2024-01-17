@@ -8,6 +8,8 @@ import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
 import 'uiElements.dart';
 import 'package:geocode/geocode.dart';
+import 'package:http/http.dart' as http;
+import 'package:html/dom.dart' as dom;
 
 class AttractionCreationPage extends StatefulWidget {
   AttractionCreationPage({Key? key, this.attraction}) : super(key: key);
@@ -31,6 +33,32 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
 
 
 
+  List<String> imagesList = [];
+  final userInput = '';
+  Future getWebsiteData(String userInput) async {
+    final url = Uri.parse(
+        'https://www.flickr.com/search/?text=$userInput');
+    final response = await http.get(url);
+    dom.Document html = dom.Document.html(response.body);
+
+    final images = html
+        .querySelectorAll("> img")
+        .map((element) => "https:${element.attributes['src']}")
+        .toList();
+
+    print(images.length);
+
+    for (final image in images) {
+      print(image.toString());
+    }
+    setState(() async {
+      imagesList =await images;
+    });
+    // return images;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -39,6 +67,14 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
     final double smallInputHeight = space * 0.15;
     final double descriptionHeight = space * 0.35;
     final double buttonHeight = space * 0.1;
+
+
+    Future<String> buildImage (String userInput) async {
+       getWebsiteData(userInput);
+        return imagesList[0];
+
+    }
+
 
     return Stack(children: [
       BackgroundSuitcase(),
@@ -132,7 +168,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                           else {
                             databaseService.addAttraction(
                             Attraction(
-                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                              photoURL: await buildImage(_localizationController.text),
                               name: _nameController.text,
                               description: _descriptionController.text,
                               coordinates: coordinates,
@@ -190,6 +226,7 @@ class _AttractionTextFieldState extends State<AttractionTextField> {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
         decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10.0),
             border: Border.all(
                 color: mainGreen.withOpacity(0.8),

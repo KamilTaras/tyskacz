@@ -3,6 +3,7 @@ import 'package:tyskacz/DatabaseManagement/planInformation.dart';
 import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/DatabaseManagement/userInformation.dart';
 import 'package:tyskacz/Pages/SwipableListEntry.dart';
+import '../../Utils/constantValues.dart';
 import '../uiElements.dart';
 
 import '../../DatabaseManagement/database.dart';
@@ -46,6 +47,36 @@ class _PlanListPageState extends State<PlanListPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               CreateTitle(title: 'Your Plans', screenWidth: screenWidth),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Constant.mainGreenColor.withOpacity(0.7),
+                ),
+
+                child: Padding(
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Trip Name:",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Anton-Regular'),
+                      ),
+                      Text("Trip Type:",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Anton-Regular'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               FutureBuilder<List<Plan>>(
                 future: databaseService.getUserPlans(widget.user.id!),
                 builder: (context, snapshot) {
@@ -123,7 +154,7 @@ class _PlanEntryState extends State<PlanEntry> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(widget.plan.name, style: TextStyle(fontSize: 22),),
-                Text(widget.plan.tripType.name, style: TextStyle(fontSize: 22)),
+                Text(textAlign: TextAlign.right,widget.plan.tripType.name, style: TextStyle(fontSize: 22)),
               ],
             ),
           ),
