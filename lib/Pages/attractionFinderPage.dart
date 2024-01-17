@@ -115,7 +115,12 @@ class _AttractionFinderPage extends State<AttractionFinderPage> {
                         databaseService.addPlanToUser(widget.user.id!,widget.plan);
 
                       }
-
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Plan saved!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                      );
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
 

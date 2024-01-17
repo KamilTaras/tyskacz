@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'package:intl/intl.dart';
+import 'package:tyskacz/Pages/EventPage.dart';
 import '../../DatabaseManagement/userInformation.dart';
 import '../uiElements.dart';
 
@@ -116,8 +117,7 @@ class Calendar extends StatelessWidget {
         itemCount: eventsMap.length,
         itemBuilder: (context, index) {
           DateTime date = eventsMap.keys.elementAt(index);
-          List<Attraction> attractions = eventsMap[date]!;
-          return DayOfEventsEntry(date: date, attractions: attractions);
+          return DayOfEventsEntry(date: date, events: eventList);
         },
       );
     }
@@ -126,10 +126,10 @@ class Calendar extends StatelessWidget {
 
 class DayOfEventsEntry extends StatelessWidget {
   const DayOfEventsEntry(
-      {Key? key, required this.date, required this.attractions})
+      {Key? key, required this.date, required this.events})
       : super(key: key);
   final DateTime date;
-  final List<Attraction> attractions;
+  final List<Event> events;
 
   @override
   Widget build(BuildContext context) {
@@ -137,27 +137,7 @@ class DayOfEventsEntry extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //DATE
-        Center(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-                color: Constant.mainGreenColor.withOpacity(0.7),
-            ),
-
-            child: Padding(
-              padding:
-              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
-              child: Text(
-                DateFormat('dd MMMM yyyy').format(date),
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontFamily: 'Anton-Regular'),
-              ),
-            ),
-          ),
-        ),
+        NewDayEntry(),
         //ATTRACTIONS
         Container(
           decoration: BoxDecoration(
@@ -165,61 +145,10 @@ class DayOfEventsEntry extends StatelessWidget {
             color: Colors.transparent,
             ),
           child: Column(
-            children: attractions.map((attraction) {
+            children: events.map((event) {
               return Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          height: 100,
-                          width: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
-                              child: Image.network(
-                                attraction.photoURL,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                      ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(attraction.name,
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                          ),
-                          Container(
-                            width: 200, // Set the desired width
-                            child: Divider(
-                              height: 20,
-                              thickness: 2,
-                              color: mainRed[400], // Choose the color you prefer
-                            ),
-                          ),
-                          Container(
-                            height: 70,
-                            child: Text(
-                              attraction.description,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                        // Other widgets if needed
-                        ],
-                      ),
-                    ),
-                    ],
-                  ),
-                ),
+                child: CalendarEventEntry(event: event,),
               );
             }).toList(),
           ),
@@ -228,4 +157,99 @@ class DayOfEventsEntry extends StatelessWidget {
     );
   }
 
+  Center NewDayEntry() {
+    return Center(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+              color: Constant.mainGreenColor.withOpacity(0.7),
+          ),
+
+          child: Padding(
+            padding:
+            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+            child: Text(
+              DateFormat('dd MMMM yyyy').format(date),
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontFamily: 'Anton-Regular'),
+            ),
+          ),
+        ),
+      );
+  }
+
+}
+
+class CalendarEventEntry extends StatelessWidget {
+  CalendarEventEntry({
+    super.key,
+    required this.event,
+  });
+  Event event;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EventDescriptionPage(
+                    event: event,
+                  ))),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white.withOpacity(0.7),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                height: 100,
+                width: 120,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+                    child: Image.network(
+                      event.attractionWithinEvent.photoURL,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+            ),
+          Expanded(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(event.attractionWithinEvent.name,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                ),
+                Container(
+                  width: 200, // Set the desired width
+                  child: Divider(
+                    height: 20,
+                    thickness: 2,
+                    color: mainRed[400], // Choose the color you prefer
+                  ),
+                ),
+                Container(
+                  //height: 70,
+                  child: Text(
+                    event.attractionWithinEvent.description,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              // Other widgets if needed
+              ],
+            ),
+          ),
+          ],
+        ),
+      ),
+    );
+  }
 }
