@@ -10,13 +10,14 @@ import 'uiElements.dart';
 import 'package:geocode/geocode.dart';
 
 class AttractionCreationPage extends StatefulWidget {
-  const AttractionCreationPage({Key? key}) : super(key: key);
-
+  AttractionCreationPage({Key? key, this.attraction}) : super(key: key);
+  Attraction? attraction;
   @override
   _AttractionCreationPageState createState() => _AttractionCreationPageState();
 }
 
 class _AttractionCreationPageState extends State<AttractionCreationPage> {
+  late Attraction? attraction=widget.attraction;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _localizationController = TextEditingController();
@@ -28,8 +29,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
   final double topBarHeight = 20.0;
   final double sizedBoxHeight = 5;
 
-  final String date = '24.10.2023 - 11.11.2023';
-  final String localization = 'Szczecin, Dabie 33';
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,58 +85,71 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                       width: double.infinity,
                       child: FilledButton(
                         //TODO: create attraction after pressing the button
-                        // jak można wrzucać takie rzeczy do onPressed? to jest niemożliwe
+
                         onPressed: () async {
-                          try {
-                            var coords = LatLng(
-                                double.parse(
-                                    _localizationController.text.split(',')[0]),
-                                double.parse(
-                                    _localizationController.text.split(',')[1]));
-                            databaseService.addAttraction(Attraction(
-                              photoURL:
-                                  'https://www.w3schools.com/w3css/img_lights.jpg',
-                              name: _nameController.text,
-                              description: _descriptionController.text,
-                              coordinates: coords,
-                              //,
-                            ));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('attraction added!')));
-                          } catch (e) {
 
+                        try {
+                          bool isAddress=false;
+                          LatLng coordinates;
 
-                          GeoCode geoCode =
-                              GeoCode(apiKey: "412336480991130498790x31447");
+                          // Regular expression for coordinates (latitude, longitude)
+                          if(_localizationController.text!=""){
+                            final coordinatesRegex = RegExp(r'^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$');
 
-                          try {
-                            Coordinates coordinates =
-                                await geoCode.forwardGeocoding(
-                                    address: _localizationController.text);
+                            if (coordinatesRegex.hasMatch(_localizationController.text)) {
+                              // If the input matches the coordinates regex
+                              var match = coordinatesRegex.firstMatch(_localizationController.text);
+                              var latitude = double.parse(match!.group(1)!);
+                              var longitude = double.parse(match.group(3)!);
+                              coordinates = LatLng(latitude, longitude);
+                            } else {
+                              isAddress = true;
+                              // Use geocoding if the input is not coordinates
+                              GeoCode geoCode = GeoCode(apiKey: "412336480991130498790x31447");
+                              Coordinates geoCoordinates = await geoCode.forwardGeocoding(
+                                address: _localizationController.text.trim(),
+                              );
 
-                            databaseService.addAttraction(Attraction(
-                              photoURL:
-                                  'https://www.w3schools.com/w3css/img_lights.jpg',
-                              name: _nameController.text,
-                              description: _descriptionController.text,
-
-                              coordinates: LatLng(
-                                  coordinates.latitude!.toDouble(),
-                                  coordinates.longitude!.toDouble()),
-                              )
-                            );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('attraction added!')));
-
-                            //print("Latitude: ${coordinates.latitude}");
-                            //print("Longitude: ${coordinates.longitude}");
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('adding failed')));
-                            print(e);
+                              coordinates = LatLng(
+                                geoCoordinates.latitude!.toDouble(),
+                                geoCoordinates.longitude!.toDouble(),
+                              );
+                            }
+                          }else{
+                            coordinates=LatLng(0,0);
                           }
-                        }
 
+
+
+                          // Adding Attraction to the database
+                          if(attraction!=null){
+                            attraction!.name=_nameController.text==""?attraction!.name:_nameController.text;
+                            attraction!.description=_descriptionController.text==""?attraction!.description:_descriptionController.text;
+                            attraction!.coordinates=_localizationController.text==""?attraction!.coordinates:coordinates;
+                            attraction!.address=_localizationController.text==""?attraction!.address:_localizationController.text;
+                            databaseService.updateAttraction(attraction!);
+                          }
+                          else {
+                            databaseService.addAttraction(
+                            Attraction(
+                              photoURL: 'https://www.w3schools.com/w3css/img_lights.jpg',
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              coordinates: coordinates,
+                            ),
+                          );
+                          }
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Attraction added!')),
+                          );
+                        } catch (e) {
+                          // Handle errors
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Adding failed: $e')),
+                          );
+                          print(e);
+                        }
                         },
                         child: Text('Save', style: TextStyle(fontSize: 30),),
                       ),
@@ -185,6 +198,7 @@ class _AttractionTextFieldState extends State<AttractionTextField> {
         child: Container(
           height: widget.height,
           child: TextField(
+
             controller: widget.controller,
             style: TextStyle(fontSize: widget.fontSize, color: Colors.black),
             decoration: InputDecoration(

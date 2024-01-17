@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Utils/constantValues.dart';
+import 'attractionCreatorPage.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
 import 'uiElements.dart';
@@ -147,7 +148,13 @@ class EventDescriptionPage extends StatelessWidget {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => MapPage(attractions:[event.attractionWithinEvent])));
         });
-    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {});
+    Widget editButton = buildIconButton(icon: Icons.edit, onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AttractionCreationPage(attraction: event.attractionWithinEvent,)),
+      );
+
+    });
 
     List<Widget> firstRow = [
       Icon(Icons.calendar_month),

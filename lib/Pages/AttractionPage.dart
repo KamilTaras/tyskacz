@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tyskacz/Pages/attractionCreatorPage.dart';
+import '../DatabaseManagement/database.dart';
 import '../Utils/constantValues.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
@@ -8,7 +10,7 @@ import 'uiElements.dart';
 class AttractionDescriptionPage extends StatelessWidget {
   AttractionDescriptionPage({super.key, required this.attraction});
   final Attraction attraction;
-
+  final databaseService = DatabaseService();
   final double componentsMargin = 5.0;
   final double ratingFontSize = 20.0;
   final double titleFontSize = 25.0;
@@ -174,7 +176,14 @@ class AttractionDescriptionPage extends StatelessWidget {
                                   );
                                 },
                               ),
-                              buildIconButton(icon: Icons.edit, onPressed: (){}),
+                              buildIconButton(icon: Icons.edit, onPressed: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => AttractionCreationPage(attraction: attraction)),
+
+                                );
+                                databaseService.deleteAttraction(attraction.id!);
+                              }),
                               Container(width: screenWidth / 3)
                             ],
                           ),
