@@ -68,11 +68,22 @@ class _ChangePassword extends State<ChangePassword> {
                                       if(user!=null){
                                         if (_formkey.currentState!.validate()&&_passwordController.text==_repeatPasswordController.text) {
                                           databaseService.updateUser(User.newPassword(id:user.id , name: _userNameController.text, password: _passwordController.text, email: _emailController.text));
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text('Password changed successfully'),
+                                              duration: Duration(seconds: 2),
+                                            ),
+                                          );
                                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
                                         }
                                         }
                                       else{
-                                        print('wrong username');
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text('Username not found'),
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
                                       }
 
 

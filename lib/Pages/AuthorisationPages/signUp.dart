@@ -64,7 +64,20 @@ class _SignUpState extends State<SignUp> {
                                 onPressed: () {
                                   if (_formkey.currentState!.validate()&&_passwordController.text==_repeatPasswordController.text) {
                                     databaseService.addUser(User.newPassword(name: _userNameController.text, password: _passwordController.text, email: _emailController.text));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Account created!'),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Passwords do not match!'),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
                                   }
                                 },
                               ),

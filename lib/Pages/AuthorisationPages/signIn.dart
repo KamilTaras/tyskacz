@@ -62,12 +62,29 @@ class _SignInState extends State<SignIn> {
                         User? user = await databaseService.getUserByName(_userNameController.text);
                         if(user!=null){
                           if(user.checkPassword( _passwordController.text)){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Successfully logged in'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavBarClass(user: user)));
                           }else{
-                            print('wrong password');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Wrong password'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
                           }
                         }else{
-                          print('wrong username');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Wrong username'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
                         }
                         },
 
