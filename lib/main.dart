@@ -9,21 +9,6 @@ import 'Utils/configForDebugWindows.dart';
 
 
 void main() async {
-
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    WidgetsFlutterBinding.ensureInitialized();
-  // Must add this line.
-  await windowManager.ensureInitialized();
-  // windowManager
-  WindowOptions? windowOptions = configForDebug();
-  if (windowOptions != null) {
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
-
-      await windowManager.focus();
-    });
-  }
-}
   runApp(MyApp());
 }
 
