@@ -134,6 +134,8 @@ class _AttractionEntryState extends State<AttractionEntry> {
   Widget build(BuildContext context) {
     var attraction = widget.attraction;
     return SwipableListEntry(
+        onTap: widget.onTap,
+        onSwipe: widget.onSwipe,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -183,8 +185,6 @@ class _AttractionEntryState extends State<AttractionEntry> {
               ),
             ],
           ),
-        ),
-        onTap: widget.onTap,
-        onSwipe: widget.onSwipe);
+        ));
   }
 }
