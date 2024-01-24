@@ -1,30 +1,43 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
+import 'package:tyskacz/Pages/AttractionPage.dart';
 
-import 'package:tyskacz/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('AttractionDescriptionPage Tests', () {
+    // Sample Attraction object
+    final sampleAttraction = Attraction(
+      photoURL: 'https://bi.im-g.pl/im/3c/8e/f6/z16158268Q.jpg',
+      name: 'Sample Attraction',
+      description: 'This is a sample description', coordinates: LatLng(21,37),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    testWidgets('renders Attraction elements with proper visibility and layout', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: AttractionDescriptionPage(attraction: sampleAttraction)));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      // Verify that image, name, and description are displayed
+      final nameFinder = find.text('Sample Attraction');
+      final descriptionFinder = find.text('This is a sample description');
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      expect(nameFinder, findsOneWidget);
+      expect(descriptionFinder, findsOneWidget);
+
+      // Check visibility and layout
+      final nameTextWidget = tester.widget<Text>(nameFinder);
+      final descriptionTextWidget = tester.widget<Text>(descriptionFinder);
+
+      // Assert the text style, alignment, etc.
+      expect(nameTextWidget.style?.fontSize, equals(25.0)); // Adjust the value as per your implementation
+      expect(descriptionTextWidget.style?.fontSize, lessThanOrEqualTo(20.0)); // Example check
+
+      expect(find.byType(IconButton), findsNWidgets(2));
+
+      // Optionally, you can also check for text overflow
+      expect(tester.takeException(), isNull);
+    });
   });
 }
