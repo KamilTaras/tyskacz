@@ -1,43 +1,53 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:tyskacz/DatabaseManagement/attractionInformation.dart';
-import 'package:tyskacz/Pages/AttractionPage.dart';
-
+import 'package:tyskacz/Pages/AuthorisationPages/changePassword.dart';
+import 'package:tyskacz/Pages/AuthorisationPages/signIn.dart';
+import 'package:tyskacz/Pages/AuthorisationPages/signUp.dart';
 
 void main() {
-  group('AttractionDescriptionPage Tests', () {
-    // Sample Attraction object
-    final sampleAttraction = Attraction(
-      photoURL: 'https://bi.im-g.pl/im/3c/8e/f6/z16158268Q.jpg',
-      name: 'Sample Attraction',
-      description: 'This is a sample description', coordinates: LatLng(21,37),
-    );
+  group('SignIn Widget Tests', () {
+    testWidgets('UI Elements are Rendered', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: SignIn()));
 
-    testWidgets('renders Attraction elements with proper visibility and layout', (WidgetTester tester) async {
-      await tester.pumpWidget(MaterialApp(home: AttractionDescriptionPage(attraction: sampleAttraction)));
+      // Check if the logo is displayed
+      expect(find.byType(Image), findsOneWidget);
 
-      // Verify that image, name, and description are displayed
-      final nameFinder = find.text('Sample Attraction');
-      final descriptionFinder = find.text('This is a sample description');
+      // Check if the 'Sign In' title is displayed
+      expect(find.text('Sign In'), findsOneWidget);
 
-      expect(nameFinder, findsOneWidget);
-      expect(descriptionFinder, findsOneWidget);
+      // Check if input fields are displayed
+      expect(find.widgetWithText(TextField, 'Login'), findsOneWidget);
+      expect(find.widgetWithText(TextField, 'Password'), findsOneWidget);
 
-      // Check visibility and layout
-      final nameTextWidget = tester.widget<Text>(nameFinder);
-      final descriptionTextWidget = tester.widget<Text>(descriptionFinder);
+      // Check if 'Forgot password?' and 'Don't have an account?' buttons are displayed
+      expect(find.text('Change password'), findsOneWidget);
+      expect(find.text('Create an account'), findsOneWidget);
 
-      // Assert the text style, alignment, etc.
-      expect(nameTextWidget.style?.fontSize, equals(25.0)); // Adjust the value as per your implementation
-      expect(descriptionTextWidget.style?.fontSize, lessThanOrEqualTo(20.0)); // Example check
-
-      expect(find.byType(IconButton), findsNWidgets(2));
-
-      // Optionally, you can also check for text overflow
-      expect(tester.takeException(), isNull);
+      // Check if the 'Log in' button is displayed
+      expect(find.widgetWithText(ElevatedButton, 'Log in'), findsOneWidget);
     });
+
+    testWidgets('Navigation to Change Password Page', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: SignIn()));
+
+      await tester.tap(find.text('Change password'));
+      await tester.pumpAndSettle(); // Wait for navigation animation
+
+      // Check if the Change Password Page is displayed
+      expect(find.byType(ChangePassword), findsOneWidget);
+    });
+
+    testWidgets('Navigation to Sign Up Page', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: SignIn()));
+
+      // Tap the 'Don't have an account?' button
+      await tester.tap(find.text('Create an account'));
+      await tester.pumpAndSettle(); // Wait for navigation animation
+
+      // Check if the Sign Up Page is displayed
+      expect(find.byType(SignUp), findsOneWidget);
+    });
+
+    // You can add more test cases for user interactions, button clicks, etc.
   });
 }
