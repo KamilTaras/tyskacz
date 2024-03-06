@@ -35,7 +35,8 @@ https://github.com/KamilTaras/tyskacz/assets/116663154/dcc20335-1f00-4080-b048-a
 https://github.com/KamilTaras/tyskacz/assets/116663154/74b0c2f1-8a15-4b9e-ad68-c2e18cd1fa08
 
 ### 🛠️ Created by Kamil Taras
-This presentation and the TySkacz app were crafted with ❤️ by 3 people team! 
+Presentation was created by **Kamil Taras**.
+TySkacz app was crafted with ❤️ by 3 people team! 
 
 ---
 
