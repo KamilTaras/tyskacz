@@ -4,6 +4,7 @@ import 'package:tyskacz/DatabaseManagement/mocks.dart';
 import 'package:tyskacz/Utils/Theme/colors.dart';
 import '../DatabaseManagement/attractionInformation.dart';
 import '../Utils/constantValues.dart';
+import '../hiddenData.dart';
 import 'navBarPages/mapsPage.dart';
 import 'package:latlong2/latlong.dart';
 import 'uiElements.dart';
@@ -17,6 +18,7 @@ class AttractionCreationPage extends StatefulWidget {
   @override
   _AttractionCreationPageState createState() => _AttractionCreationPageState();
 }
+
 
 class _AttractionCreationPageState extends State<AttractionCreationPage> {
   late Attraction? attraction=widget.attraction;
@@ -35,27 +37,6 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
 
   List<String> imagesList = [];
   final userInput = '';
-  Future getWebsiteData(String userInput) async {
-    final url = Uri.parse(
-        'https://www.flickr.com/search/?text=$userInput');
-    final response = await http.get(url);
-    dom.Document html = dom.Document.html(response.body);
-
-    final images = html
-        .querySelectorAll("> img")
-        .map((element) => "https:${element.attributes['src']}")
-        .toList();
-
-    print(images.length);
-
-    for (final image in images) {
-      print(image.toString());
-    }
-    setState(() async {
-      imagesList =await images;
-    });
-    // return images;
-  }
 
 
 
@@ -141,7 +122,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                             } else {
                               isAddress = true;
                               // Use geocoding if the input is not coordinates
-                              GeoCode geoCode = GeoCode(apiKey: "412336480991130498790x31447");
+                              GeoCode geoCode = buildGeoCodeAPI();
                               Coordinates geoCoordinates = await geoCode.forwardGeocoding(
                                 address: _localizationController.text.trim(),
                               );
@@ -182,7 +163,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
                         } catch (e) {
                           // Handle errors
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Adding failed: $e')),
+                            SnackBar(content: Text('Adding failed :(')),
                           );
                           print(e);
                         }
@@ -199,6 +180,7 @@ class _AttractionCreationPageState extends State<AttractionCreationPage> {
       ),
     ]);
   }
+
 }
 
 class AttractionTextField extends StatefulWidget {

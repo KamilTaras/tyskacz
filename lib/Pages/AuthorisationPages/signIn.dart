@@ -91,7 +91,8 @@ class _SignInState extends State<SignIn> {
                       ),
                   ),
                 ),
-                TextButton(text: 'Don\'t have an account?', navigationText: 'Create an account', navigationType: NavigationType.signUp),
+                Text('Don\'t have an account?', style:TextStyle(fontSize:16, fontFamily: 'MainFont')),
+                TextButton(text: '', navigationText: 'Create an account', navigationType: NavigationType.signUp),
               ],
             ),
         ),
@@ -114,18 +115,13 @@ class TextButton extends StatelessWidget {
     return Container(
       child: Center(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 62, top: 10, bottom: 10, right: 10),
-              child: Text(text, style:TextStyle(fontSize:16, fontFamily: 'MainFont')),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 1.0, top: 10, bottom: 10),
-              child: InkWell(
-                onTap: () => _handleNavigation(context),
-                child: Text(navigationText,
-                    style: TextStyle(fontSize: 14, color: Colors.blue, fontFamily: 'MainFont')),
-              ),
+            Text(text, style:TextStyle(fontSize:16, fontFamily: 'MainFont')),
+            InkWell(
+              onTap: () => _handleNavigation(context),
+              child: Text(navigationText,
+                  style: TextStyle(fontSize: 14, color: Colors.blue, fontFamily: 'MainFont')),
             )
           ],
         ),

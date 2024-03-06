@@ -48,7 +48,7 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     var attractions = widget.attractions;
     var coordinates = attractions.map((e) => e.coordinates).toList();
-    coordinates = coordinates.isEmpty ? [LatLng(0, 0)] : coordinates;
+    coordinates = coordinates.isEmpty ? [LatLng(52.2297, 21.0122)] : coordinates;
     //coordinates = coordinates.length < 2 ? [coordinates[0], LatLng(latitude, longitude)] : coordinates;
     return Stack(
       children:[
